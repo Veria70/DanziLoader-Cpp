@@ -1,0 +1,30 @@
+# 10-env-guard-holes-off.txt (switch variant of 03-placeholder-holes.txt)
+env VICTORY_GUARD_HOLES 0
+section T 0x30000
+placeholder H 0x200400000000 5
+map H 1 T 0
+map H 3 T 0x10000
+shadow h H 0 0x50000
+shadow mid H 0x18000 0x20000
+refresh h 0 0x50000
+refresh h 0 0x50000
+write H 0x10010 16 1
+write H 0x0 16 2                          # unmapped: skipped
+refresh h 0 0x50000
+map H 2 T 0x20000
+refresh h 0 0x50000
+refresh mid 0 0x20000
+write H 0x20000 0x20000 3
+refresh mid 0 0x20000
+unmap H 3
+refresh h 0 0x50000
+refresh mid 0 0x20000
+map H 4 T 0                               # block 4 shows what block 1 shows
+refresh h 0 0x50000
+write H 0x40008 4 4                       # through block 4
+refresh h 0 0x50000
+map H 3 T 0x10000
+write H 0x30000 1 5
+refresh mid 0 0x20000
+check
+end

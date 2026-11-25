@@ -1,0 +1,47 @@
+# 32-env-card-relay-fetch.txt (switch variant of 31-card-relay.txt): no inline
+# ring, every piece through the relay's own fetch (`after`: the queue order).
+env VICTORY_CARD_INLINE_FETCH 0
+region W watched 0x201800000000 0x300000
+write W 0 0x300000 1
+card_shadow c W 0x8000 0x200000          # skewed by half a piece
+shadow p W 0x240000 0x40000              # in the PC's memory, same flights
+refresh c 0 0x200000
+refresh p 0 0x40000
+prepare 1
+gpu_declare c 0x10000 0x80000
+gpu_declare p 0 0x20000
+snapshots
+card_write c 0x10000 0x100 2
+card_write c 0x40000 0x10 3
+gpu_write p 0x100 0x10 4
+card_send c 0x10000 0x80000 p 0 0x20000  # flight 1
+write W 0x58000 0x40 5                   # the title, beside flight 1's range
+write W 0x18000 0x8 6                    # and under it
+refresh c 0 0x200000                     # around the pending range only
+merge_under c 0 0x200000 8               # stage 2: the bytes under it go up
+prepare 2
+gpu_declare c 0x40000 0x80000            # overlaps flight 1's range
+card_write c 0x40000 0x10 7              # the same bytes again
+card_write c 0x80000 0x40 8
+card_send c 0x40000 0x80000              # flight 2
+card_land 1                              # flight 1 only
+write W 0x88000 0x10 9
+card_land                                # flight 2
+refresh c 0 0x200000
+refresh p 0 0x40000
+check
+prepare 3
+gpu_declare c 0 0x200000
+card_write c 0x1f0000 0x10 10
+card_send c 0 0x200000
+prepare 4
+gpu_declare c 0 0x200000
+card_write c 0x1f0000 0x10 11            # overwrites flight 3's bytes
+card_write c 0x100000 0x10000 12         # a whole piece
+card_send c 0 0x200000
+prepare 5
+gpu_declare c 0x100000 0x10000
+card_send c 0x100000 0x10000             # declared, nothing written
+card_land
+refresh c 0 0x200000
+end

@@ -1,0 +1,15 @@
+# 36-env-window-tails.txt: asks without a length take the cell's tail from
+# their 256 KiB step on (VICTORY_WINDOW_TAILS); a lower ask makes a longer one.
+env VICTORY_WINDOW_TAILS 1
+env VICTORY_WINDOW_KB 256
+region W watched 0x202000000000 0x800000
+write W 0 0x800000 1
+find a W 0x312345 1                     # tail from 0x300000 to 0x400000
+find b W 0x380000 0                     # the same tail holds it
+find c W 0x123456 1                     # a longer tail: from 0x100000
+find d W 0x390000 1                     # the longest that holds it: c's
+find e W 0x500000 0x10                  # with a length: on the grid
+refresh c 0 0x300000
+write W 0x350000 0x10 2
+refresh c 0 0x300000
+end

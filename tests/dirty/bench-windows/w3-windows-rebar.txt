@@ -1,0 +1,2011 @@
+# w1 with VICTORY_REBAR=1: windows in CPU-visible card memory
+env VICTORY_REBAR 1
+quiet 1
+region W watched 0x202300000000 0x8000000
+write W 0 0x8000000 1
+find w0 W 0x90054 0x100
+find w1 W 0x4f54c1 0x100
+find w2 W 0x92b9f6 0x100
+find w3 W 0xe1a6bf 0x100
+find w4 W 0x11cd5c1 0x100
+find w5 W 0x15288a8 0x100
+find w6 W 0x1b6c3b8 0x100
+find w7 W 0x1d43c7b 0x100
+find w8 W 0x22753dd 0x100
+find w9 W 0x272325f 0x100
+find w10 W 0x2bed42a 0x100
+find w11 W 0x2c9b880 0x100
+find w12 W 0x334e41a 0x100
+find w13 W 0x376e5b4 0x100
+find w14 W 0x3b29044 0x100
+find w15 W 0x3e35721 0x100
+find w16 W 0x439fda4 0x100
+find w17 W 0x44ffb0e 0x100
+find w18 W 0x4a5355f 0x100
+find w19 W 0x4f2aeb0 0x100
+find w20 W 0x500f3f8 0x100
+find w21 W 0x57c4e25 0x100
+find w22 W 0x599190e 0x100
+find w23 W 0x5c68ce7 0x100
+find w24 W 0x608538c 0x100
+find w25 W 0x66de548 0x100
+find w26 W 0x691f421 0x100
+find w27 W 0x6dd1e16 0x100
+find w28 W 0x722b0dc 0x100
+find w29 W 0x76e7457 0x100
+find w30 W 0x79d36c9 0x100
+find w31 W 0x7f5ae11 0x100
+refresh w0 0 0x400000
+refresh w1 0 0x400000
+refresh w2 0 0x400000
+refresh w3 0 0x400000
+refresh w4 0 0x400000
+refresh w5 0 0x400000
+refresh w6 0 0x400000
+refresh w7 0 0x400000
+refresh w8 0 0x400000
+refresh w9 0 0x400000
+refresh w10 0 0x400000
+refresh w11 0 0x400000
+refresh w12 0 0x400000
+refresh w13 0 0x400000
+refresh w14 0 0x400000
+refresh w15 0 0x400000
+refresh w16 0 0x400000
+refresh w17 0 0x400000
+refresh w18 0 0x400000
+refresh w19 0 0x400000
+refresh w20 0 0x400000
+refresh w21 0 0x400000
+refresh w22 0 0x400000
+refresh w23 0 0x400000
+refresh w24 0 0x400000
+refresh w25 0 0x400000
+refresh w26 0 0x400000
+refresh w27 0 0x400000
+refresh w28 0 0x400000
+refresh w29 0 0x400000
+refresh w30 0 0x400000
+refresh w31 0 0x400000
+card_submit
+quiet 1
+write W 0x2aa0336 32 2
+write W 0x9a1b60 32 3
+write W 0x3442c6f 32 4
+write W 0x3e03b75 32 5
+write W 0x43231fd 32 6
+write W 0x654e2c5 32 7
+write W 0x20022c2 32 8
+write W 0x43576d1 32 9
+write W 0x3c8536f 32 10
+write W 0x4848014 32 11
+write W 0x6198a25 32 12
+write W 0x2bd4fb6 32 13
+write W 0x6353c07 32 14
+write W 0x678a2cd 32 15
+write W 0x401f16c 32 16
+write W 0x1506870 32 17
+write W 0x1354c5e 32 18
+write W 0x13db413 32 19
+write W 0x2189d86 32 20
+write W 0x1f0acf9 32 21
+write W 0x77e9689 32 22
+write W 0x3a21b4 32 23
+write W 0x69cf3e4 32 24
+write W 0x5413bd0 32 25
+write W 0xf0a8d0 32 26
+write W 0x436ed24 32 27
+write W 0x23fdd96 32 28
+write W 0x4b4e6a5 32 29
+write W 0x2e7a681 32 30
+write W 0x2b572a 32 31
+write W 0x3a3942d 32 32
+write W 0x4dc41a6 32 33
+write W 0x189bd67 32 34
+write W 0x4d3ec34 32 35
+write W 0x738012a 32 36
+write W 0x7fad832 32 37
+write W 0x5d5d274 32 38
+write W 0x66ccbe3 32 39
+write W 0x434e8cc 32 40
+write W 0x5590bf4 32 41
+write W 0x5875a09 32 42
+write W 0x6b4b71a 32 43
+write W 0x2478558 32 44
+write W 0x7e0cd36 32 45
+write W 0x143439e 32 46
+write W 0x2194245 32 47
+write W 0x38a69fa 32 48
+write W 0x3b002b2 32 49
+write W 0x151976b 32 50
+write W 0x4a0a5b3 32 51
+write W 0x1de67c0 32 52
+write W 0x1f384d8 32 53
+write W 0x225644f 32 54
+write W 0xb6509a 32 55
+write W 0x6bacf88 32 56
+write W 0x1d66761 32 57
+write W 0x578169b 32 58
+write W 0x43579a7 32 59
+write W 0x6fc8441 32 60
+write W 0x705205e 32 61
+write W 0x1e63d7d 32 62
+write W 0x7c887ee 32 63
+write W 0x24e8b17 32 64
+write W 0x7c0adcf 32 65
+refresh w0 0 0x400000
+refresh w1 0 0x400000
+refresh w2 0 0x400000
+refresh w3 0 0x400000
+refresh w4 0 0x400000
+refresh w5 0 0x400000
+refresh w6 0 0x400000
+refresh w7 0 0x400000
+refresh w8 0 0x400000
+refresh w9 0 0x400000
+refresh w10 0 0x400000
+refresh w11 0 0x400000
+refresh w12 0 0x400000
+refresh w13 0 0x400000
+refresh w14 0 0x400000
+refresh w15 0 0x400000
+refresh w16 0 0x400000
+refresh w17 0 0x400000
+refresh w18 0 0x400000
+refresh w19 0 0x400000
+refresh w20 0 0x400000
+refresh w21 0 0x400000
+refresh w22 0 0x400000
+refresh w23 0 0x400000
+refresh w24 0 0x400000
+refresh w25 0 0x400000
+refresh w26 0 0x400000
+refresh w27 0 0x400000
+refresh w28 0 0x400000
+refresh w29 0 0x400000
+refresh w30 0 0x400000
+refresh w31 0 0x400000
+card_submit
+write W 0x77e718c 32 1002
+write W 0x3d3d6a8 32 1003
+write W 0x4dc00a5 32 1004
+write W 0x4894331 32 1005
+write W 0x610df6b 32 1006
+write W 0x121cb32 32 1007
+write W 0x30277ba 32 1008
+write W 0x11d81f8 32 1009
+write W 0x21b7073 32 1010
+write W 0x30d17a5 32 1011
+write W 0x3804a9f 32 1012
+write W 0x7c487e 32 1013
+write W 0x609c588 32 1014
+write W 0x4841488 32 1015
+write W 0x7312b57 32 1016
+write W 0x75b4251 32 1017
+write W 0x5156557 32 1018
+write W 0x7bee526 32 1019
+write W 0x4b88c0d 32 1020
+write W 0x41b9c21 32 1021
+write W 0x792bdbf 32 1022
+write W 0x14bc967 32 1023
+write W 0x57d2f7b 32 1024
+write W 0xb800e1 32 1025
+write W 0x54aa32d 32 1026
+write W 0x2724022 32 1027
+write W 0x31e5b9b 32 1028
+write W 0x2ee5b88 32 1029
+write W 0x4b64ba4 32 1030
+write W 0x41e011a 32 1031
+write W 0x473f155 32 1032
+write W 0x319ca8b 32 1033
+write W 0x6bdd76a 32 1034
+write W 0x2b3d140 32 1035
+write W 0x348c659 32 1036
+write W 0x6b2d649 32 1037
+write W 0x2168eb1 32 1038
+write W 0x3429126 32 1039
+write W 0x7ac4d8 32 1040
+write W 0x162ac4a 32 1041
+write W 0x8eef84 32 1042
+write W 0x12df52c 32 1043
+write W 0x600bc08 32 1044
+write W 0x5977bca 32 1045
+write W 0x270dc14 32 1046
+write W 0x27550cd 32 1047
+write W 0x5b7eb38 32 1048
+write W 0x67f847c 32 1049
+write W 0x2560c75 32 1050
+write W 0x3d62bcb 32 1051
+write W 0x6b7c66f 32 1052
+write W 0x5798446 32 1053
+write W 0x4fe4897 32 1054
+write W 0x1e8bccd 32 1055
+write W 0x3258b5c 32 1056
+write W 0x69cb01 32 1057
+write W 0x2edc908 32 1058
+write W 0x561657e 32 1059
+write W 0x5c6526d 32 1060
+write W 0x35a2ee7 32 1061
+write W 0x6c162e0 32 1062
+write W 0x3feebfd 32 1063
+write W 0xfa186c 32 1064
+write W 0x6ab3309 32 1065
+refresh w0 0 0x400000
+refresh w1 0 0x400000
+refresh w2 0 0x400000
+refresh w3 0 0x400000
+refresh w4 0 0x400000
+refresh w5 0 0x400000
+refresh w6 0 0x400000
+refresh w7 0 0x400000
+refresh w8 0 0x400000
+refresh w9 0 0x400000
+refresh w10 0 0x400000
+refresh w11 0 0x400000
+refresh w12 0 0x400000
+refresh w13 0 0x400000
+refresh w14 0 0x400000
+refresh w15 0 0x400000
+refresh w16 0 0x400000
+refresh w17 0 0x400000
+refresh w18 0 0x400000
+refresh w19 0 0x400000
+refresh w20 0 0x400000
+refresh w21 0 0x400000
+refresh w22 0 0x400000
+refresh w23 0 0x400000
+refresh w24 0 0x400000
+refresh w25 0 0x400000
+refresh w26 0 0x400000
+refresh w27 0 0x400000
+refresh w28 0 0x400000
+refresh w29 0 0x400000
+refresh w30 0 0x400000
+refresh w31 0 0x400000
+card_submit
+write W 0x4b9a340 32 2002
+write W 0x7820adc 32 2003
+write W 0x31b5fde 32 2004
+write W 0x72d5211 32 2005
+write W 0x6b329ab 32 2006
+write W 0x99a2c9 32 2007
+write W 0x7081596 32 2008
+write W 0x6a3929e 32 2009
+write W 0x6a7f94c 32 2010
+write W 0x6a5fa22 32 2011
+write W 0x6222abb 32 2012
+write W 0x7275fc6 32 2013
+write W 0x241ad7e 32 2014
+write W 0x5529d5e 32 2015
+write W 0x79a3f0f 32 2016
+write W 0xdfda75 32 2017
+write W 0x1c729a0 32 2018
+write W 0x25f5f40 32 2019
+write W 0x12f6767 32 2020
+write W 0x5725b82 32 2021
+write W 0x6615d7e 32 2022
+write W 0x38f77c9 32 2023
+write W 0x5ab4e95 32 2024
+write W 0x634978c 32 2025
+write W 0xbf5acc 32 2026
+write W 0xa6996d 32 2027
+write W 0x6a06c2a 32 2028
+write W 0x3c8993c 32 2029
+write W 0x7411f1 32 2030
+write W 0x1c404c8 32 2031
+write W 0x4971545 32 2032
+write W 0x72dda1b 32 2033
+write W 0x4ac148d 32 2034
+write W 0x5be3f88 32 2035
+write W 0x5997aa7 32 2036
+write W 0x1ca31ca 32 2037
+write W 0x30ac841 32 2038
+write W 0x1145b33 32 2039
+write W 0x47a46cb 32 2040
+write W 0x5479ae0 32 2041
+write W 0x26e99a2 32 2042
+write W 0x6d198a3 32 2043
+write W 0x5f73e3f 32 2044
+write W 0x746dfa3 32 2045
+write W 0x7306157 32 2046
+write W 0x44dfbc6 32 2047
+write W 0xef8917 32 2048
+write W 0x602a7ea 32 2049
+write W 0x755fc44 32 2050
+write W 0x5039251 32 2051
+write W 0xfed204 32 2052
+write W 0x329c98d 32 2053
+write W 0x79a8420 32 2054
+write W 0x1d62a3b 32 2055
+write W 0x38164a2 32 2056
+write W 0x2d90c5f 32 2057
+write W 0x66d030d 32 2058
+write W 0x5b6205c 32 2059
+write W 0x3cdaf0e 32 2060
+write W 0xf85f8e 32 2061
+write W 0x31ed906 32 2062
+write W 0x746b963 32 2063
+write W 0x1fbbcca 32 2064
+write W 0x2ee3b39 32 2065
+refresh w0 0 0x400000
+refresh w1 0 0x400000
+refresh w2 0 0x400000
+refresh w3 0 0x400000
+refresh w4 0 0x400000
+refresh w5 0 0x400000
+refresh w6 0 0x400000
+refresh w7 0 0x400000
+refresh w8 0 0x400000
+refresh w9 0 0x400000
+refresh w10 0 0x400000
+refresh w11 0 0x400000
+refresh w12 0 0x400000
+refresh w13 0 0x400000
+refresh w14 0 0x400000
+refresh w15 0 0x400000
+refresh w16 0 0x400000
+refresh w17 0 0x400000
+refresh w18 0 0x400000
+refresh w19 0 0x400000
+refresh w20 0 0x400000
+refresh w21 0 0x400000
+refresh w22 0 0x400000
+refresh w23 0 0x400000
+refresh w24 0 0x400000
+refresh w25 0 0x400000
+refresh w26 0 0x400000
+refresh w27 0 0x400000
+refresh w28 0 0x400000
+refresh w29 0 0x400000
+refresh w30 0 0x400000
+refresh w31 0 0x400000
+card_submit
+write W 0x7d060cd 32 3002
+write W 0x6400fbf 32 3003
+write W 0x3ab093e 32 3004
+write W 0x4844a6f 32 3005
+write W 0x616c230 32 3006
+write W 0x6d3f41e 32 3007
+write W 0x56ce05b 32 3008
+write W 0x3e771d6 32 3009
+write W 0x21890b5 32 3010
+write W 0x1c45cb0 32 3011
+write W 0x20150bb 32 3012
+write W 0x4010168 32 3013
+write W 0x39a1c48 32 3014
+write W 0x36a2390 32 3015
+write W 0x2b3943d 32 3016
+write W 0x2db4d7b 32 3017
+write W 0x21b32d6 32 3018
+write W 0x1b4091 32 3019
+write W 0x38cbc4d 32 3020
+write W 0xc21eff 32 3021
+write W 0x21484ab 32 3022
+write W 0x4ca12b3 32 3023
+write W 0x2ba0798 32 3024
+write W 0x486dd9b 32 3025
+write W 0x528d124 32 3026
+write W 0x71da8b5 32 3027
+write W 0xccac6b 32 3028
+write W 0x20e027f 32 3029
+write W 0x5a4b6f4 32 3030
+write W 0x52a4f8e 32 3031
+write W 0x6250c78 32 3032
+write W 0x781447b 32 3033
+write W 0x58b80c2 32 3034
+write W 0x56e39f3 32 3035
+write W 0x7ac6056 32 3036
+write W 0xbef13c 32 3037
+write W 0x6fe4d3 32 3038
+write W 0x52e251b 32 3039
+write W 0x5d5e5a0 32 3040
+write W 0x3d7e2fa 32 3041
+write W 0x5be7b08 32 3042
+write W 0x5c2ba5c 32 3043
+write W 0x3e6eda6 32 3044
+write W 0x3fa15d0 32 3045
+write W 0x776113f 32 3046
+write W 0x1232066 32 3047
+write W 0x3d5c6f5 32 3048
+write W 0x182d562 32 3049
+write W 0xd1af53 32 3050
+write W 0x1053670 32 3051
+write W 0x60df0d8 32 3052
+write W 0x76ecd80 32 3053
+write W 0x6a396d6 32 3054
+write W 0x36b7a7c 32 3055
+write W 0x2f7cd90 32 3056
+write W 0x447dc17 32 3057
+write W 0x47d0c97 32 3058
+write W 0x9ec6d6 32 3059
+write W 0x4060d17 32 3060
+write W 0x6626715 32 3061
+write W 0x1b3fb16 32 3062
+write W 0x72192f8 32 3063
+write W 0x1316d12 32 3064
+write W 0x4b19a08 32 3065
+refresh w0 0 0x400000
+refresh w1 0 0x400000
+refresh w2 0 0x400000
+refresh w3 0 0x400000
+refresh w4 0 0x400000
+refresh w5 0 0x400000
+refresh w6 0 0x400000
+refresh w7 0 0x400000
+refresh w8 0 0x400000
+refresh w9 0 0x400000
+refresh w10 0 0x400000
+refresh w11 0 0x400000
+refresh w12 0 0x400000
+refresh w13 0 0x400000
+refresh w14 0 0x400000
+refresh w15 0 0x400000
+refresh w16 0 0x400000
+refresh w17 0 0x400000
+refresh w18 0 0x400000
+refresh w19 0 0x400000
+refresh w20 0 0x400000
+refresh w21 0 0x400000
+refresh w22 0 0x400000
+refresh w23 0 0x400000
+refresh w24 0 0x400000
+refresh w25 0 0x400000
+refresh w26 0 0x400000
+refresh w27 0 0x400000
+refresh w28 0 0x400000
+refresh w29 0 0x400000
+refresh w30 0 0x400000
+refresh w31 0 0x400000
+card_submit
+write W 0xd68625 32 4002
+write W 0x420151 32 4003
+write W 0xbdfcaa 32 4004
+write W 0x4149d18 32 4005
+write W 0x961d46 32 4006
+write W 0x639ea70 32 4007
+write W 0x5a737b9 32 4008
+write W 0x6548df1 32 4009
+write W 0x7027eba 32 4010
+write W 0x258549f 32 4011
+write W 0x592f78b 32 4012
+write W 0x3d1cd8 32 4013
+write W 0x6b45721 32 4014
+write W 0x22f2778 32 4015
+write W 0x8c557c 32 4016
+write W 0x77676da 32 4017
+write W 0x4431a2e 32 4018
+write W 0x70059e2 32 4019
+write W 0x7e2d40c 32 4020
+write W 0x42c1111 32 4021
+write W 0x6204174 32 4022
+write W 0x1e81bab 32 4023
+write W 0x2e0d625 32 4024
+write W 0x9b06a0 32 4025
+write W 0x225ecc 32 4026
+write W 0x3d3ba76 32 4027
+write W 0x697f139 32 4028
+write W 0x26493e1 32 4029
+write W 0x6d9f4af 32 4030
+write W 0x4840802 32 4031
+write W 0x3730d0f 32 4032
+write W 0x4ac33ee 32 4033
+write W 0x1140cde 32 4034
+write W 0x2b19a59 32 4035
+write W 0x3c7520a 32 4036
+write W 0x3821b8e 32 4037
+write W 0x39f81ad 32 4038
+write W 0x64a1919 32 4039
+write W 0x370ebe1 32 4040
+write W 0x19effd6 32 4041
+write W 0x408b252 32 4042
+write W 0x68341c1 32 4043
+write W 0x2e4bdb9 32 4044
+write W 0x38b6739 32 4045
+write W 0x2172dfe 32 4046
+write W 0x66e606c 32 4047
+write W 0x565401 32 4048
+write W 0x7f72557 32 4049
+write W 0x7e1b9b2 32 4050
+write W 0x423c2e 32 4051
+write W 0x3cad851 32 4052
+write W 0x4a5c148 32 4053
+write W 0x5da836f 32 4054
+write W 0x46cc4d0 32 4055
+write W 0x18a9c6 32 4056
+write W 0x36c580c 32 4057
+write W 0x5d52a3f 32 4058
+write W 0x3bc20e6 32 4059
+write W 0x6fa8c38 32 4060
+write W 0x2b2671c 32 4061
+write W 0x59af897 32 4062
+write W 0x250a8f6 32 4063
+write W 0x58c6585 32 4064
+write W 0x5dacd9 32 4065
+refresh w0 0 0x400000
+refresh w1 0 0x400000
+refresh w2 0 0x400000
+refresh w3 0 0x400000
+refresh w4 0 0x400000
+refresh w5 0 0x400000
+refresh w6 0 0x400000
+refresh w7 0 0x400000
+refresh w8 0 0x400000
+refresh w9 0 0x400000
+refresh w10 0 0x400000
+refresh w11 0 0x400000
+refresh w12 0 0x400000
+refresh w13 0 0x400000
+refresh w14 0 0x400000
+refresh w15 0 0x400000
+refresh w16 0 0x400000
+refresh w17 0 0x400000
+refresh w18 0 0x400000
+refresh w19 0 0x400000
+refresh w20 0 0x400000
+refresh w21 0 0x400000
+refresh w22 0 0x400000
+refresh w23 0 0x400000
+refresh w24 0 0x400000
+refresh w25 0 0x400000
+refresh w26 0 0x400000
+refresh w27 0 0x400000
+refresh w28 0 0x400000
+refresh w29 0 0x400000
+refresh w30 0 0x400000
+refresh w31 0 0x400000
+card_submit
+write W 0x3c38258 32 5002
+write W 0x290cfc5 32 5003
+write W 0x41728e5 32 5004
+write W 0xddea30 32 5005
+write W 0x1f0661b 32 5006
+write W 0x2a5fb1a 32 5007
+write W 0x1a900ad 32 5008
+write W 0x62186ee 32 5009
+write W 0x64197e5 32 5010
+write W 0xef83be 32 5011
+write W 0x27dfa55 32 5012
+write W 0x37bd504 32 5013
+write W 0x359cd1b 32 5014
+write W 0x60982cc 32 5015
+write W 0x3f6955 32 5016
+write W 0x381150 32 5017
+write W 0x6e9317a 32 5018
+write W 0x5d21954 32 5019
+write W 0x1703f84 32 5020
+write W 0x4aab40a 32 5021
+write W 0x3751321 32 5022
+write W 0x346fa95 32 5023
+write W 0x16b091e 32 5024
+write W 0x1983ec8 32 5025
+write W 0x308b8f1 32 5026
+write W 0x5ce6923 32 5027
+write W 0x5fc4f09 32 5028
+write W 0x53e2dc5 32 5029
+write W 0x91b9e3 32 5030
+write W 0xfd463d 32 5031
+write W 0x3def320 32 5032
+write W 0x2a75581 32 5033
+write W 0x7c2e771 32 5034
+write W 0x649f553 32 5035
+write W 0x50202bf 32 5036
+write W 0x4ecf7da 32 5037
+write W 0x7f8f7d2 32 5038
+write W 0xba99f0 32 5039
+write W 0x43d55a6 32 5040
+write W 0x66b03f5 32 5041
+write W 0x64cc08e 32 5042
+write W 0x314c7ed 32 5043
+write W 0x1ab77f 32 5044
+write W 0x7de66df 32 5045
+write W 0x63f98ff 32 5046
+write W 0x1233f2 32 5047
+write W 0x3e34ecd 32 5048
+write W 0x70b28cc 32 5049
+write W 0x1dcbc38 32 5050
+write W 0x74175b9 32 5051
+write W 0x4ab4d48 32 5052
+write W 0x11b2a0 32 5053
+write W 0x7cea83d 32 5054
+write W 0xa0ba44 32 5055
+write W 0x49da25d 32 5056
+write W 0x29b518d 32 5057
+write W 0x6a65dbf 32 5058
+write W 0x51123ad 32 5059
+write W 0x1657e95 32 5060
+write W 0x1d362c8 32 5061
+write W 0x6ff0034 32 5062
+write W 0x14f908a 32 5063
+write W 0x45bd2a9 32 5064
+write W 0x69cf69d 32 5065
+refresh w0 0 0x400000
+refresh w1 0 0x400000
+refresh w2 0 0x400000
+refresh w3 0 0x400000
+refresh w4 0 0x400000
+refresh w5 0 0x400000
+refresh w6 0 0x400000
+refresh w7 0 0x400000
+refresh w8 0 0x400000
+refresh w9 0 0x400000
+refresh w10 0 0x400000
+refresh w11 0 0x400000
+refresh w12 0 0x400000
+refresh w13 0 0x400000
+refresh w14 0 0x400000
+refresh w15 0 0x400000
+refresh w16 0 0x400000
+refresh w17 0 0x400000
+refresh w18 0 0x400000
+refresh w19 0 0x400000
+refresh w20 0 0x400000
+refresh w21 0 0x400000
+refresh w22 0 0x400000
+refresh w23 0 0x400000
+refresh w24 0 0x400000
+refresh w25 0 0x400000
+refresh w26 0 0x400000
+refresh w27 0 0x400000
+refresh w28 0 0x400000
+refresh w29 0 0x400000
+refresh w30 0 0x400000
+refresh w31 0 0x400000
+card_submit
+write W 0x5288b4f 32 6002
+write W 0x15c929f 32 6003
+write W 0x49a0f48 32 6004
+write W 0x674400e 32 6005
+write W 0x5e53882 32 6006
+write W 0x42c577f 32 6007
+write W 0x1feaa58 32 6008
+write W 0x28a7b6e 32 6009
+write W 0x4d5f6fe 32 6010
+write W 0x5e85647 32 6011
+write W 0x558e04d 32 6012
+write W 0x5845aa7 32 6013
+write W 0x43785b2 32 6014
+write W 0x68bc2ea 32 6015
+write W 0x71fc1f6 32 6016
+write W 0x12cb20f 32 6017
+write W 0x28caae1 32 6018
+write W 0x4627093 32 6019
+write W 0x656e3c2 32 6020
+write W 0x502d011 32 6021
+write W 0x2ea7aa8 32 6022
+write W 0x2a95f60 32 6023
+write W 0x3144f1 32 6024
+write W 0x3a6acbe 32 6025
+write W 0x643bac9 32 6026
+write W 0x4a9bfa2 32 6027
+write W 0x32269c6 32 6028
+write W 0x57eafa6 32 6029
+write W 0x470b390 32 6030
+write W 0x4e8c75b 32 6031
+write W 0x5240c76 32 6032
+write W 0x3121edd 32 6033
+write W 0x71891c 32 6034
+write W 0x7009ae4 32 6035
+write W 0xd9f0b6 32 6036
+write W 0x22e7960 32 6037
+write W 0x18eba8c 32 6038
+write W 0x3c9ee06 32 6039
+write W 0x3e7b414 32 6040
+write W 0x361c6cb 32 6041
+write W 0x4822d36 32 6042
+write W 0x21c17f1 32 6043
+write W 0x1c8dd3 32 6044
+write W 0x6bb556d 32 6045
+write W 0x6977108 32 6046
+write W 0x4c7b04e 32 6047
+write W 0x1f1a19b 32 6048
+write W 0x36b81ee 32 6049
+write W 0x7361fed 32 6050
+write W 0x41249b0 32 6051
+write W 0x58ab597 32 6052
+write W 0x54a4fef 32 6053
+write W 0x7b9fffb 32 6054
+write W 0x43c821d 32 6055
+write W 0xd38fa1 32 6056
+write W 0x1124af9 32 6057
+write W 0x173f6c6 32 6058
+write W 0x437531b 32 6059
+write W 0x3272bbb 32 6060
+write W 0x3039dd9 32 6061
+write W 0x182b706 32 6062
+write W 0x6847600 32 6063
+write W 0x3f5f438 32 6064
+write W 0x3f24f8d 32 6065
+refresh w0 0 0x400000
+refresh w1 0 0x400000
+refresh w2 0 0x400000
+refresh w3 0 0x400000
+refresh w4 0 0x400000
+refresh w5 0 0x400000
+refresh w6 0 0x400000
+refresh w7 0 0x400000
+refresh w8 0 0x400000
+refresh w9 0 0x400000
+refresh w10 0 0x400000
+refresh w11 0 0x400000
+refresh w12 0 0x400000
+refresh w13 0 0x400000
+refresh w14 0 0x400000
+refresh w15 0 0x400000
+refresh w16 0 0x400000
+refresh w17 0 0x400000
+refresh w18 0 0x400000
+refresh w19 0 0x400000
+refresh w20 0 0x400000
+refresh w21 0 0x400000
+refresh w22 0 0x400000
+refresh w23 0 0x400000
+refresh w24 0 0x400000
+refresh w25 0 0x400000
+refresh w26 0 0x400000
+refresh w27 0 0x400000
+refresh w28 0 0x400000
+refresh w29 0 0x400000
+refresh w30 0 0x400000
+refresh w31 0 0x400000
+card_submit
+write W 0x13cdb4d 32 7002
+write W 0x6f1fff0 32 7003
+write W 0x3d0a752 32 7004
+write W 0x1ab9eb 32 7005
+write W 0x5c25c8a 32 7006
+write W 0x6b5d125 32 7007
+write W 0x115a059 32 7008
+write W 0xcb2513 32 7009
+write W 0x178f73e 32 7010
+write W 0x7743474 32 7011
+write W 0x798f414 32 7012
+write W 0x20d23a6 32 7013
+write W 0x7375efe 32 7014
+write W 0x4898db8 32 7015
+write W 0x2d66979 32 7016
+write W 0x7299b6f 32 7017
+write W 0x55b2446 32 7018
+write W 0x5e3e098 32 7019
+write W 0x4730ba4 32 7020
+write W 0x7f3a0d4 32 7021
+write W 0x1eb7ee2 32 7022
+write W 0x838f4c 32 7023
+write W 0x5884cb 32 7024
+write W 0x6047282 32 7025
+write W 0xfe8af6 32 7026
+write W 0x6291f29 32 7027
+write W 0x4f561ad 32 7028
+write W 0x58173be 32 7029
+write W 0x28efeab 32 7030
+write W 0x67d35e6 32 7031
+write W 0x6a849f7 32 7032
+write W 0x5600aad 32 7033
+write W 0x4d420e4 32 7034
+write W 0x6540c36 32 7035
+write W 0x1b252d0 32 7036
+write W 0x7b81b38 32 7037
+write W 0x2bd5bb6 32 7038
+write W 0x4db1373 32 7039
+write W 0x4dcef0e 32 7040
+write W 0x41009e4 32 7041
+write W 0x1c9785a 32 7042
+write W 0x1f9de63 32 7043
+write W 0x298dc74 32 7044
+write W 0x40c15a5 32 7045
+write W 0x7349b0b 32 7046
+write W 0x4feffd5 32 7047
+write W 0x126bde 32 7048
+write W 0x636548d 32 7049
+write W 0x13798b4 32 7050
+write W 0x25cca58 32 7051
+write W 0x39c1290 32 7052
+write W 0x8d40ce 32 7053
+write W 0x4a9bc4 32 7054
+write W 0xd2baf8 32 7055
+write W 0x182c8ec 32 7056
+write W 0x528c9f1 32 7057
+write W 0x31e0c1c 32 7058
+write W 0xaac928 32 7059
+write W 0x214f425 32 7060
+write W 0x2ff1b42 32 7061
+write W 0x2d88760 32 7062
+write W 0x7a737d4 32 7063
+write W 0x1626a2e 32 7064
+write W 0x2714d69 32 7065
+refresh w0 0 0x400000
+refresh w1 0 0x400000
+refresh w2 0 0x400000
+refresh w3 0 0x400000
+refresh w4 0 0x400000
+refresh w5 0 0x400000
+refresh w6 0 0x400000
+refresh w7 0 0x400000
+refresh w8 0 0x400000
+refresh w9 0 0x400000
+refresh w10 0 0x400000
+refresh w11 0 0x400000
+refresh w12 0 0x400000
+refresh w13 0 0x400000
+refresh w14 0 0x400000
+refresh w15 0 0x400000
+refresh w16 0 0x400000
+refresh w17 0 0x400000
+refresh w18 0 0x400000
+refresh w19 0 0x400000
+refresh w20 0 0x400000
+refresh w21 0 0x400000
+refresh w22 0 0x400000
+refresh w23 0 0x400000
+refresh w24 0 0x400000
+refresh w25 0 0x400000
+refresh w26 0 0x400000
+refresh w27 0 0x400000
+refresh w28 0 0x400000
+refresh w29 0 0x400000
+refresh w30 0 0x400000
+refresh w31 0 0x400000
+card_submit
+write W 0x4b9536c 32 8002
+write W 0x53569fa 32 8003
+write W 0x4f44912 32 8004
+write W 0x78d3170 32 8005
+write W 0x7418da9 32 8006
+write W 0x4c15621 32 8007
+write W 0x2a77f7b 32 8008
+write W 0x8fe229 32 8009
+write W 0x25aa58e 32 8010
+write W 0xa7ff2c 32 8011
+write W 0x3bc5551 32 8012
+write W 0xf08228 32 8013
+write W 0x77bf618 32 8014
+write W 0x68bd58d 32 8015
+write W 0x5d29a14 32 8016
+write W 0x6ee4e8a 32 8017
+write W 0x819bd9 32 8018
+write W 0x6c3c9a0 32 8019
+write W 0x5c0d686 32 8020
+write W 0x25971c4 32 8021
+write W 0x1bc41ba 32 8022
+write W 0x4e1bc1 32 8023
+write W 0x7815d28 32 8024
+write W 0x2422997 32 8025
+write W 0x4a12eab 32 8026
+write W 0x11f8213 32 8027
+write W 0x37c068e 32 8028
+write W 0x51fde71 32 8029
+write W 0x39f0565 32 8030
+write W 0x1232535 32 8031
+write W 0x3cc15ac 32 8032
+write W 0x508305e 32 8033
+write W 0x75043cc 32 8034
+write W 0x169252e 32 8035
+write W 0x3abb577 32 8036
+write W 0x3a84a78 32 8037
+write W 0x7cfe17e 32 8038
+write W 0x7a4b869 32 8039
+write W 0x3cc2e87 32 8040
+write W 0x6d5a467 32 8041
+write W 0x289bb70 32 8042
+write W 0x3183178 32 8043
+write W 0x4906f48 32 8044
+write W 0x4ba212d 32 8045
+write W 0x49a4ba5 32 8046
+write W 0x1f81e84 32 8047
+write W 0x149d004 32 8048
+write W 0xd7b19b 32 8049
+write W 0xef9620 32 8050
+write W 0x417fbcf 32 8051
+write W 0x4eb698b 32 8052
+write W 0x52c1a9 32 8053
+write W 0xd60 32 8054
+write W 0x739dbd7 32 8055
+write W 0x495cfca 32 8056
+write W 0x27f3345 32 8057
+write W 0x1f08273 32 8058
+write W 0x69cdb27 32 8059
+write W 0x2a023bf 32 8060
+write W 0x287307 32 8061
+write W 0x185aaae 32 8062
+write W 0x7cd0a13 32 8063
+write W 0x47a500d 32 8064
+write W 0x674181a 32 8065
+refresh w0 0 0x400000
+refresh w1 0 0x400000
+refresh w2 0 0x400000
+refresh w3 0 0x400000
+refresh w4 0 0x400000
+refresh w5 0 0x400000
+refresh w6 0 0x400000
+refresh w7 0 0x400000
+refresh w8 0 0x400000
+refresh w9 0 0x400000
+refresh w10 0 0x400000
+refresh w11 0 0x400000
+refresh w12 0 0x400000
+refresh w13 0 0x400000
+refresh w14 0 0x400000
+refresh w15 0 0x400000
+refresh w16 0 0x400000
+refresh w17 0 0x400000
+refresh w18 0 0x400000
+refresh w19 0 0x400000
+refresh w20 0 0x400000
+refresh w21 0 0x400000
+refresh w22 0 0x400000
+refresh w23 0 0x400000
+refresh w24 0 0x400000
+refresh w25 0 0x400000
+refresh w26 0 0x400000
+refresh w27 0 0x400000
+refresh w28 0 0x400000
+refresh w29 0 0x400000
+refresh w30 0 0x400000
+refresh w31 0 0x400000
+card_submit
+write W 0x5166e6 32 9002
+write W 0x735fbc 32 9003
+write W 0x5f38092 32 9004
+write W 0x33cbe8d 32 9005
+write W 0x2581262 32 9006
+write W 0x5a3ec3d 32 9007
+write W 0x27c9e1e 32 9008
+write W 0x5d364aa 32 9009
+write W 0x6c69e12 32 9010
+write W 0x6b5b789 32 9011
+write W 0x7e929b0 32 9012
+write W 0x4192ff1 32 9013
+write W 0x3274810 32 9014
+write W 0x5d4e020 32 9015
+write W 0x5ca38b5 32 9016
+write W 0x74fee6c 32 9017
+write W 0x7596c48 32 9018
+write W 0x6437dec 32 9019
+write W 0x4435 32 9020
+write W 0x17bc7d5 32 9021
+write W 0x2649699 32 9022
+write W 0x207a03b 32 9023
+write W 0x509cc6a 32 9024
+write W 0x241c2d8 32 9025
+write W 0x1fb27cb 32 9026
+write W 0x65863f2 32 9027
+write W 0x3fc940 32 9028
+write W 0x49b4fc3 32 9029
+write W 0xaaf913 32 9030
+write W 0x46dfad4 32 9031
+write W 0xb4db03 32 9032
+write W 0x4394bf 32 9033
+write W 0x245b6d3 32 9034
+write W 0x1911cb7 32 9035
+write W 0x24e8320 32 9036
+write W 0x6f1f733 32 9037
+write W 0x6c49db6 32 9038
+write W 0x5221e2d 32 9039
+write W 0x26156e8 32 9040
+write W 0x6384fdc 32 9041
+write W 0x52ce5a1 32 9042
+write W 0x4e47501 32 9043
+write W 0x18af35d 32 9044
+write W 0x6c2da51 32 9045
+write W 0xc34c8e 32 9046
+write W 0x3d6ff2a 32 9047
+write W 0x58f3121 32 9048
+write W 0x17d99a2 32 9049
+write W 0x4717f51 32 9050
+write W 0x9be36e 32 9051
+write W 0x64f5bf7 32 9052
+write W 0x7fff401 32 9053
+write W 0x24c2612 32 9054
+write W 0x670f4ec 32 9055
+write W 0x5926f5f 32 9056
+write W 0x649f028 32 9057
+write W 0x1a571c 32 9058
+write W 0x24936de 32 9059
+write W 0x52ba8f5 32 9060
+write W 0x59211dc 32 9061
+write W 0x53d9784 32 9062
+write W 0x2bd0293 32 9063
+write W 0x35db212 32 9064
+write W 0x5650a90 32 9065
+refresh w0 0 0x400000
+refresh w1 0 0x400000
+refresh w2 0 0x400000
+refresh w3 0 0x400000
+refresh w4 0 0x400000
+refresh w5 0 0x400000
+refresh w6 0 0x400000
+refresh w7 0 0x400000
+refresh w8 0 0x400000
+refresh w9 0 0x400000
+refresh w10 0 0x400000
+refresh w11 0 0x400000
+refresh w12 0 0x400000
+refresh w13 0 0x400000
+refresh w14 0 0x400000
+refresh w15 0 0x400000
+refresh w16 0 0x400000
+refresh w17 0 0x400000
+refresh w18 0 0x400000
+refresh w19 0 0x400000
+refresh w20 0 0x400000
+refresh w21 0 0x400000
+refresh w22 0 0x400000
+refresh w23 0 0x400000
+refresh w24 0 0x400000
+refresh w25 0 0x400000
+refresh w26 0 0x400000
+refresh w27 0 0x400000
+refresh w28 0 0x400000
+refresh w29 0 0x400000
+refresh w30 0 0x400000
+refresh w31 0 0x400000
+card_submit
+write W 0x1f8873d 32 10002
+write W 0x2670b2a 32 10003
+write W 0x6ae5e32 32 10004
+write W 0x6a40c0c 32 10005
+write W 0x55b3e89 32 10006
+write W 0xa7efea 32 10007
+write W 0x24c83 32 10008
+write W 0x67f542e 32 10009
+write W 0x78725eb 32 10010
+write W 0x2d1ce17 32 10011
+write W 0x4e256cf 32 10012
+write W 0x516e2c1 32 10013
+write W 0x45ef4ff 32 10014
+write W 0x3d93f2a 32 10015
+write W 0x111432f 32 10016
+write W 0x76bb03f 32 10017
+write W 0x7b1d89d 32 10018
+write W 0xfc30aa 32 10019
+write W 0x5ebd682 32 10020
+write W 0x5005680 32 10021
+write W 0x2b43e27 32 10022
+write W 0x3c66f8 32 10023
+write W 0x6ea3d76 32 10024
+write W 0x2e89a2 32 10025
+write W 0x6de2694 32 10026
+write W 0x60b369f 32 10027
+write W 0x6fcc149 32 10028
+write W 0x38df2b8 32 10029
+write W 0xfb536 32 10030
+write W 0x6eca2eb 32 10031
+write W 0x580aef2 32 10032
+write W 0x634ffb2 32 10033
+write W 0x5b38b6 32 10034
+write W 0x3b2a612 32 10035
+write W 0x3012cc7 32 10036
+write W 0x702e6a9 32 10037
+write W 0x11b0011 32 10038
+write W 0x24fe182 32 10039
+write W 0x1c5d49e 32 10040
+write W 0xee38cb 32 10041
+write W 0x7c327a5 32 10042
+write W 0x1c15137 32 10043
+write W 0x6e0fe9c 32 10044
+write W 0x5ef6999 32 10045
+write W 0x7bab54f 32 10046
+write W 0x1aaaed2 32 10047
+write W 0x42716d5 32 10048
+write W 0x3b8089c 32 10049
+write W 0x4ecd4ad 32 10050
+write W 0x5443f54 32 10051
+write W 0x43e4f0 32 10052
+write W 0x51f30c8 32 10053
+write W 0x2f17747 32 10054
+write W 0x31bdceb 32 10055
+write W 0x6de2286 32 10056
+write W 0xd9de9a 32 10057
+write W 0x2df224c 32 10058
+write W 0xf1ba16 32 10059
+write W 0x210cef9 32 10060
+write W 0x6b143cc 32 10061
+write W 0x6fa6029 32 10062
+write W 0x341204d 32 10063
+write W 0x9792fc 32 10064
+write W 0x64d6d32 32 10065
+refresh w0 0 0x400000
+refresh w1 0 0x400000
+refresh w2 0 0x400000
+refresh w3 0 0x400000
+refresh w4 0 0x400000
+refresh w5 0 0x400000
+refresh w6 0 0x400000
+refresh w7 0 0x400000
+refresh w8 0 0x400000
+refresh w9 0 0x400000
+refresh w10 0 0x400000
+refresh w11 0 0x400000
+refresh w12 0 0x400000
+refresh w13 0 0x400000
+refresh w14 0 0x400000
+refresh w15 0 0x400000
+refresh w16 0 0x400000
+refresh w17 0 0x400000
+refresh w18 0 0x400000
+refresh w19 0 0x400000
+refresh w20 0 0x400000
+refresh w21 0 0x400000
+refresh w22 0 0x400000
+refresh w23 0 0x400000
+refresh w24 0 0x400000
+refresh w25 0 0x400000
+refresh w26 0 0x400000
+refresh w27 0 0x400000
+refresh w28 0 0x400000
+refresh w29 0 0x400000
+refresh w30 0 0x400000
+refresh w31 0 0x400000
+card_submit
+write W 0x1df03aa 32 11002
+write W 0x13171e8 32 11003
+write W 0x5510dfa 32 11004
+write W 0xf04528 32 11005
+write W 0x6ba61db 32 11006
+write W 0xe05214 32 11007
+write W 0x60d80fa 32 11008
+write W 0x3e39010 32 11009
+write W 0x367eecb 32 11010
+write W 0x4ac50ba 32 11011
+write W 0xa57b1e 32 11012
+write W 0x2821686 32 11013
+write W 0x1214297 32 11014
+write W 0x12776fb 32 11015
+write W 0x2a3e26c 32 11016
+write W 0x67c217f 32 11017
+write W 0x12e13d5 32 11018
+write W 0x7dea64 32 11019
+write W 0x65fb0af 32 11020
+write W 0x540e01b 32 11021
+write W 0x7c89b4c 32 11022
+write W 0x5f341ce 32 11023
+write W 0x731c922 32 11024
+write W 0x159b21b 32 11025
+write W 0x4d0f8a3 32 11026
+write W 0x5ddd53b 32 11027
+write W 0x45609 32 11028
+write W 0x731497f 32 11029
+write W 0x448aeb2 32 11030
+write W 0x792a78c 32 11031
+write W 0x37ba936 32 11032
+write W 0x2848683 32 11033
+write W 0x2297f20 32 11034
+write W 0x7ce6f40 32 11035
+write W 0x7ac8c92 32 11036
+write W 0x6d2c380 32 11037
+write W 0x3077ee3 32 11038
+write W 0x2d332bb 32 11039
+write W 0x42976f4 32 11040
+write W 0x5fb16b6 32 11041
+write W 0x17d927f 32 11042
+write W 0x47703c5 32 11043
+write W 0x71bfd9e 32 11044
+write W 0x3f86568 32 11045
+write W 0x372a3f6 32 11046
+write W 0x4d93789 32 11047
+write W 0x5c913fd 32 11048
+write W 0x1802a9d 32 11049
+write W 0x48b9b9b 32 11050
+write W 0x3223f2e 32 11051
+write W 0xc6d54b 32 11052
+write W 0x7b9aff4 32 11053
+write W 0x7c64b56 32 11054
+write W 0x6d06540 32 11055
+write W 0x669e75b 32 11056
+write W 0x736b3a0 32 11057
+write W 0x3541baa 32 11058
+write W 0x682413f 32 11059
+write W 0x407e4e5 32 11060
+write W 0x7ed14a7 32 11061
+write W 0x44126ef 32 11062
+write W 0x59e8a06 32 11063
+write W 0x4da9405 32 11064
+write W 0x196c14b 32 11065
+refresh w0 0 0x400000
+refresh w1 0 0x400000
+refresh w2 0 0x400000
+refresh w3 0 0x400000
+refresh w4 0 0x400000
+refresh w5 0 0x400000
+refresh w6 0 0x400000
+refresh w7 0 0x400000
+refresh w8 0 0x400000
+refresh w9 0 0x400000
+refresh w10 0 0x400000
+refresh w11 0 0x400000
+refresh w12 0 0x400000
+refresh w13 0 0x400000
+refresh w14 0 0x400000
+refresh w15 0 0x400000
+refresh w16 0 0x400000
+refresh w17 0 0x400000
+refresh w18 0 0x400000
+refresh w19 0 0x400000
+refresh w20 0 0x400000
+refresh w21 0 0x400000
+refresh w22 0 0x400000
+refresh w23 0 0x400000
+refresh w24 0 0x400000
+refresh w25 0 0x400000
+refresh w26 0 0x400000
+refresh w27 0 0x400000
+refresh w28 0 0x400000
+refresh w29 0 0x400000
+refresh w30 0 0x400000
+refresh w31 0 0x400000
+card_submit
+write W 0x68833de 32 12002
+write W 0x75793bc 32 12003
+write W 0x666af4c 32 12004
+write W 0x7584b9d 32 12005
+write W 0x1a3fd2b 32 12006
+write W 0xf4a8b1 32 12007
+write W 0x2dc1dd 32 12008
+write W 0x20aca3a 32 12009
+write W 0x1a0856c 32 12010
+write W 0x34b2f43 32 12011
+write W 0x1686d6f 32 12012
+write W 0x37e48d3 32 12013
+write W 0x6f3701e 32 12014
+write W 0x26494e1 32 12015
+write W 0x3c2dc1d 32 12016
+write W 0x1bc1f35 32 12017
+write W 0x20fce40 32 12018
+write W 0xb76b5d 32 12019
+write W 0x203dfc 32 12020
+write W 0x4c042f 32 12021
+write W 0x76e98a6 32 12022
+write W 0x2249b94 32 12023
+write W 0xb50d0a 32 12024
+write W 0x115f55f 32 12025
+write W 0x2e45ee1 32 12026
+write W 0x7b5f787 32 12027
+write W 0x5bba521 32 12028
+write W 0x4ee861d 32 12029
+write W 0x287360b 32 12030
+write W 0x460123d 32 12031
+write W 0x18ead57 32 12032
+write W 0x3a4230a 32 12033
+write W 0x12aa344 32 12034
+write W 0xaf6c63 32 12035
+write W 0x5530d94 32 12036
+write W 0x59455d6 32 12037
+write W 0x34bf0fb 32 12038
+write W 0x7aef426 32 12039
+write W 0x779a2a2 32 12040
+write W 0x5057a50 32 12041
+write W 0x5901dcb 32 12042
+write W 0x4c27b2f 32 12043
+write W 0x29ebd01 32 12044
+write W 0x387cbce 32 12045
+write W 0x23e54d8 32 12046
+write W 0x5381e76 32 12047
+write W 0x17a72ea 32 12048
+write W 0x5a53360 32 12049
+write W 0x6501abc 32 12050
+write W 0x24ee5b4 32 12051
+write W 0x3cd19f 32 12052
+write W 0x4932c00 32 12053
+write W 0x2bf65a4 32 12054
+write W 0x7124ad9 32 12055
+write W 0x197dc9d 32 12056
+write W 0x12cb6ba 32 12057
+write W 0x33600d9 32 12058
+write W 0x28378d9 32 12059
+write W 0x8d8ed5 32 12060
+write W 0x294956b 32 12061
+write W 0xc5e978 32 12062
+write W 0x1c98233 32 12063
+write W 0x28cbae6 32 12064
+write W 0x245e704 32 12065
+refresh w0 0 0x400000
+refresh w1 0 0x400000
+refresh w2 0 0x400000
+refresh w3 0 0x400000
+refresh w4 0 0x400000
+refresh w5 0 0x400000
+refresh w6 0 0x400000
+refresh w7 0 0x400000
+refresh w8 0 0x400000
+refresh w9 0 0x400000
+refresh w10 0 0x400000
+refresh w11 0 0x400000
+refresh w12 0 0x400000
+refresh w13 0 0x400000
+refresh w14 0 0x400000
+refresh w15 0 0x400000
+refresh w16 0 0x400000
+refresh w17 0 0x400000
+refresh w18 0 0x400000
+refresh w19 0 0x400000
+refresh w20 0 0x400000
+refresh w21 0 0x400000
+refresh w22 0 0x400000
+refresh w23 0 0x400000
+refresh w24 0 0x400000
+refresh w25 0 0x400000
+refresh w26 0 0x400000
+refresh w27 0 0x400000
+refresh w28 0 0x400000
+refresh w29 0 0x400000
+refresh w30 0 0x400000
+refresh w31 0 0x400000
+card_submit
+write W 0x7ede417 32 13002
+write W 0x6ae8e58 32 13003
+write W 0x40a5f88 32 13004
+write W 0xa5b6fa 32 13005
+write W 0x5b8153f 32 13006
+write W 0x275d6b1 32 13007
+write W 0x3751381 32 13008
+write W 0x1b70ff1 32 13009
+write W 0x29672d7 32 13010
+write W 0xd2e4ca 32 13011
+write W 0x16a8af4 32 13012
+write W 0x6b034c6 32 13013
+write W 0x2f3cbe8 32 13014
+write W 0x2f9ac33 32 13015
+write W 0x1d72411 32 13016
+write W 0x4c46c79 32 13017
+write W 0x4df29b2 32 13018
+write W 0x7e3565 32 13019
+write W 0x1ac60d9 32 13020
+write W 0x3efd6da 32 13021
+write W 0x361f638 32 13022
+write W 0x5f127ba 32 13023
+write W 0x4033995 32 13024
+write W 0x7a2fd38 32 13025
+write W 0xa8d464 32 13026
+write W 0x141420e 32 13027
+write W 0x8858af 32 13028
+write W 0x6b319c3 32 13029
+write W 0x25f7ac0 32 13030
+write W 0x40ea8f 32 13031
+write W 0x228acb5 32 13032
+write W 0x747516d 32 13033
+write W 0xa05948 32 13034
+write W 0x767b853 32 13035
+write W 0x7295eca 32 13036
+write W 0x2cb8948 32 13037
+write W 0x6cbc97a 32 13038
+write W 0x14945b5 32 13039
+write W 0x14f5555 32 13040
+write W 0x1c2cccf 32 13041
+write W 0x4f355cb 32 13042
+write W 0x7bff54b 32 13043
+write W 0x72813d9 32 13044
+write W 0x3a61c5e 32 13045
+write W 0x451b987 32 13046
+write W 0x21405f9 32 13047
+write W 0x119ce76 32 13048
+write W 0x22e974d 32 13049
+write W 0x1282f76 32 13050
+write W 0x7f1b49b 32 13051
+write W 0xffb59a 32 13052
+write W 0x493f98c 32 13053
+write W 0x515a807 32 13054
+write W 0x2d3eb80 32 13055
+write W 0x282c85a 32 13056
+write W 0x620da37 32 13057
+write W 0x21d0e34 32 13058
+write W 0x3d5d588 32 13059
+write W 0x53888c4 32 13060
+write W 0x16e91b0 32 13061
+write W 0x33d74eb 32 13062
+write W 0x7163054 32 13063
+write W 0x57696cd 32 13064
+write W 0x79312e6 32 13065
+refresh w0 0 0x400000
+refresh w1 0 0x400000
+refresh w2 0 0x400000
+refresh w3 0 0x400000
+refresh w4 0 0x400000
+refresh w5 0 0x400000
+refresh w6 0 0x400000
+refresh w7 0 0x400000
+refresh w8 0 0x400000
+refresh w9 0 0x400000
+refresh w10 0 0x400000
+refresh w11 0 0x400000
+refresh w12 0 0x400000
+refresh w13 0 0x400000
+refresh w14 0 0x400000
+refresh w15 0 0x400000
+refresh w16 0 0x400000
+refresh w17 0 0x400000
+refresh w18 0 0x400000
+refresh w19 0 0x400000
+refresh w20 0 0x400000
+refresh w21 0 0x400000
+refresh w22 0 0x400000
+refresh w23 0 0x400000
+refresh w24 0 0x400000
+refresh w25 0 0x400000
+refresh w26 0 0x400000
+refresh w27 0 0x400000
+refresh w28 0 0x400000
+refresh w29 0 0x400000
+refresh w30 0 0x400000
+refresh w31 0 0x400000
+card_submit
+write W 0x720ae29 32 14002
+write W 0x62fb4c5 32 14003
+write W 0x15e94c5 32 14004
+write W 0x32e949d 32 14005
+write W 0x256c569 32 14006
+write W 0x37fadf8 32 14007
+write W 0x5b72ccf 32 14008
+write W 0x786bed6 32 14009
+write W 0x1e81d8c 32 14010
+write W 0x26db8be 32 14011
+write W 0x10224a 32 14012
+write W 0x416e83c 32 14013
+write W 0x5995474 32 14014
+write W 0x1ea0953 32 14015
+write W 0x1ae008f 32 14016
+write W 0x587cee1 32 14017
+write W 0x2d77a3f 32 14018
+write W 0x7767a38 32 14019
+write W 0x2e0e3 32 14020
+write W 0x17d3048 32 14021
+write W 0x38fb165 32 14022
+write W 0x57e4deb 32 14023
+write W 0x78746f8 32 14024
+write W 0x4011e71 32 14025
+write W 0x2e844cb 32 14026
+write W 0x5d354e9 32 14027
+write W 0x6359624 32 14028
+write W 0x5b39846 32 14029
+write W 0x611cc13 32 14030
+write W 0x60d2cf8 32 14031
+write W 0x75d05e4 32 14032
+write W 0x6c6e2f 32 14033
+write W 0x606f48f 32 14034
+write W 0x44a21d0 32 14035
+write W 0x41f54dc 32 14036
+write W 0x422009b 32 14037
+write W 0x5e8be55 32 14038
+write W 0x72fc08b 32 14039
+write W 0x591b9df 32 14040
+write W 0x20ed175 32 14041
+write W 0x61e61cf 32 14042
+write W 0x37226c2 32 14043
+write W 0x715fc7b 32 14044
+write W 0x480b42e 32 14045
+write W 0x1aeb88 32 14046
+write W 0x557ee31 32 14047
+write W 0x3765b10 32 14048
+write W 0x7eae157 32 14049
+write W 0x17877ba 32 14050
+write W 0x45a6f2e 32 14051
+write W 0x5a52be4 32 14052
+write W 0x1be3102 32 14053
+write W 0x44fa9d9 32 14054
+write W 0x7bcd6d0 32 14055
+write W 0x4527a60 32 14056
+write W 0x2de487f 32 14057
+write W 0x2a19f10 32 14058
+write W 0x7c927ff 32 14059
+write W 0x74b43fe 32 14060
+write W 0x6bca5b6 32 14061
+write W 0xc39c0 32 14062
+write W 0x383b8cd 32 14063
+write W 0x68ad23a 32 14064
+write W 0xeef17d 32 14065
+refresh w0 0 0x400000
+refresh w1 0 0x400000
+refresh w2 0 0x400000
+refresh w3 0 0x400000
+refresh w4 0 0x400000
+refresh w5 0 0x400000
+refresh w6 0 0x400000
+refresh w7 0 0x400000
+refresh w8 0 0x400000
+refresh w9 0 0x400000
+refresh w10 0 0x400000
+refresh w11 0 0x400000
+refresh w12 0 0x400000
+refresh w13 0 0x400000
+refresh w14 0 0x400000
+refresh w15 0 0x400000
+refresh w16 0 0x400000
+refresh w17 0 0x400000
+refresh w18 0 0x400000
+refresh w19 0 0x400000
+refresh w20 0 0x400000
+refresh w21 0 0x400000
+refresh w22 0 0x400000
+refresh w23 0 0x400000
+refresh w24 0 0x400000
+refresh w25 0 0x400000
+refresh w26 0 0x400000
+refresh w27 0 0x400000
+refresh w28 0 0x400000
+refresh w29 0 0x400000
+refresh w30 0 0x400000
+refresh w31 0 0x400000
+card_submit
+write W 0x5e7022b 32 15002
+write W 0x3f0f27e 32 15003
+write W 0x1f20a48 32 15004
+write W 0x50af396 32 15005
+write W 0x524fd72 32 15006
+write W 0x2b446fc 32 15007
+write W 0x17a3f9f 32 15008
+write W 0x101151f 32 15009
+write W 0x15021d3 32 15010
+write W 0x3431e1d 32 15011
+write W 0x15195db 32 15012
+write W 0x3989fe5 32 15013
+write W 0x71c7f16 32 15014
+write W 0x733d41 32 15015
+write W 0x77e05d7 32 15016
+write W 0x6b0f8a8 32 15017
+write W 0x2264a90 32 15018
+write W 0x32596fb 32 15019
+write W 0x761091b 32 15020
+write W 0x59039f 32 15021
+write W 0x662281b 32 15022
+write W 0x7e77c93 32 15023
+write W 0x6b9e3c9 32 15024
+write W 0x4e57ed2 32 15025
+write W 0x2b9ade2 32 15026
+write W 0x2cd182e 32 15027
+write W 0x7cfd4c 32 15028
+write W 0x771b1bf 32 15029
+write W 0x62ce041 32 15030
+write W 0x2b25492 32 15031
+write W 0x4b534d6 32 15032
+write W 0x879591 32 15033
+write W 0x4ed9488 32 15034
+write W 0x7b23de6 32 15035
+write W 0x783999e 32 15036
+write W 0x1922bf5 32 15037
+write W 0x1dca384 32 15038
+write W 0x45c1a5d 32 15039
+write W 0x3b321f4 32 15040
+write W 0x15a6d32 32 15041
+write W 0x6085490 32 15042
+write W 0x25732ad 32 15043
+write W 0x7627136 32 15044
+write W 0x57fc75c 32 15045
+write W 0x6789403 32 15046
+write W 0x2e0efba 32 15047
+write W 0x58fb076 32 15048
+write W 0x46cd5dd 32 15049
+write W 0x16eae65 32 15050
+write W 0x4556061 32 15051
+write W 0x4be7e7c 32 15052
+write W 0x625bfdd 32 15053
+write W 0x49d1865 32 15054
+write W 0x7ea3755 32 15055
+write W 0x2d6c341 32 15056
+write W 0x15f2e81 32 15057
+write W 0x7841b08 32 15058
+write W 0x31977a4 32 15059
+write W 0x42cbfd6 32 15060
+write W 0x514857 32 15061
+write W 0x1aacda8 32 15062
+write W 0x178dac3 32 15063
+write W 0x5a1b1c4 32 15064
+write W 0x6e56c38 32 15065
+refresh w0 0 0x400000
+refresh w1 0 0x400000
+refresh w2 0 0x400000
+refresh w3 0 0x400000
+refresh w4 0 0x400000
+refresh w5 0 0x400000
+refresh w6 0 0x400000
+refresh w7 0 0x400000
+refresh w8 0 0x400000
+refresh w9 0 0x400000
+refresh w10 0 0x400000
+refresh w11 0 0x400000
+refresh w12 0 0x400000
+refresh w13 0 0x400000
+refresh w14 0 0x400000
+refresh w15 0 0x400000
+refresh w16 0 0x400000
+refresh w17 0 0x400000
+refresh w18 0 0x400000
+refresh w19 0 0x400000
+refresh w20 0 0x400000
+refresh w21 0 0x400000
+refresh w22 0 0x400000
+refresh w23 0 0x400000
+refresh w24 0 0x400000
+refresh w25 0 0x400000
+refresh w26 0 0x400000
+refresh w27 0 0x400000
+refresh w28 0 0x400000
+refresh w29 0 0x400000
+refresh w30 0 0x400000
+refresh w31 0 0x400000
+card_submit
+write W 0x221bf2a 32 16002
+write W 0x2566464 32 16003
+write W 0x60d4d08 32 16004
+write W 0x5cdc972 32 16005
+write W 0x7b0c647 32 16006
+write W 0x7152bbf 32 16007
+write W 0x2077af3 32 16008
+write W 0x304d728 32 16009
+write W 0x5abf66b 32 16010
+write W 0x607625e 32 16011
+write W 0x2a9d6ab 32 16012
+write W 0x543f11f 32 16013
+write W 0x1eb3fb7 32 16014
+write W 0x47aaf61 32 16015
+write W 0x6ff9956 32 16016
+write W 0x1aacf35 32 16017
+write W 0x4efb3b7 32 16018
+write W 0xe6bd6d 32 16019
+write W 0x5167d59 32 16020
+write W 0x4a6a214 32 16021
+write W 0x646154c 32 16022
+write W 0x4e31094 32 16023
+write W 0x62458e0 32 16024
+write W 0x4bcfba3 32 16025
+write W 0x5c66ffb 32 16026
+write W 0x5596a64 32 16027
+write W 0x2840cf1 32 16028
+write W 0x5705a7e 32 16029
+write W 0x7cddbdf 32 16030
+write W 0x31ad887 32 16031
+write W 0x1629c00 32 16032
+write W 0x2bdf878 32 16033
+write W 0x20f701c 32 16034
+write W 0x65d99c2 32 16035
+write W 0x762a277 32 16036
+write W 0x3cbe5fa 32 16037
+write W 0x320ef2 32 16038
+write W 0x37def7b 32 16039
+write W 0x59799a4 32 16040
+write W 0x1989350 32 16041
+write W 0x2811e23 32 16042
+write W 0x6dc37f6 32 16043
+write W 0x43f34fd 32 16044
+write W 0x6d9f0f9 32 16045
+write W 0x2a34842 32 16046
+write W 0x1e8b676 32 16047
+write W 0x6f4b48f 32 16048
+write W 0x51d789a 32 16049
+write W 0x29f4008 32 16050
+write W 0x5ebe9c7 32 16051
+write W 0x46a3d6a 32 16052
+write W 0x26d2bcf 32 16053
+write W 0x418b610 32 16054
+write W 0x149ad60 32 16055
+write W 0x6bfd3dc 32 16056
+write W 0x4deaac1 32 16057
+write W 0x73e57b5 32 16058
+write W 0x3ead314 32 16059
+write W 0x511f3cc 32 16060
+write W 0x2d0652d 32 16061
+write W 0x19ad171 32 16062
+write W 0x887647 32 16063
+write W 0x518741d 32 16064
+write W 0x2332159 32 16065
+refresh w0 0 0x400000
+refresh w1 0 0x400000
+refresh w2 0 0x400000
+refresh w3 0 0x400000
+refresh w4 0 0x400000
+refresh w5 0 0x400000
+refresh w6 0 0x400000
+refresh w7 0 0x400000
+refresh w8 0 0x400000
+refresh w9 0 0x400000
+refresh w10 0 0x400000
+refresh w11 0 0x400000
+refresh w12 0 0x400000
+refresh w13 0 0x400000
+refresh w14 0 0x400000
+refresh w15 0 0x400000
+refresh w16 0 0x400000
+refresh w17 0 0x400000
+refresh w18 0 0x400000
+refresh w19 0 0x400000
+refresh w20 0 0x400000
+refresh w21 0 0x400000
+refresh w22 0 0x400000
+refresh w23 0 0x400000
+refresh w24 0 0x400000
+refresh w25 0 0x400000
+refresh w26 0 0x400000
+refresh w27 0 0x400000
+refresh w28 0 0x400000
+refresh w29 0 0x400000
+refresh w30 0 0x400000
+refresh w31 0 0x400000
+card_submit
+write W 0x61625f 32 17002
+write W 0x6cf745e 32 17003
+write W 0x2925c06 32 17004
+write W 0x578a470 32 17005
+write W 0xc6ec0f 32 17006
+write W 0x763d07a 32 17007
+write W 0x4b10637 32 17008
+write W 0x79e1607 32 17009
+write W 0x4aa6370 32 17010
+write W 0x337ed8f 32 17011
+write W 0x1b35994 32 17012
+write W 0x74d36aa 32 17013
+write W 0x194bdbf 32 17014
+write W 0x601d35d 32 17015
+write W 0x35700d0 32 17016
+write W 0x7b7675c 32 17017
+write W 0x6fb5d5b 32 17018
+write W 0x783b20a 32 17019
+write W 0x797e2e0 32 17020
+write W 0x3904010 32 17021
+write W 0xfdd390 32 17022
+write W 0x528699b 32 17023
+write W 0x7657b87 32 17024
+write W 0x731613a 32 17025
+write W 0x2cdd14f 32 17026
+write W 0x7f00ae 32 17027
+write W 0x31ece21 32 17028
+write W 0x3c07284 32 17029
+write W 0x2f51019 32 17030
+write W 0x7e510b6 32 17031
+write W 0xa87a43 32 17032
+write W 0x128234 32 17033
+write W 0x6ad5915 32 17034
+write W 0x4dda674 32 17035
+write W 0x6740981 32 17036
+write W 0x24e45bf 32 17037
+write W 0x7e31bf2 32 17038
+write W 0x1604428 32 17039
+write W 0x33ccda8 32 17040
+write W 0x7d6c720 32 17041
+write W 0x64c361b 32 17042
+write W 0x4a27ef6 32 17043
+write W 0x536a9ca 32 17044
+write W 0x29e0736 32 17045
+write W 0x207f 32 17046
+write W 0x3acf8b4 32 17047
+write W 0x22a123 32 17048
+write W 0x6efdbae 32 17049
+write W 0x758a0d 32 17050
+write W 0x5db38cb 32 17051
+write W 0x3e30075 32 17052
+write W 0x5827914 32 17053
+write W 0x1f07aa 32 17054
+write W 0x98d024 32 17055
+write W 0x270e228 32 17056
+write W 0x5514178 32 17057
+write W 0x3dbd2a4 32 17058
+write W 0x2b18ea 32 17059
+write W 0x509e6d 32 17060
+write W 0x2051831 32 17061
+write W 0x5d07d3a 32 17062
+write W 0x14c7dea 32 17063
+write W 0x6979679 32 17064
+write W 0x39d1bc6 32 17065
+refresh w0 0 0x400000
+refresh w1 0 0x400000
+refresh w2 0 0x400000
+refresh w3 0 0x400000
+refresh w4 0 0x400000
+refresh w5 0 0x400000
+refresh w6 0 0x400000
+refresh w7 0 0x400000
+refresh w8 0 0x400000
+refresh w9 0 0x400000
+refresh w10 0 0x400000
+refresh w11 0 0x400000
+refresh w12 0 0x400000
+refresh w13 0 0x400000
+refresh w14 0 0x400000
+refresh w15 0 0x400000
+refresh w16 0 0x400000
+refresh w17 0 0x400000
+refresh w18 0 0x400000
+refresh w19 0 0x400000
+refresh w20 0 0x400000
+refresh w21 0 0x400000
+refresh w22 0 0x400000
+refresh w23 0 0x400000
+refresh w24 0 0x400000
+refresh w25 0 0x400000
+refresh w26 0 0x400000
+refresh w27 0 0x400000
+refresh w28 0 0x400000
+refresh w29 0 0x400000
+refresh w30 0 0x400000
+refresh w31 0 0x400000
+card_submit
+write W 0x5d40904 32 18002
+write W 0x2450171 32 18003
+write W 0x4a0399f 32 18004
+write W 0x144a4 32 18005
+write W 0x58fc364 32 18006
+write W 0x6d86107 32 18007
+write W 0x332dc14 32 18008
+write W 0x4cf9eb9 32 18009
+write W 0x531b90c 32 18010
+write W 0x2b4ea78 32 18011
+write W 0x4373ee4 32 18012
+write W 0x5704a7f 32 18013
+write W 0x56fd019 32 18014
+write W 0x36f640a 32 18015
+write W 0x35d82f 32 18016
+write W 0x2306022 32 18017
+write W 0x4edf269 32 18018
+write W 0x7fd2398 32 18019
+write W 0x1125aa8 32 18020
+write W 0x46a5a70 32 18021
+write W 0x7d47b05 32 18022
+write W 0x1b71b7a 32 18023
+write W 0x3292d44 32 18024
+write W 0x7a74d60 32 18025
+write W 0x585c40b 32 18026
+write W 0x70a5e80 32 18027
+write W 0x5bf8fe4 32 18028
+write W 0x16a84cd 32 18029
+write W 0x2c27a46 32 18030
+write W 0x3127b43 32 18031
+write W 0x1cabf3c 32 18032
+write W 0xe2eebc 32 18033
+write W 0x522c90c 32 18034
+write W 0x59b984c 32 18035
+write W 0x24265e8 32 18036
+write W 0x7b4fd21 32 18037
+write W 0x1e8ddb4 32 18038
+write W 0x32ce9c8 32 18039
+write W 0x4edef02 32 18040
+write W 0x74121a6 32 18041
+write W 0x544c26c 32 18042
+write W 0x5f7f07d 32 18043
+write W 0x260c62b 32 18044
+write W 0x335b069 32 18045
+write W 0x7fc22c 32 18046
+write W 0x5e035b4 32 18047
+write W 0x5e1cdf6 32 18048
+write W 0x5edfd71 32 18049
+write W 0x3dbacd1 32 18050
+write W 0x6bed7d2 32 18051
+write W 0x427e12e 32 18052
+write W 0xd30ddf 32 18053
+write W 0x42476e 32 18054
+write W 0x4caa6d1 32 18055
+write W 0x792a204 32 18056
+write W 0x50e66d7 32 18057
+write W 0x357312b 32 18058
+write W 0x1f1da14 32 18059
+write W 0x4a9b87a 32 18060
+write W 0x3544c31 32 18061
+write W 0x4e6f84e 32 18062
+write W 0x284d9fb 32 18063
+write W 0x4b07afc 32 18064
+write W 0x3de62d4 32 18065
+refresh w0 0 0x400000
+refresh w1 0 0x400000
+refresh w2 0 0x400000
+refresh w3 0 0x400000
+refresh w4 0 0x400000
+refresh w5 0 0x400000
+refresh w6 0 0x400000
+refresh w7 0 0x400000
+refresh w8 0 0x400000
+refresh w9 0 0x400000
+refresh w10 0 0x400000
+refresh w11 0 0x400000
+refresh w12 0 0x400000
+refresh w13 0 0x400000
+refresh w14 0 0x400000
+refresh w15 0 0x400000
+refresh w16 0 0x400000
+refresh w17 0 0x400000
+refresh w18 0 0x400000
+refresh w19 0 0x400000
+refresh w20 0 0x400000
+refresh w21 0 0x400000
+refresh w22 0 0x400000
+refresh w23 0 0x400000
+refresh w24 0 0x400000
+refresh w25 0 0x400000
+refresh w26 0 0x400000
+refresh w27 0 0x400000
+refresh w28 0 0x400000
+refresh w29 0 0x400000
+refresh w30 0 0x400000
+refresh w31 0 0x400000
+card_submit
+write W 0x2afb8a9 32 19002
+write W 0x7d349db 32 19003
+write W 0x3297d71 32 19004
+write W 0x1721eef 32 19005
+write W 0x2af38fa 32 19006
+write W 0x6c5cd5 32 19007
+write W 0x4f4a726 32 19008
+write W 0x62d6f6a 32 19009
+write W 0x5711a04 32 19010
+write W 0x3638829 32 19011
+write W 0x516de4 32 19012
+write W 0x675bcd1 32 19013
+write W 0x98c3b1 32 19014
+write W 0x27dff6 32 19015
+write W 0x3eef0c7 32 19016
+write W 0x5b5165f 32 19017
+write W 0x783aec5 32 19018
+write W 0x69a9884 32 19019
+write W 0x586bba6 32 19020
+write W 0x30cdf94 32 19021
+write W 0xad6aa 32 19022
+write W 0x2edfa7e 32 19023
+write W 0x5d8e1a1 32 19024
+write W 0x494863c 32 19025
+write W 0x6ad4f18 32 19026
+write W 0x26a8e91 32 19027
+write W 0x6409afa 32 19028
+write W 0xa53f1f 32 19029
+write W 0x2b2ed43 32 19030
+write W 0x3cb210e 32 19031
+write W 0xec484a 32 19032
+write W 0x5681f52 32 19033
+write W 0x2579180 32 19034
+write W 0x229e53a 32 19035
+write W 0x3e8f2a2 32 19036
+write W 0x2687bbc 32 19037
+write W 0x32be7a9 32 19038
+write W 0x59f1917 32 19039
+write W 0x41344fc 32 19040
+write W 0x77cd9db 32 19041
+write W 0x71deb93 32 19042
+write W 0x3b36589 32 19043
+write W 0x79d0ad0 32 19044
+write W 0xda279c 32 19045
+write W 0x1ae5f04 32 19046
+write W 0xee4998 32 19047
+write W 0x3df7992 32 19048
+write W 0x58c6cc9 32 19049
+write W 0x1590a12 32 19050
+write W 0x4dffd5c 32 19051
+write W 0x600a86f 32 19052
+write W 0x3fed776 32 19053
+write W 0x696b3fc 32 19054
+write W 0x288419 32 19055
+write W 0x4b2b627 32 19056
+write W 0x1987a94 32 19057
+write W 0x5605741 32 19058
+write W 0xd3ca48 32 19059
+write W 0xd48a7f 32 19060
+write W 0x22c46f5 32 19061
+write W 0x1e3afa8 32 19062
+write W 0x1969e66 32 19063
+write W 0x48092b2 32 19064
+write W 0x661ce66 32 19065
+refresh w0 0 0x400000
+refresh w1 0 0x400000
+refresh w2 0 0x400000
+refresh w3 0 0x400000
+refresh w4 0 0x400000
+refresh w5 0 0x400000
+refresh w6 0 0x400000
+refresh w7 0 0x400000
+refresh w8 0 0x400000
+refresh w9 0 0x400000
+refresh w10 0 0x400000
+refresh w11 0 0x400000
+refresh w12 0 0x400000
+refresh w13 0 0x400000
+refresh w14 0 0x400000
+refresh w15 0 0x400000
+refresh w16 0 0x400000
+refresh w17 0 0x400000
+refresh w18 0 0x400000
+refresh w19 0 0x400000
+refresh w20 0 0x400000
+refresh w21 0 0x400000
+refresh w22 0 0x400000
+refresh w23 0 0x400000
+refresh w24 0 0x400000
+refresh w25 0 0x400000
+refresh w26 0 0x400000
+refresh w27 0 0x400000
+refresh w28 0 0x400000
+refresh w29 0 0x400000
+refresh w30 0 0x400000
+refresh w31 0 0x400000
+card_submit

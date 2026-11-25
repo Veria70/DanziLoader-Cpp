@@ -1,0 +1,17 @@
+# 35-env-window-grid.txt: asks with a length cut on 256 KiB (VICTORY_WINDOW_KB);
+# find_any takes the longest window that holds its range.
+env VICTORY_WINDOW_KB 256
+region W watched 0x201f00000000 0x1000000
+write W 0 0x1000000 1
+find a W 0x240010 0x100                 # 256 KiB at 0x240000
+find b W 0x23fff0 0x40000               # across a line: 512 KiB at 0x200000
+find_any c W 0x250000 0x100             # held by b (the longest) and a: b
+find_any d W 0x2c0000 0x100             # none holds it: its own
+find e W 0x250000 1                     # without a length: the 4 MiB cell
+find_any f W 0x260000 0x10              # e holds it, longest: e
+refresh a 0 0x40000
+refresh b 0 0x80000
+write W 0x241000 0x10 2
+refresh a 0 0x40000
+refresh e 0 0x400000
+end

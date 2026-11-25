@@ -1,0 +1,41 @@
+# M3.9: VICTORY_REBAR=2. The reference places small title buffers (below
+# VICTORY_CARD_BUFFERS_MIN_MB) in CPU-visible card memory and reads them on
+# the CPU for snapshots and copy-backs; the port gives them the card path.
+# Compare with `dirty-diff --title`: title memory, title writes, the copies.
+env VICTORY_REBAR 2
+region W watched 0x201c00000000 0x200000
+write W 0 0x200000 1
+card_shadow a W 0 0x10000
+card_shadow b W 0x23450 0x40000
+card_shadow c W 0x100000 0x80000
+refresh a 0 0x10000
+refresh b 0 0x40000
+refresh c 0 0x80000
+prepare 1
+gpu_declare a 0 0x10000
+gpu_declare b 0x1000 0x20000
+gpu_declare c 0 0x80000
+snapshots
+card_write a 0x100 0x10 2
+card_write b 0x1ff0 0x20 3
+card_write c 0x7fff0 0x10 4
+card_write c 0x40000 0x1000 5
+card_submit a 0 0x10000 b 0x1000 0x20000 c 0 0x80000
+write W 0x100100 0x20 6
+write W 0x24450 0x8 7
+refresh a 0 0x10000
+refresh b 0 0x40000
+refresh c 0 0x80000
+prepare 2
+gpu_declare c 0 0x80000
+gpu_declare b 0 0x40000
+snapshots
+card_write c 0x100 0x100 8
+card_write b 0x3fff0 0x10 9
+card_send c 0 0x80000 b 0 0x40000
+write W 0x170000 0x10 10
+card_land
+refresh b 0 0x40000
+refresh c 0 0x80000
+check
+end

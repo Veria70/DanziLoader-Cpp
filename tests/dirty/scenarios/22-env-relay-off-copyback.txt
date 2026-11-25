@@ -1,0 +1,29 @@
+# 22-env-relay-off-copyback.txt (switch variant of 15-copyback-relay.txt)
+env VICTORY_RELAY 0
+region W watched 0x200e00000000 0x40000
+shadow g W 0 0x40000
+refresh g 0 0x40000
+refresh g 0 0x40000
+prepare 1
+gpu_declare g 0 0x28000                  # flight A
+snapshots
+gpu_write g 0x4000 0x8000 1
+gpu_write g 0x1e000 0x4000 2
+write W 0x8000 0x2 3                     # the title, over A's bytes
+write W 0x14000 0x10 4
+write W 0x32000 0x10 5
+merge_under g 0 0x40000 512             # the next preparing puts the title's bytes in
+prepare 2
+gpu_declare g 0x18000 0x28000            # flight B
+snapshots
+gpu_write g 0x20000 0x4000 6             # over A's 0x1e000.. run
+relay_back g 0 0x28000                   # A lands; B is still writing
+gpu_done g 0 0x28000
+check
+gpu_write g 0x24000 0x8000 7             # B finishes
+write W 0x26000 1 8                      # the title, after B's shader did
+merge_under g 0x18000 0x28000 512
+relay_back g 0x18000 0x28000
+gpu_done g 0x18000 0x28000
+refresh g 0 0x40000
+end

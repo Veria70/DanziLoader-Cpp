@@ -1,0 +1,22 @@
+# Milestone 3: a copy in the card's memory over title memory that is not
+# all there. Where title memory cannot be read, the copy keeps what the
+# card wrote and nothing goes to the title (it is looked at again later).
+region R reserve 0x201400000000 0x200000
+commit R 0 0x100000
+card_shadow c R 0 0x200000
+refresh c 0 0x200000
+prepare 1
+gpu_declare c 0 0x200000
+card_write c 0x1000 0x10 1
+card_write c 0x150000 0x10 2             # never committed
+card_write c 0x80000 0x10 3
+decommit R 0x80000 0x10000               # gone before the landing
+card_submit c 0 0x200000
+commit R 0x80000 0x10000
+commit R 0x150000 0x10000
+refresh c 0 0x200000
+prepare 2
+gpu_declare c 0 0x200000
+card_write c 0x150008 0x8 4
+card_submit c 0 0x200000
+end

@@ -1,0 +1,38 @@
+# M4.2: the DXGI walk titles make at startup (device -> DXGI device ->
+# adapter -> description, factory -> adapters, outputs -> display modes),
+# on both consoles; private data and names.
+runtime
+console S
+create_device dev device11
+query dev dxgi_device2 dx
+get_object dx 7 adapter                    # GetAdapter
+get_parent dx 6 dxgi_adapter1 adapter_p    # GetParent as IDXGIAdapter1
+get_parent dx 6 dxgi_factory nothing       # not its parent
+adapter_desc adapter
+get_parent adapter 6 dxgi_factory2 factory
+get_indexed factory 7 0 adapter_again      # EnumAdapters
+get_indexed factory 12 0 adapter1          # EnumAdapters1
+get_indexed factory 7 1 none
+get_indexed adapter 7 0 output
+get_indexed adapter 7 1 none2
+query output dxgi_output out2
+get_parent output 6 dxgi_adapter2 adapter3
+modes output nocount
+modes output null
+modes output 0
+modes output 4
+query adapter dxgi_device nope
+query factory dxgi_factory1 f1
+missing adapter 10
+missing output 9
+set_private dev pd1 0102030405
+get_private dev pd1 16
+get_private dev pd1 2
+get_private dev pd1 null
+get_private dev pd2 16
+set_private dev pd1 null
+get_private dev pd1 16
+set_name dev
+console X
+adapter_desc adapter
+end

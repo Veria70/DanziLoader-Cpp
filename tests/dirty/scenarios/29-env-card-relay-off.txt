@@ -1,0 +1,38 @@
+# 29-env-card-relay-off.txt (switch variant of 26-card-mixed.txt).
+env VICTORY_RELAY 0
+region A watched 0x201600000000 0x300000
+write A 0 0x300000 1
+card_shadow a A 0x10000 0x100000         # piece-aligned
+card_shadow b A 0x123450 0x110000        # skewed, odd length
+shadow p A 0x240000 0x40000              # in the PC's memory
+refresh a 0 0x100000
+refresh b 0 0x110000
+refresh p 0 0x40000
+prepare 1
+gpu_declare a 0 0x100000
+gpu_declare b 0x1000 0x20000
+gpu_declare p 0 0x40000
+snapshots
+card_write a 0x7fff0 0x30 2              # across a piece edge
+card_write b 0x10ff0 0x20 3
+gpu_write p 0x100 0x10 4
+card_submit a 0 0x100000 b 0x1000 0x20000 p 0 0x40000
+refresh a 0 0x100000
+refresh b 0 0x110000
+prepare 2
+gpu_declare a 0x20000 0x10000
+gpu_declare b 0x100000 0x40000           # past the end: cut to the copy
+card_write a 0x20000 0x10 5
+card_write b 0x10ffff 0x1 6              # the copy's last byte
+card_submit a 0x20000 0x10000 a 0x20000 0x10000 b 0x100000 0x40000
+refresh a 0 0x100000
+prepare 3
+gpu_declare a 0 0x100000
+write A 0x50000 0x20 7                   # under the declared range
+write A 0x50100 0x20 8
+merge_under a 0 0x100000 1               # one run allowed: settle
+merge_under a 0 0x100000 8
+card_write a 0x50000 0x8 9               # the shaders write beside them
+card_submit a 0 0x100000
+check
+end

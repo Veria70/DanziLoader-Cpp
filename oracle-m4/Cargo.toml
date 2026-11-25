@@ -1,0 +1,14 @@
+[package]
+name = "victory-ref-backend"
+description = "The reference's victory-gpu, unchanged, as a backend DLL for the milestone 4 title driver: the d3d12_xs exports and the runtime's hand-over."
+version = "0.1.0"
+edition = "2024"
+license = "GPL-3.0-or-later"
+publish = false
+
+[lib]
+name = "victory_ref"
+crate-type = ["cdylib"]
+
+[dependencies]
+victory-gpu.workspace = true

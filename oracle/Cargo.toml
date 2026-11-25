@@ -1,0 +1,46 @@
+[package]
+name = "danzi-dirty-oracle"
+description = "Runs the Rust reference's dirty-page range selector (compiled verbatim from the read-only reference checkout) on differential scenarios."
+version = "0.1.0"
+edition = "2024"
+license = "GPL-3.0-or-later"
+publish = false
+build = "build.rs"
+
+[workspace]
+
+[[bin]]
+name = "oracle-dirty"
+path = "src/main.rs"
+
+[features]
+diagnostics = []
+
+[dependencies]
+windows-sys = { version = "=0.61.2", features = [
+    "Win32_Foundation",
+    "Win32_Security",
+    "Win32_System_Diagnostics_Debug",
+    "Win32_System_Kernel",
+    "Win32_System_Memory",
+    "Win32_System_Threading",
+] }
+windows = { version = "=0.62.2", features = [
+    "Win32_Foundation",
+    "Win32_Graphics_Direct3D",
+    "Win32_Graphics_Direct3D_Fxc",
+    "Win32_Graphics_Direct3D12",
+    "Win32_Graphics_Dxgi",
+    "Win32_Graphics_Dxgi_Common",
+    "Win32_Security",
+    "Win32_System_Threading",
+] }
+windows-core = "=0.62.2"
+tracing = "=0.1.44"
+
+[build-dependencies]
+syn = { version = "=2.0.119", features = ["full", "parsing", "printing"] }
+proc-macro2 = { version = "=1.0.107", features = ["span-locations"] }
+
+[profile.release]
+debug = "line-tables-only"

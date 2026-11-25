@@ -1,0 +1,35 @@
+# 12-env-relay-off.txt (switch variant of 05-gpu-pending.txt)
+env VICTORY_RELAY 0
+region W watched 0x200600000000 0x80000
+shadow g W 0x1000 0x60000
+refresh g 0 0x60000
+refresh g 0 0x60000
+prepare 1
+gpu_declare g 0x8000 0x10000             # partial pages at both ends
+gpu_write g 0x8000 0x10000 1
+write W 0x9000 0x20 2                    # under the pending range
+write W 0x20 0x10 3                      # page 0, before it
+write W 0x19800 0x10 4                   # page 1, after it
+refresh g 0 0x60000
+stale g 0 0x60000
+stale g 0x30000 0x1000
+prepare 2
+gpu_declare g 0x8000 0x10000             # a second flight of the same range
+gpu_declare g 0x40000 0x100
+gpu_write g 0x40000 0x100 5
+gpu_done g 0x8000 0x10000                # the first flight is done: still held
+refresh g 0 0x60000
+gpu_done g 0x8000 0x10000 0x40000 0x100
+refresh g 0 0x60000
+check
+ask_once g 0 0x60000
+write W 0x9000 4 6
+stale g 0 0x60000
+gpu_declare g 0x9000 0x10
+stale g 0 0x60000
+ask_once_end
+stale g 0 0x60000
+gpu_done g 0x9000 0x10
+gpu_done g 0x50000 0x10                  # never declared: nothing held
+refresh g 0 0x60000
+end

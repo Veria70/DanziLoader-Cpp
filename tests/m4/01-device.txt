@@ -1,0 +1,40 @@
+# M4.1/M4.2: what the title sees of the device before it records anything:
+# virtual memory, creation (as each interface level, wrong ids, no out),
+# interfaces, reference counts, node count, descriptor sizes, features,
+# and a slot the backend leaves out.
+runtime
+configure_vm
+device_iid
+create_device bad zero                     # not a device interface
+create_device none device11 0x20004 noout  # no out: S_FALSE
+create_device dev device11                 # as the title creates it
+create_device dev0 device                  # the same device
+create_device old device 0x20003           # another interface version
+query dev device1 d1
+query dev device8 d8
+query dev dxgi_device dx
+query dev dxgi_device3 dx3
+query dev dxgi_adapter da
+query dev zero z
+query dx device back
+addref dev
+addref dev
+release dev
+node_count dev
+increment_size dev 0
+increment_size dev 1
+increment_size dev 2
+increment_size dev 3
+increment_size dev 4
+feature dev 0 64                           # options
+feature dev 1 16 0                         # architecture, node 0
+feature dev 1 16 1                         # node 1: refused
+feature_levels dev 0xb000 0xc100 0xc200     # feature levels: the highest supported
+feature_levels dev 0xb000 0xc300            # 12_2 is the console's highest
+feature dev 2 16                           # wrong size
+feature dev 3 12 28                        # format support (R8G8B8A8_UNORM)
+feature dev 4 16 28 4                      # multisample 4x
+feature dev 0 60                           # wrong size
+feature dev 7 8                            # not implemented
+missing dev 30
+end

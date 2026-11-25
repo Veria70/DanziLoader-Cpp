@@ -1,0 +1,18 @@
+# Build output (CMake, cargo, differential-test work directories)
+/build/
+/oracle/target/
+
+# Never: game data, derived data, personal files (see NOTICE.md, asset policy)
+*.exe
+*.dll
+*.pdb
+*.etl
+*.diagsession
+victory.toml
+/UserData/
+/Game/
+
+
+# Other projects kept beside the port for review only (their own licences;
+# some are AGPL or GPL-2.0-only and must never be committed here)
+/OtherLoaders/

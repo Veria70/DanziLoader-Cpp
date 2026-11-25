@@ -1,0 +1,21 @@
+# M3.10: VICTORY_INPLACE=2: title buffers in place too, except the big ones
+# the card's memory takes.
+env VICTORY_INPLACE 2
+region W watched 0x202800000000 0x800000
+write W 0 0x800000 1
+buffer small W 0x10000 0x80000
+buffer big W 0x200000 0x200000
+find s W 0x10010 0x100                   # placed
+find g W 0x200010 0x100                  # on the card
+refresh s 0 0x80000
+refresh g 0 0x200000
+prepare 1
+gpu_declare s 0x10000 0x80000
+gpu_declare g 0x200000 0x200000
+card_write s 0x100 0x10 2
+card_write g 0x100 0x10 3
+card_submit s 0x10000 0x80000 g 0x200000 0x200000
+unbuffer small
+find s2 W 0x10010 0x100                  # gone: a window now, placed (level 2 places windows too)
+check
+end

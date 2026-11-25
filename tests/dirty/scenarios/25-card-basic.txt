@@ -1,0 +1,34 @@
+# Milestone 3: a copy in the card's memory (VICTORY_CARD_BUFFERS, on by
+# default), submissions that are waited for. Runs on the hardware adapter
+# (DANZI_TEST_ADAPTER=warp: WARP).
+#
+# The copy starts 0x1000 into title memory (its 64 KiB pieces are skewed),
+# and is 2 MiB + 0x800 long (a partial last piece). Shaders write the
+# card's side; the compare on the card flags the pieces that changed, the
+# ring brings them down inline, and only the bytes the shaders changed go
+# into title memory. The title writes beside and under them.
+region W watched 0x200e00000000 0x400000
+write W 0 0x400000 1
+card_shadow c W 0x1000 0x200800
+refresh c 0 0x200800                    # the CPU's side; goes up at the next submission
+prepare 1
+gpu_declare c 0x10000 0x40000
+gpu_declare c 0x48000 0x100             # a second range, not touching
+card_write c 0x10010 0x100 7            # a few bytes in one piece
+card_write c 0x2fff0 0x20 8             # across a piece edge
+card_write c 0x48000 0x10 9
+card_write c 0x100000 0x1000 10         # outside every declared range
+card_submit c 0x10000 0x40000 c 0x48000 0x100
+write W 0x20000 0x1000 11               # the title writes
+write W 0x11000 0x40 12                 # under bytes the shaders wrote
+refresh c 0 0x200800
+prepare 2
+gpu_declare c 0 0x200800                # the whole copy
+card_write c 0x1f0000 0x10800 13        # the last pieces, the partial one too
+card_write c 0x0 0x10 14                # the first, skewed piece
+card_submit c 0 0x200800
+refresh c 0 0x200800
+prepare 3
+gpu_declare c 0x80000 0x80000           # declared, nothing written: no fetch
+card_submit c 0x80000 0x80000
+end

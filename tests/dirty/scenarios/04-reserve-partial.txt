@@ -1,0 +1,24 @@
+# A write-watched reservation committed in parts: copies read zeros where
+# nothing is committed, decommitted pages come back as zeros.
+region R reserve 0x200500000000 0x80000
+commit R 0x0 0x3000
+commit R 0x11000 0x1000
+commit R 0x40000 0x20000
+shadow r R 0 0x80000
+shadow small R 0x10800 0x1000
+refresh r 0 0x80000
+refresh r 0 0x80000
+write R 0x11004 4 1
+refresh r 0 0x80000
+refresh small 0 0x1000
+write R 0x40000 0x20000 2
+refresh r 0 0x80000
+decommit R 0x40000 0x10000
+refresh r 0 0x80000
+commit R 0x40000 0x1000
+write R 0x40000 0x1000 3
+refresh r 0 0x80000
+write R 0x70000 0x100 4                  # nothing committed there: skipped
+refresh r 0 0x80000
+check
+end
