@@ -3,10 +3,55 @@
 #include "memcopy.hpp"
 
 #include <algorithm>
+#include <atomic>
 #include <bit>
+#include <cstdio>
 #include <cstring>
+#include <string>
+
+#include "log.hpp"
+#include "readback.hpp"
 
 namespace danzi::memcopy {
+
+namespace {
+
+constexpr usize COUNTERS = 13;
+std::atomic<std::uint64_t> COUNT[COUNTERS]{};
+
+
+std::string fixed(double v, int places) {
+    char b[64];
+    std::snprintf(b, sizeof b, "%.*f", places, v);
+    return b;
+}
+
+}   
+
+void add(M m, std::uint64_t n) { COUNT[static_cast<usize>(m)].fetch_add(n, std::memory_order_relaxed); }
+
+void log(double frames, bool known_writes, bool texture_overlap, std::uint64_t hash_every) {
+    double c[COUNTERS];
+    for (usize i = 0; i < COUNTERS; ++i) {
+        c[i] = static_cast<double>(COUNT[i].exchange(0, std::memory_order_relaxed)) / std::max(frames, 1.0);
+    }
+    constexpr bool fast_hash = true;
+    bool back = readback::enabled();
+    if (!(known_writes || texture_overlap || fast_hash || hash_every != 8 || back)) {
+        return;
+    }
+    auto g = [&](M m) { return c[static_cast<usize>(m)]; };
+    log::info("victory_gpu::memcopy",
+              "memcopy per frame: title memory copies at submission " + fixed(g(M::RunsKept), 0) + " kept the asking, " + fixed(g(M::RunsEnded), 0) + " ended it, " +
+                  fixed(g(M::RunsNotBlocking), 0) + " late submissions not held back by them (VICTORY_KNOWN_WRITES=" + std::to_string(known_writes ? 1 : 0) +
+                  "); shader-written ranges " + fixed(g(M::BackKept), 0) + " kept on the card " + fixed(g(M::BackKeptBytes) / 1e6, 1) + " MB, " +
+                  fixed(g(M::BackGoes), 0) + " copied back (VICTORY_COPY_BACK_ONLY_READBACK=" + std::to_string(back ? 1 : 0) + ", " +
+                  std::to_string(readback::tagged()) + " read-back buffers); texture hashes " + fixed(g(M::Hashes), 0) + " " + fixed(g(M::HashBytes) / 1e6, 1) +
+                  " MB " + fixed(g(M::HashUs) / 1e3, 2) + " ms (VICTORY_FAST_HASH=" + std::to_string(fast_hash ? 1 : 0) + "), " + fixed(g(M::ChecksSkipped), 0) +
+                  " check hashes left out (VICTORY_TEXTURE_HASH_EVERY=" + std::to_string(hash_every) + "); texture refreshes beside the submitting thread " +
+                  fixed(g(M::Overlapped), 0) + ", " + fixed(g(M::OverlapUs) / 1e3, 2) + " ms on their threads, " + fixed(g(M::OverlapWaitUs) / 1e3, 2) +
+                  " ms waited for (VICTORY_TEXTURE_OVERLAP=" + std::to_string(texture_overlap ? 1 : 0) + ")");
+}
 
 void RangeSet::insert(std::uint64_t start, std::uint64_t end) {
     if (start >= end) {

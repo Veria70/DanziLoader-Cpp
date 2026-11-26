@@ -1,0 +1,101 @@
+# M4.14: title memory by address (`memory.rs`): shaders that read and
+# write through raw 40-bit addresses (global loads and stores; the console's
+# ray-tracing structure builder works this way). The title's memory at a
+# console address (below 128 GiB); the address in two root constants, which
+# the host takes for a title address and gives its copy before the dispatch
+# (the directory of 64 KiB pages, the copy's raw view in a run of view heap
+# slots). A load; a store (copied back into title memory); a load 16 MiB
+# further on, which no constant names: the page has no copy, the access
+# reads 0 and notes the page, and the next frame finds it there. Then a
+# program with a spilled user-data table (the builder's kind): dropped
+# unless VICTORY_BVH_BUILDER=1 (all or none).
+runtime
+shader_cache c:/tmp/m4-shader-cache c:/tmp/m4-shader-cache/build.bin
+create_device dev device11
+create_queue dev q 0
+create_fence dev f 0
+allocator dev a 0
+list dev l 0 a
+list_close l
+set_interval dev 1000
+desc_heap dev views 0 4096 flags=1
+committed dev out 1 B65536
+title_memory mem 33554432 0x1234500000
+fill out 4096 0 0
+fill mem 1024 3 1
+fill mem+16777216 1024 5 9
+cs_memory cm
+cs_memory_far cf
+cs_memory_store cw 0xA5A5A5A5
+cs_spilled cs
+compute_pipeline dev pm cm
+compute_pipeline dev pf cf
+compute_pipeline dev pw cw
+compute_pipeline dev ps cs
+frame_wait dev 0 1000 0
+# A load through the address.
+list_reset l a
+set_heaps l views
+set_pipeline l pm
+compute_uav l 0 out
+compute_address l 1 mem
+dispatch l 1 1 1
+list_close l
+execute q l
+queue_signal q f 1
+fence_event f 1 null
+peek out 0 16
+hash out 256
+# A store through the address.
+list_reset l a
+set_heaps l views
+set_pipeline l pw
+compute_uav l 0 out+1024
+compute_address l 1 mem+4096
+dispatch l 1 1 1
+list_close l
+execute q l
+queue_signal q f 2
+fence_event f 2 null
+hash mem+4096 16
+hash mem+4096 256
+# 16 MiB further on: no copy yet (zeros, the page noted).
+list_reset l a
+set_heaps l views
+set_pipeline l pf
+compute_uav l 0 out+256
+compute_address l 1 mem
+dispatch l 1 1 1
+list_close l
+execute q l
+queue_signal q f 3
+fence_event f 3 null
+peek out 256 16
+# The next frame: the noted page has its copy.
+frame_wait dev 0 1000 0
+list_reset l a
+set_heaps l views
+set_pipeline l pf
+compute_uav l 0 out+512
+compute_address l 1 mem
+dispatch l 1 1 1
+list_close l
+execute q l
+queue_signal q f 4
+fence_event f 4 null
+peek out 512 16
+hash out 1024
+# The builder's kind of program: dropped (VICTORY_BVH_BUILDER is not set).
+list_reset l a
+set_heaps l views
+set_pipeline l ps
+compute_uav l 0 out+2048
+compute_constant l 1 0x5A5A5A5A 0
+dispatch l 1 1 1
+list_close l
+execute q l
+queue_signal q f 5
+fence_event f 5 null
+peek out 2048 16
+release l
+end

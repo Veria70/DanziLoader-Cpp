@@ -1,6 +1,11 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-
-
+// Transfer paths the card path chooses between (milestone 3), measured on
+// the adapter at hand:
+//   cpu-write   the CPU writes 64 MiB into each kind of heap
+//   gpu-copy    the card copies 256 MiB between system memory and VRAM
+//   cpu-read    the CPU reads 64 MiB the card produced, from each kind of heap
+//   shader-read a compute shader reads 256 MiB from VRAM / system memory
+// Usage: gpu-bench [warp] [runs]
 #include <d3dcompiler.h>
 
 #include <algorithm>

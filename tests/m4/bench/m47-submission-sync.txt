@@ -1,0 +1,26 @@
+# M4.7a: submissions (time per call): the title's frame in small (reset,
+# buffer copies, a value, close, execute, a fence signalled behind and
+# waited for by blocking) waited for (VICTORY_RELAY=0) - small and 1 MiB of
+# copies - and recording calls alone.
+env VICTORY_RELAY 0
+runtime
+create_device dev device11
+create_queue dev q 0
+create_fence dev f 0
+allocator dev a 0
+list dev l 0 a
+list_close l
+committed dev src 2 B4194304
+committed dev dst 2 B4194304
+committed dev values 2 B65536
+list dev lr 0 a
+quiet 1
+repeat 2000 submit_cycle q l a f 4 256 dst src values+0
+repeat 500 submit_cycle q l a f 16 65536 dst src values+0
+repeat 10000 copy_region lr dst 0 src 0 256
+repeat 10000 write_value lr values+64 5
+repeat 2000 submit_cycle q l a f 4 256 dst src values+0
+repeat 500 submit_cycle q l a f 16 65536 dst src values+0
+repeat 10000 copy_region lr dst 0 src 0 256
+repeat 10000 write_value lr values+64 5
+end

@@ -1,0 +1,41 @@
+# Port-only (M4.17): the pipeline library's mapped file let go. Run by
+# tools/check_library_trim.py twice: the first run stores a compute pipeline
+# into an emptied library and saves it; the second maps the saved file,
+# loads the pipeline from it, waits past the RAM idle time (10 s with room)
+# and submits again, so that the sweep lets the file's pages go.
+runtime
+shader_cache c:/tmp/m4-shader-cache c:/tmp/m4-shader-cache/build.bin
+pipeline_cache c:/tmp/m4-trim-port
+create_device dev device11
+create_queue dev q 0
+create_fence dev f 0
+allocator dev a 0
+list dev l 0 a
+list_close l
+desc_heap dev views 0 4096 flags=1
+committed dev buf 1 B65536
+cs_store c1 0x20202020
+compute_pipeline dev p1 c1
+list_reset l a
+set_heaps l views
+set_pipeline l p1
+compute_uav l 0 buf
+dispatch l 1 1 1
+list_close l
+execute q l
+queue_signal q f 1
+fence_event f 1 null
+pipeline_save
+sleep 10500
+list_reset l a
+set_heaps l views
+set_pipeline l p1
+compute_uav l 0 buf
+dispatch l 1 1 1
+list_close l
+execute q l
+queue_signal q f 2
+fence_event f 2 null
+library_trimmed
+release l
+end

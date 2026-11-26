@@ -1,0 +1,51 @@
+# M4.7d: draws (time per call). Frames in small - reset, heaps, pipeline, a
+# target (256x256), viewport, scissor, 1 or 64 full-target triangles,
+# close, execute, a fence signalled behind (the relay) and waited for; then
+# recording calls alone: targets, viewport, scissor, topology, draws without
+# inputs, with a vertex buffer, indexed, and the console's rectangles
+# (expanded at submission), and pipeline creation from streams.
+runtime
+shader_cache c:/tmp/m4-shader-cache c:/tmp/m4-shader-cache/build.bin
+create_device dev device11
+create_queue dev q 0
+create_fence dev f 0
+allocator dev a 0
+list dev l 0 a
+list_close l
+desc_heap dev views 0 4096 flags=1
+desc_heap dev rtvs 2 8
+committed dev rt 1 T3/256x256/f28/F1
+committed dev vb 2 B65536
+committed dev ib 2 B4096
+rtv dev rtvs:0 rt
+vs_fullscreen vs
+vs_input vsi
+ps_color ps 1.0 0.5 0.25 1.0
+graphics_pipeline dev g vs ps 28
+graphics_pipeline dev gi vsi ps 28 input
+fill_floats vb -1 -1 0 1 -1 0 0 1 0 0 0 1 0 -1 0 1
+fill_u16 ib 0 1 2 0 2 3
+list dev lr 0 a
+set_heaps lr views
+quiet 1
+repeat 1000 draw_cycle q l a f views g rtvs:0 256 1
+repeat 1000 draw_cycle q l a f views g rtvs:0 256 64
+repeat 20000 targets lr rtvs:0
+repeat 20000 viewport lr 0 0 256 256
+repeat 20000 scissor lr 0 0 256 256
+repeat 20000 topology lr 4
+set_pipeline lr g
+targets lr rtvs:0
+repeat 20000 draw lr 3 1
+set_pipeline lr gi
+vertex_buffer lr 0 vb 64 16
+repeat 20000 draw lr 3 1
+index_buffer lr ib 12 57
+repeat 20000 draw_indexed lr 6 1
+topology lr 17
+repeat 20000 draw lr 3 1
+topology lr 4
+repeat 200 graphics_pipeline dev gx vs ps 28
+repeat 1000 draw_cycle q l a f views g rtvs:0 256 1
+repeat 1000 draw_cycle q l a f views g rtvs:0 256 64
+end

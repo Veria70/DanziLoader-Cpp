@@ -1,0 +1,144 @@
+# M4.8: indirect execution with the driver's synthetic shaders (translated
+# by the reference into the shader cache the port reads). Arguments in title
+# buffers, clamped on the GPU into the list's scratch buffer before the GPU
+# reads them: a dispatch; a dispatch whose arguments are garbage (left
+# empty); draws one record a call walking a buffer (a window clamped ahead,
+# the calls joined into one); a draw bounded by a count buffer (0, then 1);
+# an indexed draw. Every result read back and hashed.
+runtime
+shader_cache c:/tmp/m4-shader-cache c:/tmp/m4-shader-cache/build.bin
+create_device dev device11
+create_queue dev q 0
+create_fence dev f 0
+allocator dev a 0
+list dev l 0 a
+list_close l
+desc_heap dev views 0 4096 flags=1
+desc_heap dev rtvs 2 8
+committed dev back 3 B1048576
+committed dev rt 1 T3/64x64/f28/F1
+committed dev buf 1 B65536
+committed dev args 2 B65536
+committed dev count 2 B4096
+committed dev vb 2 B65536
+committed dev ib 2 B4096
+rtv dev rtvs:0 rt
+cs_store cs1 0x12345678
+compute_pipeline dev p1 cs1
+vs_fullscreen vs
+vs_input vsi
+ps_color ps 1.0 0.5 0.25 1.0
+ps_color ps2 0.0 1.0 0.0 1.0
+graphics_pipeline dev g vs ps 28
+graphics_pipeline dev gi vsi ps2 28 input
+cmd_signature dev sd 12 null 2
+cmd_signature dev sdraw 16 null 0
+cmd_signature dev sidx 20 null 1
+fill buf 1024 0 0
+# A dispatch of two groups from the arguments.
+fill_u32 args 2 1 1
+list_reset l a
+set_heaps l views
+set_pipeline l p1
+compute_uav l 0 buf
+execute_indirect l sd 1 args 0
+list_close l
+execute q l
+queue_signal q f 1
+fence_event f 1 null
+peek buf 0 8
+peek buf 252 8
+hash buf 1024
+# Garbage arguments: clamped to nothing (the buffer keeps its bytes).
+fill buf 1024 0 0
+fill_u32 args+64 0xFFFFFFFF 0xFFFFFFFF 1
+list_reset l a
+set_heaps l views
+set_pipeline l p1
+compute_uav l 0 buf
+execute_indirect l sd 1 args 64
+list_close l
+execute q l
+queue_signal q f 2
+fence_event f 2 null
+hash buf 1024
+# Draws one record a call, records 32 bytes apart: a window, the calls joined.
+fill_u32 args+256 3 1 0 0 0 0 0 0 3 1 0 0 0 0 0 0 0 1 0 0 0 0 0 0 3 1 0 0
+list_reset l a
+set_heaps l views
+clear_rtv l rtvs:0 0,0,0,0
+set_pipeline l g
+targets l rtvs:0
+viewport l 0 0 64 64
+scissor l 0 0 64 64
+topology l 4
+execute_indirect l sdraw 1 args 256
+execute_indirect l sdraw 1 args 288
+execute_indirect l sdraw 1 args 320
+execute_indirect l sdraw 1 args 352
+copy_tex l back:fp:0:28:64:64:1:256 0 0 0 rt:sub:0
+list_close l
+execute q l
+queue_signal q f 3
+fence_event f 3 null
+peek back 0 8
+hash back 16384
+# A count buffer: 0 records, then 1.
+fill_u32 args+512 3 1 0 0
+fill_u32 count 0
+list_reset l a
+set_heaps l views
+clear_rtv l rtvs:0 0,0,0,0
+set_pipeline l g
+targets l rtvs:0
+viewport l 0 0 64 64
+scissor l 0 0 64 64
+topology l 4
+execute_indirect l sdraw 4 args 512 count 0
+copy_tex l back:fp:0:28:64:64:1:256 0 0 0 rt:sub:0
+list_close l
+execute q l
+queue_signal q f 4
+fence_event f 4 null
+peek back 0 8
+fill_u32 count 1
+list_reset l a
+set_heaps l views
+set_pipeline l g
+targets l rtvs:0
+viewport l 0 0 64 64
+scissor l 0 0 64 64
+topology l 4
+execute_indirect l sdraw 4 args 512 count 0
+copy_tex l back:fp:0:28:64:64:1:256 0 0 0 rt:sub:0
+list_close l
+execute q l
+queue_signal q f 5
+fence_event f 5 null
+peek back 0 8
+hash back 16384
+# Indexed: a quad of four vertices.
+fill_floats vb -1 -1 0 1 -1 0 0 1 0 0 0 1 0 -1 0 1
+fill_u16 ib 0 1 2 0 2 3
+fill_u32 args+768 6 1 0 0 0
+list_reset l a
+set_heaps l views
+clear_rtv l rtvs:0 0,0,0,0
+set_pipeline l gi
+targets l rtvs:0
+viewport l 0 0 64 64
+scissor l 0 0 64 64
+topology l 4
+vertex_buffer l 0 vb 64 16
+index_buffer l ib 12 57
+execute_indirect l sidx 1 args 768
+copy_tex l back:fp:0:28:64:64:1:256 0 0 0 rt:sub:0
+list_close l
+execute q l
+queue_signal q f 6
+fence_event f 6 null
+peek back 8192 8
+peek back 0 8
+hash back 16384
+release l
+end

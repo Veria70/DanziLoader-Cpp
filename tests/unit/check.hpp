@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-
+// A minimal test registry: TEST(name) { CHECK(...); CHECK_EQ(a, b); }
 #pragma once
 
 #include <cstdio>

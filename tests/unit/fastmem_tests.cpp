@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-
-
+// The wide routines agree with the byte loops they replace (the reference's
+// own `first_difference`, `last_difference`, `merge_piece`, `changed_runs`
+// tests, ported, plus exhaustive small cases), and the fault-catching copy
+// reports unmapped pages.
 #include <optional>
 #include <vector>
 

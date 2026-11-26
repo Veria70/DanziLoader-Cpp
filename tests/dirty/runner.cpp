@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-
-
+// Runs a dirty-range scenario (docs/dirty-scenarios.md) against the C++
+// port and writes `log.txt` plus one `shadow-<name>.bin` per host copy.
+// `oracle/src/runner.rs` is the same runner for the Rust reference; the two
+// must stay line-for-line equivalent in what they log.
 #include <algorithm>
 #include <chrono>
 #include <cstdio>

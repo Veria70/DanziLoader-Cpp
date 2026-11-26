@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Port of the window choice of crates/victory-gpu/src/shadow.rs
-
-
+// (DanziLoader / victory-perf, see NOTICE.md): title memory outside any
+// title buffer gets copies of aligned windows of it. Pure: which window an
+// ask of [address, end) takes (`window_of`, tails, `holder`).
 #pragma once
 
 #include <cstdint>

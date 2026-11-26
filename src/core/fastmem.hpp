@@ -1,6 +1,12 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-
-
+// Memory primitives the reference does byte- or slice-wise, done wide, and
+// title-memory access without a system call when nothing faults.
+//
+// Every routine here returns what the reference's code returns for the same
+// bytes (each is checked against a plain byte loop by the unit tests and,
+// through the selector and the copy-back, by the differential tests). The
+// reference is built for baseline x86-64; the product already requires AVX2
+// (reference README), and this file uses it.
 #pragma once
 
 #include <cstdint>

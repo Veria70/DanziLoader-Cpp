@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Port of the window choice of crates/victory-gpu/src/shadow.rs (see
-
+// windows.hpp).
 #include "windows.hpp"
 
 #include <algorithm>

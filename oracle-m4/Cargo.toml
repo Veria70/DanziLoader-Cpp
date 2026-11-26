@@ -12,3 +12,8 @@ crate-type = ["cdylib"]
 
 [dependencies]
 victory-gpu.workspace = true
+victory-formats.workspace = true
+windows = { workspace = true, features = ["Win32_Graphics_Direct3D12", "Win32_Graphics_Dxgi_Common"] }
+victory-shader.workspace = true
+blake3.workspace = true
+tracing-subscriber.workspace = true

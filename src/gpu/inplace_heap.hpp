@@ -1,7 +1,11 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Port of the D3D12 side of crates/victory-gpu/src/inplace.rs (DanziLoader
-
-
+// / victory-perf, see NOTICE.md): title memory as the card's own memory. A
+// host heap is opened on a committed part of the title's private memory
+// (`OpenExistingHeapFromAddress1`, by address: review #13, NVIDIA's driver
+// 591.59 leaked 512 MB of commit per section opened from a file mapping)
+// and a buffer is placed over it, so that shaders read and write the
+// title's bytes and no copy stands between.
 #pragma once
 
 #include <cstdint>

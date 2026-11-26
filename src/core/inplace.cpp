@@ -10,6 +10,7 @@
 #include <tuple>
 
 #include "env.hpp"
+#include "log.hpp"
 #include "watch.hpp"
 
 namespace danzi::inplace {
@@ -308,6 +309,26 @@ void title_memory_freeing(usize at, usize len) {
     }
     std::uint64_t n = FREEING_HOOK(FREEING_CONTEXT, at, len);
     STATS[7].fetch_add(n, std::memory_order_relaxed);
+}
+
+void tick(std::uint64_t now) {
+    if (level() == 0) {
+        return;
+    }
+    static std::atomic<std::uint64_t> LAST{0};
+    std::uint64_t last = LAST.load(std::memory_order_relaxed);
+    if (now < last + 10'000 || !LAST.compare_exchange_strong(last, now, std::memory_order_relaxed)) {
+        return;
+    }
+    std::uint64_t s[8];
+    for (usize i = 0; i < 8; ++i) {
+        s[i] = STATS[i].load(std::memory_order_relaxed);
+    }
+    log::info("victory_gpu::inplace",
+              "title memory in place: " + std::to_string(s[0]) + " windows " + std::to_string(s[1] >> 20) + " MB, " + std::to_string(s[2]) + " title buffers " +
+                  std::to_string(s[3] >> 20) + " MB (no copy, no refresh, no copy-back); turned down: " + std::to_string(s[4]) +
+                  " view memory or not private memory committed whole, " + std::to_string(s[5]) + " refused by the host, " + std::to_string(s[6]) +
+                  " over VICTORY_INPLACE_MB; " + std::to_string(s[7]) + " let go because their memory changed");
 }
 
 }   

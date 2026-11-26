@@ -1,9 +1,10 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Port of the D3D12 side of crates/victory-gpu/src/inplace.rs (see
-
+// inplace_heap.hpp).
 #include "inplace_heap.hpp"
 
 #include "core/inplace.hpp"
+#include "core/log.hpp"
 
 namespace danzi::gpu::inplace {
 
@@ -66,7 +67,12 @@ std::optional<Placed> place_for(Device& device, std::uint64_t start, std::uint64
         STATS[at + 1].fetch_add(len, std::memory_order_relaxed);
         return placed;
     }
-    STATS[hr == S_OK ? 4 : 5].fetch_add(1, std::memory_order_relaxed);
+    if (hr == S_OK) {
+        STATS[4].fetch_add(1, std::memory_order_relaxed);
+    } else if (STATS[5].fetch_add(1, std::memory_order_relaxed) < 8) {
+        log::warn("victory_gpu::inplace", "title memory not opened in place: a copy instead",
+                  {{"start", log::hex(start)}, {"len", log::debug(len)}, {"error", log::hresult(hr)}});
+    }
     return std::nullopt;
 }
 

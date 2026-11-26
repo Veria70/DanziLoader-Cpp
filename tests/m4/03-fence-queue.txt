@@ -1,0 +1,139 @@
+# M4.3: fences and queues, before any list runs. Fences: creation (ids,
+# flags, no out), values in the object and at the GPU address, events set
+# on completion (already reached, reached later, values in between, a
+# blocking wait), a value moved back, private data forgotten with the
+# fence. Queues: creation (PC and console descriptions, wrong ids, no out,
+# no description), their description and timestamp frequency; signals at
+# once; the line a queue holds behind a wait for a fence not reached (and
+# behind what it holds already), released when the fence moves, across
+# two queues, forced by a present; a fence event set by a held signal; a
+# queue released while it holds; the newer queue layout.
+runtime
+create_device dev device
+create_fence dev f 0
+create_fence dev f5 5 1
+create_fence dev bad 0 0 queue          # not a fence interface
+create_fence dev none 0 0 noout         # asked only whether it would work
+create_fence dev fp 0 0 pageable
+fence_completed f
+fence_completed f5
+fence_flags f5
+fence_flags f
+fence_memory f5
+query f fence1 fq                       # not a console fence interface
+query f d3d12_object fo
+query f unknown u
+release f                               # the query handed out f itself
+get_parent f 7 device p
+fence_event f 3 e1
+event e1
+fence_signal f 2
+event e1
+fence_signal f 3
+event e1
+fence_event f 3 e1                      # reached already: set at once
+event e1
+fence_event f 9 null                    # blocking, not reached
+fence_event f 2 null                    # blocking, reached
+fence_event f 10 e2
+fence_event f 12 e3
+fence_event f 11 e5
+fence_signal f 11
+event e2
+event e3
+event e5
+fence_signal f 1                        # back
+fence_completed f
+fence_memory f
+fence_signal f 12
+event e3
+set_private f pd1 0102
+get_private f pd1 8
+release f
+create_fence dev f2 7
+get_private f2 pd1 8                    # nothing (a new fence)
+fence_completed f2
+# Queues.
+create_queue dev gq 0
+create_queue_x dev cq 2 1
+create_queue dev bq 0 fence
+create_queue dev nq 0 noout
+create_queue dev dq 0 nodesc
+create_queue_x dev dq 0 0 nodesc
+create_queue dev copyq 3
+queue_desc gq
+queue_desc cq
+queue_desc copyq
+timestamp_frequency gq
+marker gq
+query gq pageable gqp
+query gq queue gqq
+query gq fence nope
+release gq
+release gq
+get_parent gq 7 device p2
+create_fence dev a 0
+create_fence dev b 0
+create_fence dev c 0
+queue_signal gq b 1                     # nothing held: at once
+fence_completed b
+queue_wait gq a 1                       # not reached: held from here on
+queue_signal gq b 2
+fence_completed b
+queue_wait gq a 0                       # reached, but behind what is held
+queue_signal gq c 5
+queue_wait cq b 2                       # the other queue waits for b
+queue_signal cq c 9
+fence_completed c
+fence_signal a 1                        # both lines run, in order
+fence_completed b
+fence_completed c
+queue_wait gq a 3
+queue_signal gq b 3
+fence_completed b
+present gq                              # forced
+fence_completed b
+queue_signal gq null 1
+queue_wait gq null 1
+queue_signal2 gq b 4
+fence_completed b
+handoff gq a b
+repeat 5 handoff gq a b
+fence_event c 10 e4
+queue_wait gq a 10
+queue_signal gq c 10
+event e4
+fence_signal a 9
+event e4
+fence_signal a 10
+event e4
+fence_completed c
+queue_wait cq a 20
+queue_signal cq c 20
+queue_signal cq c 21
+release cq                              # goes while it holds
+fence_signal a 20
+fence_completed c
+present gq
+fence_completed c
+# The newer layout (the device created as ID3D12Device11).
+create_device dev device11                # the same device
+create_queue dev nq2 0
+create_queue_x dev nq3 2 1
+queue_signal nq2 b 50
+fence_completed b
+timestamp_frequency nq2
+queue_desc nq2
+queue_desc nq3
+queue_wait nq2 a 30
+queue_signal2 nq2 b 51
+fence_completed b
+present nq2
+fence_completed b
+queue_desc gq                           # an older queue keeps its layout
+queue_signal gq b 52
+fence_completed b
+release gq
+release nq2
+release a
+end

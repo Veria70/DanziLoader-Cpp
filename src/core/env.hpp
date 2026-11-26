@@ -1,7 +1,10 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Port of DanziLoader / victory-perf (see NOTICE.md).
-
-
+//
+// The reference reads its switches with `std::env::var_os(NAME)` and
+// compares the whole value; each switch is read once, at first use
+// (`OnceLock`). These helpers give the same answers: a variable set to the
+// empty string is present (and is not "0" nor "1").
 #pragma once
 
 #include <optional>

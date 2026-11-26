@@ -1,0 +1,1133 @@
+# M4.12 shaders that pick resources from the view heap by index (time
+# per call). 4,096 raw buffer views of 32 buffers and 128 textures the
+# title fills in the heap. A dispatch cycle (reset, heaps, a shader that
+# picks a buffer by index, close, execute, wait): the frame's first (the
+# pass over every buffer view, the texture pass uploading 128 textures),
+# 1,000 more in that frame (the pass once a frame), one in each of 200
+# frames (a 64th of the views looked at, the changed ones), dispatches
+# recorded in one list; then draw cycles of a pipeline that picks
+# nothing: the first of each of 100 frames (the early texture pass) and
+# 1,000 in one frame. Written by tools/gen_m412_bench.py.
+runtime
+shader_cache c:/tmp/m4-shader-cache c:/tmp/m4-shader-cache/build.bin
+create_device dev device11
+create_queue dev q 0
+create_fence dev f 0
+allocator dev a 0
+list dev l 0 a
+list_close l
+set_interval dev 1000
+desc_heap dev views 0 8192 flags=1
+desc_heap dev cpu 0 4096
+desc_heap dev rtvs 2 8
+committed dev out 1 B65536
+committed dev rt 1 T3/64x64/f28/F1
+rtv dev rtvs:0 rt
+fill out 4096 0 0
+committed dev b0 1 B65536
+fill b0 1024 1 0
+srv dev cpu:0 b0 w:39,1,5768,0,0,0,256,0,1,0
+committed dev b1 1 B65536
+fill b1 1024 2 1
+srv dev cpu:1 b1 w:39,1,5768,0,0,0,256,0,1,0
+committed dev b2 1 B65536
+fill b2 1024 3 2
+srv dev cpu:2 b2 w:39,1,5768,0,0,0,256,0,1,0
+committed dev b3 1 B65536
+fill b3 1024 4 3
+srv dev cpu:3 b3 w:39,1,5768,0,0,0,256,0,1,0
+committed dev b4 1 B65536
+fill b4 1024 5 4
+srv dev cpu:4 b4 w:39,1,5768,0,0,0,256,0,1,0
+committed dev b5 1 B65536
+fill b5 1024 6 5
+srv dev cpu:5 b5 w:39,1,5768,0,0,0,256,0,1,0
+committed dev b6 1 B65536
+fill b6 1024 7 6
+srv dev cpu:6 b6 w:39,1,5768,0,0,0,256,0,1,0
+committed dev b7 1 B65536
+fill b7 1024 8 7
+srv dev cpu:7 b7 w:39,1,5768,0,0,0,256,0,1,0
+committed dev b8 1 B65536
+fill b8 1024 9 8
+srv dev cpu:8 b8 w:39,1,5768,0,0,0,256,0,1,0
+committed dev b9 1 B65536
+fill b9 1024 10 9
+srv dev cpu:9 b9 w:39,1,5768,0,0,0,256,0,1,0
+committed dev b10 1 B65536
+fill b10 1024 11 10
+srv dev cpu:10 b10 w:39,1,5768,0,0,0,256,0,1,0
+committed dev b11 1 B65536
+fill b11 1024 12 11
+srv dev cpu:11 b11 w:39,1,5768,0,0,0,256,0,1,0
+committed dev b12 1 B65536
+fill b12 1024 13 12
+srv dev cpu:12 b12 w:39,1,5768,0,0,0,256,0,1,0
+committed dev b13 1 B65536
+fill b13 1024 14 13
+srv dev cpu:13 b13 w:39,1,5768,0,0,0,256,0,1,0
+committed dev b14 1 B65536
+fill b14 1024 15 14
+srv dev cpu:14 b14 w:39,1,5768,0,0,0,256,0,1,0
+committed dev b15 1 B65536
+fill b15 1024 16 15
+srv dev cpu:15 b15 w:39,1,5768,0,0,0,256,0,1,0
+committed dev b16 1 B65536
+fill b16 1024 17 16
+srv dev cpu:16 b16 w:39,1,5768,0,0,0,256,0,1,0
+committed dev b17 1 B65536
+fill b17 1024 18 17
+srv dev cpu:17 b17 w:39,1,5768,0,0,0,256,0,1,0
+committed dev b18 1 B65536
+fill b18 1024 19 18
+srv dev cpu:18 b18 w:39,1,5768,0,0,0,256,0,1,0
+committed dev b19 1 B65536
+fill b19 1024 20 19
+srv dev cpu:19 b19 w:39,1,5768,0,0,0,256,0,1,0
+committed dev b20 1 B65536
+fill b20 1024 21 20
+srv dev cpu:20 b20 w:39,1,5768,0,0,0,256,0,1,0
+committed dev b21 1 B65536
+fill b21 1024 22 21
+srv dev cpu:21 b21 w:39,1,5768,0,0,0,256,0,1,0
+committed dev b22 1 B65536
+fill b22 1024 23 22
+srv dev cpu:22 b22 w:39,1,5768,0,0,0,256,0,1,0
+committed dev b23 1 B65536
+fill b23 1024 24 23
+srv dev cpu:23 b23 w:39,1,5768,0,0,0,256,0,1,0
+committed dev b24 1 B65536
+fill b24 1024 25 24
+srv dev cpu:24 b24 w:39,1,5768,0,0,0,256,0,1,0
+committed dev b25 1 B65536
+fill b25 1024 26 25
+srv dev cpu:25 b25 w:39,1,5768,0,0,0,256,0,1,0
+committed dev b26 1 B65536
+fill b26 1024 27 26
+srv dev cpu:26 b26 w:39,1,5768,0,0,0,256,0,1,0
+committed dev b27 1 B65536
+fill b27 1024 28 27
+srv dev cpu:27 b27 w:39,1,5768,0,0,0,256,0,1,0
+committed dev b28 1 B65536
+fill b28 1024 29 28
+srv dev cpu:28 b28 w:39,1,5768,0,0,0,256,0,1,0
+committed dev b29 1 B65536
+fill b29 1024 30 29
+srv dev cpu:29 b29 w:39,1,5768,0,0,0,256,0,1,0
+committed dev b30 1 B65536
+fill b30 1024 31 30
+srv dev cpu:30 b30 w:39,1,5768,0,0,0,256,0,1,0
+committed dev b31 1 B65536
+fill b31 1024 32 31
+srv dev cpu:31 b31 w:39,1,5768,0,0,0,256,0,1,0
+desc_copy1 dev 32 cpu:32 cpu:0 0
+desc_copy1 dev 64 cpu:64 cpu:0 0
+desc_copy1 dev 128 cpu:128 cpu:0 0
+desc_copy1 dev 256 cpu:256 cpu:0 0
+desc_copy1 dev 512 cpu:512 cpu:0 0
+desc_copy1 dev 1024 cpu:1024 cpu:0 0
+desc_copy1 dev 2048 cpu:2048 cpu:0 0
+desc_copy1 dev 4096 views:0 cpu:0 0
+committed dev t0 1 T3/64x64/f28
+fill t0 16384 1 0
+srv dev views:4096 t0
+committed dev t1 1 T3/64x64/f28
+fill t1 16384 2 1
+srv dev views:4097 t1
+committed dev t2 1 T3/64x64/f28
+fill t2 16384 3 2
+srv dev views:4098 t2
+committed dev t3 1 T3/64x64/f28
+fill t3 16384 4 3
+srv dev views:4099 t3
+committed dev t4 1 T3/64x64/f28
+fill t4 16384 5 4
+srv dev views:4100 t4
+committed dev t5 1 T3/64x64/f28
+fill t5 16384 6 5
+srv dev views:4101 t5
+committed dev t6 1 T3/64x64/f28
+fill t6 16384 7 6
+srv dev views:4102 t6
+committed dev t7 1 T3/64x64/f28
+fill t7 16384 1 7
+srv dev views:4103 t7
+committed dev t8 1 T3/64x64/f28
+fill t8 16384 2 8
+srv dev views:4104 t8
+committed dev t9 1 T3/64x64/f28
+fill t9 16384 3 9
+srv dev views:4105 t9
+committed dev t10 1 T3/64x64/f28
+fill t10 16384 4 10
+srv dev views:4106 t10
+committed dev t11 1 T3/64x64/f28
+fill t11 16384 5 11
+srv dev views:4107 t11
+committed dev t12 1 T3/64x64/f28
+fill t12 16384 6 12
+srv dev views:4108 t12
+committed dev t13 1 T3/64x64/f28
+fill t13 16384 7 13
+srv dev views:4109 t13
+committed dev t14 1 T3/64x64/f28
+fill t14 16384 1 14
+srv dev views:4110 t14
+committed dev t15 1 T3/64x64/f28
+fill t15 16384 2 15
+srv dev views:4111 t15
+committed dev t16 1 T3/64x64/f28
+fill t16 16384 3 16
+srv dev views:4112 t16
+committed dev t17 1 T3/64x64/f28
+fill t17 16384 4 17
+srv dev views:4113 t17
+committed dev t18 1 T3/64x64/f28
+fill t18 16384 5 18
+srv dev views:4114 t18
+committed dev t19 1 T3/64x64/f28
+fill t19 16384 6 19
+srv dev views:4115 t19
+committed dev t20 1 T3/64x64/f28
+fill t20 16384 7 20
+srv dev views:4116 t20
+committed dev t21 1 T3/64x64/f28
+fill t21 16384 1 21
+srv dev views:4117 t21
+committed dev t22 1 T3/64x64/f28
+fill t22 16384 2 22
+srv dev views:4118 t22
+committed dev t23 1 T3/64x64/f28
+fill t23 16384 3 23
+srv dev views:4119 t23
+committed dev t24 1 T3/64x64/f28
+fill t24 16384 4 24
+srv dev views:4120 t24
+committed dev t25 1 T3/64x64/f28
+fill t25 16384 5 25
+srv dev views:4121 t25
+committed dev t26 1 T3/64x64/f28
+fill t26 16384 6 26
+srv dev views:4122 t26
+committed dev t27 1 T3/64x64/f28
+fill t27 16384 7 27
+srv dev views:4123 t27
+committed dev t28 1 T3/64x64/f28
+fill t28 16384 1 28
+srv dev views:4124 t28
+committed dev t29 1 T3/64x64/f28
+fill t29 16384 2 29
+srv dev views:4125 t29
+committed dev t30 1 T3/64x64/f28
+fill t30 16384 3 30
+srv dev views:4126 t30
+committed dev t31 1 T3/64x64/f28
+fill t31 16384 4 31
+srv dev views:4127 t31
+committed dev t32 1 T3/64x64/f28
+fill t32 16384 5 32
+srv dev views:4128 t32
+committed dev t33 1 T3/64x64/f28
+fill t33 16384 6 33
+srv dev views:4129 t33
+committed dev t34 1 T3/64x64/f28
+fill t34 16384 7 34
+srv dev views:4130 t34
+committed dev t35 1 T3/64x64/f28
+fill t35 16384 1 35
+srv dev views:4131 t35
+committed dev t36 1 T3/64x64/f28
+fill t36 16384 2 36
+srv dev views:4132 t36
+committed dev t37 1 T3/64x64/f28
+fill t37 16384 3 37
+srv dev views:4133 t37
+committed dev t38 1 T3/64x64/f28
+fill t38 16384 4 38
+srv dev views:4134 t38
+committed dev t39 1 T3/64x64/f28
+fill t39 16384 5 39
+srv dev views:4135 t39
+committed dev t40 1 T3/64x64/f28
+fill t40 16384 6 40
+srv dev views:4136 t40
+committed dev t41 1 T3/64x64/f28
+fill t41 16384 7 41
+srv dev views:4137 t41
+committed dev t42 1 T3/64x64/f28
+fill t42 16384 1 42
+srv dev views:4138 t42
+committed dev t43 1 T3/64x64/f28
+fill t43 16384 2 43
+srv dev views:4139 t43
+committed dev t44 1 T3/64x64/f28
+fill t44 16384 3 44
+srv dev views:4140 t44
+committed dev t45 1 T3/64x64/f28
+fill t45 16384 4 45
+srv dev views:4141 t45
+committed dev t46 1 T3/64x64/f28
+fill t46 16384 5 46
+srv dev views:4142 t46
+committed dev t47 1 T3/64x64/f28
+fill t47 16384 6 47
+srv dev views:4143 t47
+committed dev t48 1 T3/64x64/f28
+fill t48 16384 7 48
+srv dev views:4144 t48
+committed dev t49 1 T3/64x64/f28
+fill t49 16384 1 49
+srv dev views:4145 t49
+committed dev t50 1 T3/64x64/f28
+fill t50 16384 2 50
+srv dev views:4146 t50
+committed dev t51 1 T3/64x64/f28
+fill t51 16384 3 51
+srv dev views:4147 t51
+committed dev t52 1 T3/64x64/f28
+fill t52 16384 4 52
+srv dev views:4148 t52
+committed dev t53 1 T3/64x64/f28
+fill t53 16384 5 53
+srv dev views:4149 t53
+committed dev t54 1 T3/64x64/f28
+fill t54 16384 6 54
+srv dev views:4150 t54
+committed dev t55 1 T3/64x64/f28
+fill t55 16384 7 55
+srv dev views:4151 t55
+committed dev t56 1 T3/64x64/f28
+fill t56 16384 1 56
+srv dev views:4152 t56
+committed dev t57 1 T3/64x64/f28
+fill t57 16384 2 57
+srv dev views:4153 t57
+committed dev t58 1 T3/64x64/f28
+fill t58 16384 3 58
+srv dev views:4154 t58
+committed dev t59 1 T3/64x64/f28
+fill t59 16384 4 59
+srv dev views:4155 t59
+committed dev t60 1 T3/64x64/f28
+fill t60 16384 5 60
+srv dev views:4156 t60
+committed dev t61 1 T3/64x64/f28
+fill t61 16384 6 61
+srv dev views:4157 t61
+committed dev t62 1 T3/64x64/f28
+fill t62 16384 7 62
+srv dev views:4158 t62
+committed dev t63 1 T3/64x64/f28
+fill t63 16384 1 63
+srv dev views:4159 t63
+committed dev t64 1 T3/64x64/f28
+fill t64 16384 2 64
+srv dev views:4160 t64
+committed dev t65 1 T3/64x64/f28
+fill t65 16384 3 65
+srv dev views:4161 t65
+committed dev t66 1 T3/64x64/f28
+fill t66 16384 4 66
+srv dev views:4162 t66
+committed dev t67 1 T3/64x64/f28
+fill t67 16384 5 67
+srv dev views:4163 t67
+committed dev t68 1 T3/64x64/f28
+fill t68 16384 6 68
+srv dev views:4164 t68
+committed dev t69 1 T3/64x64/f28
+fill t69 16384 7 69
+srv dev views:4165 t69
+committed dev t70 1 T3/64x64/f28
+fill t70 16384 1 70
+srv dev views:4166 t70
+committed dev t71 1 T3/64x64/f28
+fill t71 16384 2 71
+srv dev views:4167 t71
+committed dev t72 1 T3/64x64/f28
+fill t72 16384 3 72
+srv dev views:4168 t72
+committed dev t73 1 T3/64x64/f28
+fill t73 16384 4 73
+srv dev views:4169 t73
+committed dev t74 1 T3/64x64/f28
+fill t74 16384 5 74
+srv dev views:4170 t74
+committed dev t75 1 T3/64x64/f28
+fill t75 16384 6 75
+srv dev views:4171 t75
+committed dev t76 1 T3/64x64/f28
+fill t76 16384 7 76
+srv dev views:4172 t76
+committed dev t77 1 T3/64x64/f28
+fill t77 16384 1 77
+srv dev views:4173 t77
+committed dev t78 1 T3/64x64/f28
+fill t78 16384 2 78
+srv dev views:4174 t78
+committed dev t79 1 T3/64x64/f28
+fill t79 16384 3 79
+srv dev views:4175 t79
+committed dev t80 1 T3/64x64/f28
+fill t80 16384 4 80
+srv dev views:4176 t80
+committed dev t81 1 T3/64x64/f28
+fill t81 16384 5 81
+srv dev views:4177 t81
+committed dev t82 1 T3/64x64/f28
+fill t82 16384 6 82
+srv dev views:4178 t82
+committed dev t83 1 T3/64x64/f28
+fill t83 16384 7 83
+srv dev views:4179 t83
+committed dev t84 1 T3/64x64/f28
+fill t84 16384 1 84
+srv dev views:4180 t84
+committed dev t85 1 T3/64x64/f28
+fill t85 16384 2 85
+srv dev views:4181 t85
+committed dev t86 1 T3/64x64/f28
+fill t86 16384 3 86
+srv dev views:4182 t86
+committed dev t87 1 T3/64x64/f28
+fill t87 16384 4 87
+srv dev views:4183 t87
+committed dev t88 1 T3/64x64/f28
+fill t88 16384 5 88
+srv dev views:4184 t88
+committed dev t89 1 T3/64x64/f28
+fill t89 16384 6 89
+srv dev views:4185 t89
+committed dev t90 1 T3/64x64/f28
+fill t90 16384 7 90
+srv dev views:4186 t90
+committed dev t91 1 T3/64x64/f28
+fill t91 16384 1 91
+srv dev views:4187 t91
+committed dev t92 1 T3/64x64/f28
+fill t92 16384 2 92
+srv dev views:4188 t92
+committed dev t93 1 T3/64x64/f28
+fill t93 16384 3 93
+srv dev views:4189 t93
+committed dev t94 1 T3/64x64/f28
+fill t94 16384 4 94
+srv dev views:4190 t94
+committed dev t95 1 T3/64x64/f28
+fill t95 16384 5 95
+srv dev views:4191 t95
+committed dev t96 1 T3/64x64/f28
+fill t96 16384 6 96
+srv dev views:4192 t96
+committed dev t97 1 T3/64x64/f28
+fill t97 16384 7 97
+srv dev views:4193 t97
+committed dev t98 1 T3/64x64/f28
+fill t98 16384 1 98
+srv dev views:4194 t98
+committed dev t99 1 T3/64x64/f28
+fill t99 16384 2 99
+srv dev views:4195 t99
+committed dev t100 1 T3/64x64/f28
+fill t100 16384 3 100
+srv dev views:4196 t100
+committed dev t101 1 T3/64x64/f28
+fill t101 16384 4 101
+srv dev views:4197 t101
+committed dev t102 1 T3/64x64/f28
+fill t102 16384 5 102
+srv dev views:4198 t102
+committed dev t103 1 T3/64x64/f28
+fill t103 16384 6 103
+srv dev views:4199 t103
+committed dev t104 1 T3/64x64/f28
+fill t104 16384 7 104
+srv dev views:4200 t104
+committed dev t105 1 T3/64x64/f28
+fill t105 16384 1 105
+srv dev views:4201 t105
+committed dev t106 1 T3/64x64/f28
+fill t106 16384 2 106
+srv dev views:4202 t106
+committed dev t107 1 T3/64x64/f28
+fill t107 16384 3 107
+srv dev views:4203 t107
+committed dev t108 1 T3/64x64/f28
+fill t108 16384 4 108
+srv dev views:4204 t108
+committed dev t109 1 T3/64x64/f28
+fill t109 16384 5 109
+srv dev views:4205 t109
+committed dev t110 1 T3/64x64/f28
+fill t110 16384 6 110
+srv dev views:4206 t110
+committed dev t111 1 T3/64x64/f28
+fill t111 16384 7 111
+srv dev views:4207 t111
+committed dev t112 1 T3/64x64/f28
+fill t112 16384 1 112
+srv dev views:4208 t112
+committed dev t113 1 T3/64x64/f28
+fill t113 16384 2 113
+srv dev views:4209 t113
+committed dev t114 1 T3/64x64/f28
+fill t114 16384 3 114
+srv dev views:4210 t114
+committed dev t115 1 T3/64x64/f28
+fill t115 16384 4 115
+srv dev views:4211 t115
+committed dev t116 1 T3/64x64/f28
+fill t116 16384 5 116
+srv dev views:4212 t116
+committed dev t117 1 T3/64x64/f28
+fill t117 16384 6 117
+srv dev views:4213 t117
+committed dev t118 1 T3/64x64/f28
+fill t118 16384 7 118
+srv dev views:4214 t118
+committed dev t119 1 T3/64x64/f28
+fill t119 16384 1 119
+srv dev views:4215 t119
+committed dev t120 1 T3/64x64/f28
+fill t120 16384 2 120
+srv dev views:4216 t120
+committed dev t121 1 T3/64x64/f28
+fill t121 16384 3 121
+srv dev views:4217 t121
+committed dev t122 1 T3/64x64/f28
+fill t122 16384 4 122
+srv dev views:4218 t122
+committed dev t123 1 T3/64x64/f28
+fill t123 16384 5 123
+srv dev views:4219 t123
+committed dev t124 1 T3/64x64/f28
+fill t124 16384 6 124
+srv dev views:4220 t124
+committed dev t125 1 T3/64x64/f28
+fill t125 16384 7 125
+srv dev views:4221 t125
+committed dev t126 1 T3/64x64/f28
+fill t126 16384 1 126
+srv dev views:4222 t126
+committed dev t127 1 T3/64x64/f28
+fill t127 16384 2 127
+srv dev views:4223 t127
+cs_heap ch
+compute_pipeline dev ph ch
+vs_fullscreen vs
+ps_color ps 1.0 0.5 0.25 1.0
+graphics_pipeline dev g vs ps 28
+list dev lr 0 a
+list_close lr
+quiet 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+repeat 1000 dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+frame_wait dev 0 1000 0
+dispatch_cycle q l a f views ph out 1
+list_reset lr a
+set_heaps lr views
+set_pipeline lr ph
+compute_uav lr 0 out
+repeat 20000 dispatch lr 1 1 1
+list_close lr
+frame_wait dev 0 1000 0
+draw_cycle q l a f views g rtvs:0 64 1
+frame_wait dev 0 1000 0
+draw_cycle q l a f views g rtvs:0 64 1
+frame_wait dev 0 1000 0
+draw_cycle q l a f views g rtvs:0 64 1
+frame_wait dev 0 1000 0
+draw_cycle q l a f views g rtvs:0 64 1
+frame_wait dev 0 1000 0
+draw_cycle q l a f views g rtvs:0 64 1
+frame_wait dev 0 1000 0
+draw_cycle q l a f views g rtvs:0 64 1
+frame_wait dev 0 1000 0
+draw_cycle q l a f views g rtvs:0 64 1
+frame_wait dev 0 1000 0
+draw_cycle q l a f views g rtvs:0 64 1
+frame_wait dev 0 1000 0
+draw_cycle q l a f views g rtvs:0 64 1
+frame_wait dev 0 1000 0
+draw_cycle q l a f views g rtvs:0 64 1
+frame_wait dev 0 1000 0
+draw_cycle q l a f views g rtvs:0 64 1
+frame_wait dev 0 1000 0
+draw_cycle q l a f views g rtvs:0 64 1
+frame_wait dev 0 1000 0
+draw_cycle q l a f views g rtvs:0 64 1
+frame_wait dev 0 1000 0
+draw_cycle q l a f views g rtvs:0 64 1
+frame_wait dev 0 1000 0
+draw_cycle q l a f views g rtvs:0 64 1
+frame_wait dev 0 1000 0
+draw_cycle q l a f views g rtvs:0 64 1
+frame_wait dev 0 1000 0
+draw_cycle q l a f views g rtvs:0 64 1
+frame_wait dev 0 1000 0
+draw_cycle q l a f views g rtvs:0 64 1
+frame_wait dev 0 1000 0
+draw_cycle q l a f views g rtvs:0 64 1
+frame_wait dev 0 1000 0
+draw_cycle q l a f views g rtvs:0 64 1
+frame_wait dev 0 1000 0
+draw_cycle q l a f views g rtvs:0 64 1
+frame_wait dev 0 1000 0
+draw_cycle q l a f views g rtvs:0 64 1
+frame_wait dev 0 1000 0
+draw_cycle q l a f views g rtvs:0 64 1
+frame_wait dev 0 1000 0
+draw_cycle q l a f views g rtvs:0 64 1
+frame_wait dev 0 1000 0
+draw_cycle q l a f views g rtvs:0 64 1
+frame_wait dev 0 1000 0
+draw_cycle q l a f views g rtvs:0 64 1
+frame_wait dev 0 1000 0
+draw_cycle q l a f views g rtvs:0 64 1
+frame_wait dev 0 1000 0
+draw_cycle q l a f views g rtvs:0 64 1
+frame_wait dev 0 1000 0
+draw_cycle q l a f views g rtvs:0 64 1
+frame_wait dev 0 1000 0
+draw_cycle q l a f views g rtvs:0 64 1
+frame_wait dev 0 1000 0
+draw_cycle q l a f views g rtvs:0 64 1
+frame_wait dev 0 1000 0
+draw_cycle q l a f views g rtvs:0 64 1
+frame_wait dev 0 1000 0
+draw_cycle q l a f views g rtvs:0 64 1
+frame_wait dev 0 1000 0
+draw_cycle q l a f views g rtvs:0 64 1
+frame_wait dev 0 1000 0
+draw_cycle q l a f views g rtvs:0 64 1
+frame_wait dev 0 1000 0
+draw_cycle q l a f views g rtvs:0 64 1
+frame_wait dev 0 1000 0
+draw_cycle q l a f views g rtvs:0 64 1
+frame_wait dev 0 1000 0
+draw_cycle q l a f views g rtvs:0 64 1
+frame_wait dev 0 1000 0
+draw_cycle q l a f views g rtvs:0 64 1
+frame_wait dev 0 1000 0
+draw_cycle q l a f views g rtvs:0 64 1
+frame_wait dev 0 1000 0
+draw_cycle q l a f views g rtvs:0 64 1
+frame_wait dev 0 1000 0
+draw_cycle q l a f views g rtvs:0 64 1
+frame_wait dev 0 1000 0
+draw_cycle q l a f views g rtvs:0 64 1
+frame_wait dev 0 1000 0
+draw_cycle q l a f views g rtvs:0 64 1
+frame_wait dev 0 1000 0
+draw_cycle q l a f views g rtvs:0 64 1
+frame_wait dev 0 1000 0
+draw_cycle q l a f views g rtvs:0 64 1
+frame_wait dev 0 1000 0
+draw_cycle q l a f views g rtvs:0 64 1
+frame_wait dev 0 1000 0
+draw_cycle q l a f views g rtvs:0 64 1
+frame_wait dev 0 1000 0
+draw_cycle q l a f views g rtvs:0 64 1
+frame_wait dev 0 1000 0
+draw_cycle q l a f views g rtvs:0 64 1
+frame_wait dev 0 1000 0
+draw_cycle q l a f views g rtvs:0 64 1
+frame_wait dev 0 1000 0
+draw_cycle q l a f views g rtvs:0 64 1
+frame_wait dev 0 1000 0
+draw_cycle q l a f views g rtvs:0 64 1
+frame_wait dev 0 1000 0
+draw_cycle q l a f views g rtvs:0 64 1
+frame_wait dev 0 1000 0
+draw_cycle q l a f views g rtvs:0 64 1
+frame_wait dev 0 1000 0
+draw_cycle q l a f views g rtvs:0 64 1
+frame_wait dev 0 1000 0
+draw_cycle q l a f views g rtvs:0 64 1
+frame_wait dev 0 1000 0
+draw_cycle q l a f views g rtvs:0 64 1
+frame_wait dev 0 1000 0
+draw_cycle q l a f views g rtvs:0 64 1
+frame_wait dev 0 1000 0
+draw_cycle q l a f views g rtvs:0 64 1
+frame_wait dev 0 1000 0
+draw_cycle q l a f views g rtvs:0 64 1
+frame_wait dev 0 1000 0
+draw_cycle q l a f views g rtvs:0 64 1
+frame_wait dev 0 1000 0
+draw_cycle q l a f views g rtvs:0 64 1
+frame_wait dev 0 1000 0
+draw_cycle q l a f views g rtvs:0 64 1
+frame_wait dev 0 1000 0
+draw_cycle q l a f views g rtvs:0 64 1
+frame_wait dev 0 1000 0
+draw_cycle q l a f views g rtvs:0 64 1
+frame_wait dev 0 1000 0
+draw_cycle q l a f views g rtvs:0 64 1
+frame_wait dev 0 1000 0
+draw_cycle q l a f views g rtvs:0 64 1
+frame_wait dev 0 1000 0
+draw_cycle q l a f views g rtvs:0 64 1
+frame_wait dev 0 1000 0
+draw_cycle q l a f views g rtvs:0 64 1
+frame_wait dev 0 1000 0
+draw_cycle q l a f views g rtvs:0 64 1
+frame_wait dev 0 1000 0
+draw_cycle q l a f views g rtvs:0 64 1
+frame_wait dev 0 1000 0
+draw_cycle q l a f views g rtvs:0 64 1
+frame_wait dev 0 1000 0
+draw_cycle q l a f views g rtvs:0 64 1
+frame_wait dev 0 1000 0
+draw_cycle q l a f views g rtvs:0 64 1
+frame_wait dev 0 1000 0
+draw_cycle q l a f views g rtvs:0 64 1
+frame_wait dev 0 1000 0
+draw_cycle q l a f views g rtvs:0 64 1
+frame_wait dev 0 1000 0
+draw_cycle q l a f views g rtvs:0 64 1
+frame_wait dev 0 1000 0
+draw_cycle q l a f views g rtvs:0 64 1
+frame_wait dev 0 1000 0
+draw_cycle q l a f views g rtvs:0 64 1
+frame_wait dev 0 1000 0
+draw_cycle q l a f views g rtvs:0 64 1
+frame_wait dev 0 1000 0
+draw_cycle q l a f views g rtvs:0 64 1
+frame_wait dev 0 1000 0
+draw_cycle q l a f views g rtvs:0 64 1
+frame_wait dev 0 1000 0
+draw_cycle q l a f views g rtvs:0 64 1
+frame_wait dev 0 1000 0
+draw_cycle q l a f views g rtvs:0 64 1
+frame_wait dev 0 1000 0
+draw_cycle q l a f views g rtvs:0 64 1
+frame_wait dev 0 1000 0
+draw_cycle q l a f views g rtvs:0 64 1
+frame_wait dev 0 1000 0
+draw_cycle q l a f views g rtvs:0 64 1
+frame_wait dev 0 1000 0
+draw_cycle q l a f views g rtvs:0 64 1
+frame_wait dev 0 1000 0
+draw_cycle q l a f views g rtvs:0 64 1
+frame_wait dev 0 1000 0
+draw_cycle q l a f views g rtvs:0 64 1
+frame_wait dev 0 1000 0
+draw_cycle q l a f views g rtvs:0 64 1
+frame_wait dev 0 1000 0
+draw_cycle q l a f views g rtvs:0 64 1
+frame_wait dev 0 1000 0
+draw_cycle q l a f views g rtvs:0 64 1
+frame_wait dev 0 1000 0
+draw_cycle q l a f views g rtvs:0 64 1
+frame_wait dev 0 1000 0
+draw_cycle q l a f views g rtvs:0 64 1
+frame_wait dev 0 1000 0
+draw_cycle q l a f views g rtvs:0 64 1
+frame_wait dev 0 1000 0
+draw_cycle q l a f views g rtvs:0 64 1
+frame_wait dev 0 1000 0
+draw_cycle q l a f views g rtvs:0 64 1
+frame_wait dev 0 1000 0
+draw_cycle q l a f views g rtvs:0 64 1
+repeat 1000 draw_cycle q l a f views g rtvs:0 64 1
+end

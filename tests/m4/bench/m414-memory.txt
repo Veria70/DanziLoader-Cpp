@@ -1,0 +1,1275 @@
+# M4.14 title memory by address (time per call). 64 MiB of title memory
+# at a console address; a shader that loads through an address in two
+# root constants. First 16 copies are numbered (an address in each 4 MiB
+# window). Then per frame a list whose first memory dispatch brings all
+# numbered copies up to date and reads the faults, and 20,000 dispatches
+# recorded in one list (the copies' refresh once a list). A plain
+# dispatch (root UAV) beside them. Written by tools/gen_m414_bench.py.
+runtime
+shader_cache c:/tmp/m4-shader-cache c:/tmp/m4-shader-cache/build.bin
+create_device dev device11
+create_queue dev q 0
+create_fence dev f 0
+allocator dev a 0
+list dev l 0 a
+list_close l
+set_interval dev 1000
+desc_heap dev views 0 4096 flags=1
+committed dev out 1 B65536
+title_memory mem 67108864 0x1234000000
+fill mem 1024 3 1
+cs_memory cm
+cs_store cs1 0x12345678
+compute_pipeline dev pm cm
+compute_pipeline dev p1 cs1
+frame_wait dev 0 1000 0
+list_reset l a
+set_heaps l views
+set_pipeline l pm
+compute_uav l 0 out
+compute_address l 1 mem+0
+dispatch l 1 1 1
+compute_address l 1 mem+4194304
+dispatch l 1 1 1
+compute_address l 1 mem+8388608
+dispatch l 1 1 1
+compute_address l 1 mem+12582912
+dispatch l 1 1 1
+compute_address l 1 mem+16777216
+dispatch l 1 1 1
+compute_address l 1 mem+20971520
+dispatch l 1 1 1
+compute_address l 1 mem+25165824
+dispatch l 1 1 1
+compute_address l 1 mem+29360128
+dispatch l 1 1 1
+compute_address l 1 mem+33554432
+dispatch l 1 1 1
+compute_address l 1 mem+37748736
+dispatch l 1 1 1
+compute_address l 1 mem+41943040
+dispatch l 1 1 1
+compute_address l 1 mem+46137344
+dispatch l 1 1 1
+compute_address l 1 mem+50331648
+dispatch l 1 1 1
+compute_address l 1 mem+54525952
+dispatch l 1 1 1
+compute_address l 1 mem+58720256
+dispatch l 1 1 1
+compute_address l 1 mem+62914560
+dispatch l 1 1 1
+list_close l
+execute q l
+queue_signal q f 1
+fence_event f 1 null
+quiet 1
+frame_wait dev 0 1000 0
+list_reset l a
+set_heaps l views
+set_pipeline l pm
+compute_uav l 0 out
+compute_address l 1 mem
+dispatch l 1 1 1
+dispatch l 1 1 1
+list_close l
+execute q l
+queue_signal q f 2
+fence_event f 2 null
+frame_wait dev 0 1000 0
+list_reset l a
+set_heaps l views
+set_pipeline l pm
+compute_uav l 0 out
+compute_address l 1 mem
+dispatch l 1 1 1
+dispatch l 1 1 1
+list_close l
+execute q l
+queue_signal q f 3
+fence_event f 3 null
+frame_wait dev 0 1000 0
+list_reset l a
+set_heaps l views
+set_pipeline l pm
+compute_uav l 0 out
+compute_address l 1 mem
+dispatch l 1 1 1
+dispatch l 1 1 1
+list_close l
+execute q l
+queue_signal q f 4
+fence_event f 4 null
+frame_wait dev 0 1000 0
+list_reset l a
+set_heaps l views
+set_pipeline l pm
+compute_uav l 0 out
+compute_address l 1 mem
+dispatch l 1 1 1
+dispatch l 1 1 1
+list_close l
+execute q l
+queue_signal q f 5
+fence_event f 5 null
+frame_wait dev 0 1000 0
+list_reset l a
+set_heaps l views
+set_pipeline l pm
+compute_uav l 0 out
+compute_address l 1 mem
+dispatch l 1 1 1
+dispatch l 1 1 1
+list_close l
+execute q l
+queue_signal q f 6
+fence_event f 6 null
+frame_wait dev 0 1000 0
+list_reset l a
+set_heaps l views
+set_pipeline l pm
+compute_uav l 0 out
+compute_address l 1 mem
+dispatch l 1 1 1
+dispatch l 1 1 1
+list_close l
+execute q l
+queue_signal q f 7
+fence_event f 7 null
+frame_wait dev 0 1000 0
+list_reset l a
+set_heaps l views
+set_pipeline l pm
+compute_uav l 0 out
+compute_address l 1 mem
+dispatch l 1 1 1
+dispatch l 1 1 1
+list_close l
+execute q l
+queue_signal q f 8
+fence_event f 8 null
+frame_wait dev 0 1000 0
+list_reset l a
+set_heaps l views
+set_pipeline l pm
+compute_uav l 0 out
+compute_address l 1 mem
+dispatch l 1 1 1
+dispatch l 1 1 1
+list_close l
+execute q l
+queue_signal q f 9
+fence_event f 9 null
+frame_wait dev 0 1000 0
+list_reset l a
+set_heaps l views
+set_pipeline l pm
+compute_uav l 0 out
+compute_address l 1 mem
+dispatch l 1 1 1
+dispatch l 1 1 1
+list_close l
+execute q l
+queue_signal q f 10
+fence_event f 10 null
+frame_wait dev 0 1000 0
+list_reset l a
+set_heaps l views
+set_pipeline l pm
+compute_uav l 0 out
+compute_address l 1 mem
+dispatch l 1 1 1
+dispatch l 1 1 1
+list_close l
+execute q l
+queue_signal q f 11
+fence_event f 11 null
+frame_wait dev 0 1000 0
+list_reset l a
+set_heaps l views
+set_pipeline l pm
+compute_uav l 0 out
+compute_address l 1 mem
+dispatch l 1 1 1
+dispatch l 1 1 1
+list_close l
+execute q l
+queue_signal q f 12
+fence_event f 12 null
+frame_wait dev 0 1000 0
+list_reset l a
+set_heaps l views
+set_pipeline l pm
+compute_uav l 0 out
+compute_address l 1 mem
+dispatch l 1 1 1
+dispatch l 1 1 1
+list_close l
+execute q l
+queue_signal q f 13
+fence_event f 13 null
+frame_wait dev 0 1000 0
+list_reset l a
+set_heaps l views
+set_pipeline l pm
+compute_uav l 0 out
+compute_address l 1 mem
+dispatch l 1 1 1
+dispatch l 1 1 1
+list_close l
+execute q l
+queue_signal q f 14
+fence_event f 14 null
+frame_wait dev 0 1000 0
+list_reset l a
+set_heaps l views
+set_pipeline l pm
+compute_uav l 0 out
+compute_address l 1 mem
+dispatch l 1 1 1
+dispatch l 1 1 1
+list_close l
+execute q l
+queue_signal q f 15
+fence_event f 15 null
+frame_wait dev 0 1000 0
+list_reset l a
+set_heaps l views
+set_pipeline l pm
+compute_uav l 0 out
+compute_address l 1 mem
+dispatch l 1 1 1
+dispatch l 1 1 1
+list_close l
+execute q l
+queue_signal q f 16
+fence_event f 16 null
+frame_wait dev 0 1000 0
+list_reset l a
+set_heaps l views
+set_pipeline l pm
+compute_uav l 0 out
+compute_address l 1 mem
+dispatch l 1 1 1
+dispatch l 1 1 1
+list_close l
+execute q l
+queue_signal q f 17
+fence_event f 17 null
+frame_wait dev 0 1000 0
+list_reset l a
+set_heaps l views
+set_pipeline l pm
+compute_uav l 0 out
+compute_address l 1 mem
+dispatch l 1 1 1
+dispatch l 1 1 1
+list_close l
+execute q l
+queue_signal q f 18
+fence_event f 18 null
+frame_wait dev 0 1000 0
+list_reset l a
+set_heaps l views
+set_pipeline l pm
+compute_uav l 0 out
+compute_address l 1 mem
+dispatch l 1 1 1
+dispatch l 1 1 1
+list_close l
+execute q l
+queue_signal q f 19
+fence_event f 19 null
+frame_wait dev 0 1000 0
+list_reset l a
+set_heaps l views
+set_pipeline l pm
+compute_uav l 0 out
+compute_address l 1 mem
+dispatch l 1 1 1
+dispatch l 1 1 1
+list_close l
+execute q l
+queue_signal q f 20
+fence_event f 20 null
+frame_wait dev 0 1000 0
+list_reset l a
+set_heaps l views
+set_pipeline l pm
+compute_uav l 0 out
+compute_address l 1 mem
+dispatch l 1 1 1
+dispatch l 1 1 1
+list_close l
+execute q l
+queue_signal q f 21
+fence_event f 21 null
+frame_wait dev 0 1000 0
+list_reset l a
+set_heaps l views
+set_pipeline l pm
+compute_uav l 0 out
+compute_address l 1 mem
+dispatch l 1 1 1
+dispatch l 1 1 1
+list_close l
+execute q l
+queue_signal q f 22
+fence_event f 22 null
+frame_wait dev 0 1000 0
+list_reset l a
+set_heaps l views
+set_pipeline l pm
+compute_uav l 0 out
+compute_address l 1 mem
+dispatch l 1 1 1
+dispatch l 1 1 1
+list_close l
+execute q l
+queue_signal q f 23
+fence_event f 23 null
+frame_wait dev 0 1000 0
+list_reset l a
+set_heaps l views
+set_pipeline l pm
+compute_uav l 0 out
+compute_address l 1 mem
+dispatch l 1 1 1
+dispatch l 1 1 1
+list_close l
+execute q l
+queue_signal q f 24
+fence_event f 24 null
+frame_wait dev 0 1000 0
+list_reset l a
+set_heaps l views
+set_pipeline l pm
+compute_uav l 0 out
+compute_address l 1 mem
+dispatch l 1 1 1
+dispatch l 1 1 1
+list_close l
+execute q l
+queue_signal q f 25
+fence_event f 25 null
+frame_wait dev 0 1000 0
+list_reset l a
+set_heaps l views
+set_pipeline l pm
+compute_uav l 0 out
+compute_address l 1 mem
+dispatch l 1 1 1
+dispatch l 1 1 1
+list_close l
+execute q l
+queue_signal q f 26
+fence_event f 26 null
+frame_wait dev 0 1000 0
+list_reset l a
+set_heaps l views
+set_pipeline l pm
+compute_uav l 0 out
+compute_address l 1 mem
+dispatch l 1 1 1
+dispatch l 1 1 1
+list_close l
+execute q l
+queue_signal q f 27
+fence_event f 27 null
+frame_wait dev 0 1000 0
+list_reset l a
+set_heaps l views
+set_pipeline l pm
+compute_uav l 0 out
+compute_address l 1 mem
+dispatch l 1 1 1
+dispatch l 1 1 1
+list_close l
+execute q l
+queue_signal q f 28
+fence_event f 28 null
+frame_wait dev 0 1000 0
+list_reset l a
+set_heaps l views
+set_pipeline l pm
+compute_uav l 0 out
+compute_address l 1 mem
+dispatch l 1 1 1
+dispatch l 1 1 1
+list_close l
+execute q l
+queue_signal q f 29
+fence_event f 29 null
+frame_wait dev 0 1000 0
+list_reset l a
+set_heaps l views
+set_pipeline l pm
+compute_uav l 0 out
+compute_address l 1 mem
+dispatch l 1 1 1
+dispatch l 1 1 1
+list_close l
+execute q l
+queue_signal q f 30
+fence_event f 30 null
+frame_wait dev 0 1000 0
+list_reset l a
+set_heaps l views
+set_pipeline l pm
+compute_uav l 0 out
+compute_address l 1 mem
+dispatch l 1 1 1
+dispatch l 1 1 1
+list_close l
+execute q l
+queue_signal q f 31
+fence_event f 31 null
+frame_wait dev 0 1000 0
+list_reset l a
+set_heaps l views
+set_pipeline l pm
+compute_uav l 0 out
+compute_address l 1 mem
+dispatch l 1 1 1
+dispatch l 1 1 1
+list_close l
+execute q l
+queue_signal q f 32
+fence_event f 32 null
+frame_wait dev 0 1000 0
+list_reset l a
+set_heaps l views
+set_pipeline l pm
+compute_uav l 0 out
+compute_address l 1 mem
+dispatch l 1 1 1
+dispatch l 1 1 1
+list_close l
+execute q l
+queue_signal q f 33
+fence_event f 33 null
+frame_wait dev 0 1000 0
+list_reset l a
+set_heaps l views
+set_pipeline l pm
+compute_uav l 0 out
+compute_address l 1 mem
+dispatch l 1 1 1
+dispatch l 1 1 1
+list_close l
+execute q l
+queue_signal q f 34
+fence_event f 34 null
+frame_wait dev 0 1000 0
+list_reset l a
+set_heaps l views
+set_pipeline l pm
+compute_uav l 0 out
+compute_address l 1 mem
+dispatch l 1 1 1
+dispatch l 1 1 1
+list_close l
+execute q l
+queue_signal q f 35
+fence_event f 35 null
+frame_wait dev 0 1000 0
+list_reset l a
+set_heaps l views
+set_pipeline l pm
+compute_uav l 0 out
+compute_address l 1 mem
+dispatch l 1 1 1
+dispatch l 1 1 1
+list_close l
+execute q l
+queue_signal q f 36
+fence_event f 36 null
+frame_wait dev 0 1000 0
+list_reset l a
+set_heaps l views
+set_pipeline l pm
+compute_uav l 0 out
+compute_address l 1 mem
+dispatch l 1 1 1
+dispatch l 1 1 1
+list_close l
+execute q l
+queue_signal q f 37
+fence_event f 37 null
+frame_wait dev 0 1000 0
+list_reset l a
+set_heaps l views
+set_pipeline l pm
+compute_uav l 0 out
+compute_address l 1 mem
+dispatch l 1 1 1
+dispatch l 1 1 1
+list_close l
+execute q l
+queue_signal q f 38
+fence_event f 38 null
+frame_wait dev 0 1000 0
+list_reset l a
+set_heaps l views
+set_pipeline l pm
+compute_uav l 0 out
+compute_address l 1 mem
+dispatch l 1 1 1
+dispatch l 1 1 1
+list_close l
+execute q l
+queue_signal q f 39
+fence_event f 39 null
+frame_wait dev 0 1000 0
+list_reset l a
+set_heaps l views
+set_pipeline l pm
+compute_uav l 0 out
+compute_address l 1 mem
+dispatch l 1 1 1
+dispatch l 1 1 1
+list_close l
+execute q l
+queue_signal q f 40
+fence_event f 40 null
+frame_wait dev 0 1000 0
+list_reset l a
+set_heaps l views
+set_pipeline l pm
+compute_uav l 0 out
+compute_address l 1 mem
+dispatch l 1 1 1
+dispatch l 1 1 1
+list_close l
+execute q l
+queue_signal q f 41
+fence_event f 41 null
+frame_wait dev 0 1000 0
+list_reset l a
+set_heaps l views
+set_pipeline l pm
+compute_uav l 0 out
+compute_address l 1 mem
+dispatch l 1 1 1
+dispatch l 1 1 1
+list_close l
+execute q l
+queue_signal q f 42
+fence_event f 42 null
+frame_wait dev 0 1000 0
+list_reset l a
+set_heaps l views
+set_pipeline l pm
+compute_uav l 0 out
+compute_address l 1 mem
+dispatch l 1 1 1
+dispatch l 1 1 1
+list_close l
+execute q l
+queue_signal q f 43
+fence_event f 43 null
+frame_wait dev 0 1000 0
+list_reset l a
+set_heaps l views
+set_pipeline l pm
+compute_uav l 0 out
+compute_address l 1 mem
+dispatch l 1 1 1
+dispatch l 1 1 1
+list_close l
+execute q l
+queue_signal q f 44
+fence_event f 44 null
+frame_wait dev 0 1000 0
+list_reset l a
+set_heaps l views
+set_pipeline l pm
+compute_uav l 0 out
+compute_address l 1 mem
+dispatch l 1 1 1
+dispatch l 1 1 1
+list_close l
+execute q l
+queue_signal q f 45
+fence_event f 45 null
+frame_wait dev 0 1000 0
+list_reset l a
+set_heaps l views
+set_pipeline l pm
+compute_uav l 0 out
+compute_address l 1 mem
+dispatch l 1 1 1
+dispatch l 1 1 1
+list_close l
+execute q l
+queue_signal q f 46
+fence_event f 46 null
+frame_wait dev 0 1000 0
+list_reset l a
+set_heaps l views
+set_pipeline l pm
+compute_uav l 0 out
+compute_address l 1 mem
+dispatch l 1 1 1
+dispatch l 1 1 1
+list_close l
+execute q l
+queue_signal q f 47
+fence_event f 47 null
+frame_wait dev 0 1000 0
+list_reset l a
+set_heaps l views
+set_pipeline l pm
+compute_uav l 0 out
+compute_address l 1 mem
+dispatch l 1 1 1
+dispatch l 1 1 1
+list_close l
+execute q l
+queue_signal q f 48
+fence_event f 48 null
+frame_wait dev 0 1000 0
+list_reset l a
+set_heaps l views
+set_pipeline l pm
+compute_uav l 0 out
+compute_address l 1 mem
+dispatch l 1 1 1
+dispatch l 1 1 1
+list_close l
+execute q l
+queue_signal q f 49
+fence_event f 49 null
+frame_wait dev 0 1000 0
+list_reset l a
+set_heaps l views
+set_pipeline l pm
+compute_uav l 0 out
+compute_address l 1 mem
+dispatch l 1 1 1
+dispatch l 1 1 1
+list_close l
+execute q l
+queue_signal q f 50
+fence_event f 50 null
+frame_wait dev 0 1000 0
+list_reset l a
+set_heaps l views
+set_pipeline l pm
+compute_uav l 0 out
+compute_address l 1 mem
+dispatch l 1 1 1
+dispatch l 1 1 1
+list_close l
+execute q l
+queue_signal q f 51
+fence_event f 51 null
+frame_wait dev 0 1000 0
+list_reset l a
+set_heaps l views
+set_pipeline l pm
+compute_uav l 0 out
+compute_address l 1 mem
+dispatch l 1 1 1
+dispatch l 1 1 1
+list_close l
+execute q l
+queue_signal q f 52
+fence_event f 52 null
+frame_wait dev 0 1000 0
+list_reset l a
+set_heaps l views
+set_pipeline l pm
+compute_uav l 0 out
+compute_address l 1 mem
+dispatch l 1 1 1
+dispatch l 1 1 1
+list_close l
+execute q l
+queue_signal q f 53
+fence_event f 53 null
+frame_wait dev 0 1000 0
+list_reset l a
+set_heaps l views
+set_pipeline l pm
+compute_uav l 0 out
+compute_address l 1 mem
+dispatch l 1 1 1
+dispatch l 1 1 1
+list_close l
+execute q l
+queue_signal q f 54
+fence_event f 54 null
+frame_wait dev 0 1000 0
+list_reset l a
+set_heaps l views
+set_pipeline l pm
+compute_uav l 0 out
+compute_address l 1 mem
+dispatch l 1 1 1
+dispatch l 1 1 1
+list_close l
+execute q l
+queue_signal q f 55
+fence_event f 55 null
+frame_wait dev 0 1000 0
+list_reset l a
+set_heaps l views
+set_pipeline l pm
+compute_uav l 0 out
+compute_address l 1 mem
+dispatch l 1 1 1
+dispatch l 1 1 1
+list_close l
+execute q l
+queue_signal q f 56
+fence_event f 56 null
+frame_wait dev 0 1000 0
+list_reset l a
+set_heaps l views
+set_pipeline l pm
+compute_uav l 0 out
+compute_address l 1 mem
+dispatch l 1 1 1
+dispatch l 1 1 1
+list_close l
+execute q l
+queue_signal q f 57
+fence_event f 57 null
+frame_wait dev 0 1000 0
+list_reset l a
+set_heaps l views
+set_pipeline l pm
+compute_uav l 0 out
+compute_address l 1 mem
+dispatch l 1 1 1
+dispatch l 1 1 1
+list_close l
+execute q l
+queue_signal q f 58
+fence_event f 58 null
+frame_wait dev 0 1000 0
+list_reset l a
+set_heaps l views
+set_pipeline l pm
+compute_uav l 0 out
+compute_address l 1 mem
+dispatch l 1 1 1
+dispatch l 1 1 1
+list_close l
+execute q l
+queue_signal q f 59
+fence_event f 59 null
+frame_wait dev 0 1000 0
+list_reset l a
+set_heaps l views
+set_pipeline l pm
+compute_uav l 0 out
+compute_address l 1 mem
+dispatch l 1 1 1
+dispatch l 1 1 1
+list_close l
+execute q l
+queue_signal q f 60
+fence_event f 60 null
+frame_wait dev 0 1000 0
+list_reset l a
+set_heaps l views
+set_pipeline l pm
+compute_uav l 0 out
+compute_address l 1 mem
+dispatch l 1 1 1
+dispatch l 1 1 1
+list_close l
+execute q l
+queue_signal q f 61
+fence_event f 61 null
+frame_wait dev 0 1000 0
+list_reset l a
+set_heaps l views
+set_pipeline l pm
+compute_uav l 0 out
+compute_address l 1 mem
+dispatch l 1 1 1
+dispatch l 1 1 1
+list_close l
+execute q l
+queue_signal q f 62
+fence_event f 62 null
+frame_wait dev 0 1000 0
+list_reset l a
+set_heaps l views
+set_pipeline l pm
+compute_uav l 0 out
+compute_address l 1 mem
+dispatch l 1 1 1
+dispatch l 1 1 1
+list_close l
+execute q l
+queue_signal q f 63
+fence_event f 63 null
+frame_wait dev 0 1000 0
+list_reset l a
+set_heaps l views
+set_pipeline l pm
+compute_uav l 0 out
+compute_address l 1 mem
+dispatch l 1 1 1
+dispatch l 1 1 1
+list_close l
+execute q l
+queue_signal q f 64
+fence_event f 64 null
+frame_wait dev 0 1000 0
+list_reset l a
+set_heaps l views
+set_pipeline l pm
+compute_uav l 0 out
+compute_address l 1 mem
+dispatch l 1 1 1
+dispatch l 1 1 1
+list_close l
+execute q l
+queue_signal q f 65
+fence_event f 65 null
+frame_wait dev 0 1000 0
+list_reset l a
+set_heaps l views
+set_pipeline l pm
+compute_uav l 0 out
+compute_address l 1 mem
+dispatch l 1 1 1
+dispatch l 1 1 1
+list_close l
+execute q l
+queue_signal q f 66
+fence_event f 66 null
+frame_wait dev 0 1000 0
+list_reset l a
+set_heaps l views
+set_pipeline l pm
+compute_uav l 0 out
+compute_address l 1 mem
+dispatch l 1 1 1
+dispatch l 1 1 1
+list_close l
+execute q l
+queue_signal q f 67
+fence_event f 67 null
+frame_wait dev 0 1000 0
+list_reset l a
+set_heaps l views
+set_pipeline l pm
+compute_uav l 0 out
+compute_address l 1 mem
+dispatch l 1 1 1
+dispatch l 1 1 1
+list_close l
+execute q l
+queue_signal q f 68
+fence_event f 68 null
+frame_wait dev 0 1000 0
+list_reset l a
+set_heaps l views
+set_pipeline l pm
+compute_uav l 0 out
+compute_address l 1 mem
+dispatch l 1 1 1
+dispatch l 1 1 1
+list_close l
+execute q l
+queue_signal q f 69
+fence_event f 69 null
+frame_wait dev 0 1000 0
+list_reset l a
+set_heaps l views
+set_pipeline l pm
+compute_uav l 0 out
+compute_address l 1 mem
+dispatch l 1 1 1
+dispatch l 1 1 1
+list_close l
+execute q l
+queue_signal q f 70
+fence_event f 70 null
+frame_wait dev 0 1000 0
+list_reset l a
+set_heaps l views
+set_pipeline l pm
+compute_uav l 0 out
+compute_address l 1 mem
+dispatch l 1 1 1
+dispatch l 1 1 1
+list_close l
+execute q l
+queue_signal q f 71
+fence_event f 71 null
+frame_wait dev 0 1000 0
+list_reset l a
+set_heaps l views
+set_pipeline l pm
+compute_uav l 0 out
+compute_address l 1 mem
+dispatch l 1 1 1
+dispatch l 1 1 1
+list_close l
+execute q l
+queue_signal q f 72
+fence_event f 72 null
+frame_wait dev 0 1000 0
+list_reset l a
+set_heaps l views
+set_pipeline l pm
+compute_uav l 0 out
+compute_address l 1 mem
+dispatch l 1 1 1
+dispatch l 1 1 1
+list_close l
+execute q l
+queue_signal q f 73
+fence_event f 73 null
+frame_wait dev 0 1000 0
+list_reset l a
+set_heaps l views
+set_pipeline l pm
+compute_uav l 0 out
+compute_address l 1 mem
+dispatch l 1 1 1
+dispatch l 1 1 1
+list_close l
+execute q l
+queue_signal q f 74
+fence_event f 74 null
+frame_wait dev 0 1000 0
+list_reset l a
+set_heaps l views
+set_pipeline l pm
+compute_uav l 0 out
+compute_address l 1 mem
+dispatch l 1 1 1
+dispatch l 1 1 1
+list_close l
+execute q l
+queue_signal q f 75
+fence_event f 75 null
+frame_wait dev 0 1000 0
+list_reset l a
+set_heaps l views
+set_pipeline l pm
+compute_uav l 0 out
+compute_address l 1 mem
+dispatch l 1 1 1
+dispatch l 1 1 1
+list_close l
+execute q l
+queue_signal q f 76
+fence_event f 76 null
+frame_wait dev 0 1000 0
+list_reset l a
+set_heaps l views
+set_pipeline l pm
+compute_uav l 0 out
+compute_address l 1 mem
+dispatch l 1 1 1
+dispatch l 1 1 1
+list_close l
+execute q l
+queue_signal q f 77
+fence_event f 77 null
+frame_wait dev 0 1000 0
+list_reset l a
+set_heaps l views
+set_pipeline l pm
+compute_uav l 0 out
+compute_address l 1 mem
+dispatch l 1 1 1
+dispatch l 1 1 1
+list_close l
+execute q l
+queue_signal q f 78
+fence_event f 78 null
+frame_wait dev 0 1000 0
+list_reset l a
+set_heaps l views
+set_pipeline l pm
+compute_uav l 0 out
+compute_address l 1 mem
+dispatch l 1 1 1
+dispatch l 1 1 1
+list_close l
+execute q l
+queue_signal q f 79
+fence_event f 79 null
+frame_wait dev 0 1000 0
+list_reset l a
+set_heaps l views
+set_pipeline l pm
+compute_uav l 0 out
+compute_address l 1 mem
+dispatch l 1 1 1
+dispatch l 1 1 1
+list_close l
+execute q l
+queue_signal q f 80
+fence_event f 80 null
+frame_wait dev 0 1000 0
+list_reset l a
+set_heaps l views
+set_pipeline l pm
+compute_uav l 0 out
+compute_address l 1 mem
+dispatch l 1 1 1
+dispatch l 1 1 1
+list_close l
+execute q l
+queue_signal q f 81
+fence_event f 81 null
+frame_wait dev 0 1000 0
+list_reset l a
+set_heaps l views
+set_pipeline l pm
+compute_uav l 0 out
+compute_address l 1 mem
+dispatch l 1 1 1
+dispatch l 1 1 1
+list_close l
+execute q l
+queue_signal q f 82
+fence_event f 82 null
+frame_wait dev 0 1000 0
+list_reset l a
+set_heaps l views
+set_pipeline l pm
+compute_uav l 0 out
+compute_address l 1 mem
+dispatch l 1 1 1
+dispatch l 1 1 1
+list_close l
+execute q l
+queue_signal q f 83
+fence_event f 83 null
+frame_wait dev 0 1000 0
+list_reset l a
+set_heaps l views
+set_pipeline l pm
+compute_uav l 0 out
+compute_address l 1 mem
+dispatch l 1 1 1
+dispatch l 1 1 1
+list_close l
+execute q l
+queue_signal q f 84
+fence_event f 84 null
+frame_wait dev 0 1000 0
+list_reset l a
+set_heaps l views
+set_pipeline l pm
+compute_uav l 0 out
+compute_address l 1 mem
+dispatch l 1 1 1
+dispatch l 1 1 1
+list_close l
+execute q l
+queue_signal q f 85
+fence_event f 85 null
+frame_wait dev 0 1000 0
+list_reset l a
+set_heaps l views
+set_pipeline l pm
+compute_uav l 0 out
+compute_address l 1 mem
+dispatch l 1 1 1
+dispatch l 1 1 1
+list_close l
+execute q l
+queue_signal q f 86
+fence_event f 86 null
+frame_wait dev 0 1000 0
+list_reset l a
+set_heaps l views
+set_pipeline l pm
+compute_uav l 0 out
+compute_address l 1 mem
+dispatch l 1 1 1
+dispatch l 1 1 1
+list_close l
+execute q l
+queue_signal q f 87
+fence_event f 87 null
+frame_wait dev 0 1000 0
+list_reset l a
+set_heaps l views
+set_pipeline l pm
+compute_uav l 0 out
+compute_address l 1 mem
+dispatch l 1 1 1
+dispatch l 1 1 1
+list_close l
+execute q l
+queue_signal q f 88
+fence_event f 88 null
+frame_wait dev 0 1000 0
+list_reset l a
+set_heaps l views
+set_pipeline l pm
+compute_uav l 0 out
+compute_address l 1 mem
+dispatch l 1 1 1
+dispatch l 1 1 1
+list_close l
+execute q l
+queue_signal q f 89
+fence_event f 89 null
+frame_wait dev 0 1000 0
+list_reset l a
+set_heaps l views
+set_pipeline l pm
+compute_uav l 0 out
+compute_address l 1 mem
+dispatch l 1 1 1
+dispatch l 1 1 1
+list_close l
+execute q l
+queue_signal q f 90
+fence_event f 90 null
+frame_wait dev 0 1000 0
+list_reset l a
+set_heaps l views
+set_pipeline l pm
+compute_uav l 0 out
+compute_address l 1 mem
+dispatch l 1 1 1
+dispatch l 1 1 1
+list_close l
+execute q l
+queue_signal q f 91
+fence_event f 91 null
+frame_wait dev 0 1000 0
+list_reset l a
+set_heaps l views
+set_pipeline l pm
+compute_uav l 0 out
+compute_address l 1 mem
+dispatch l 1 1 1
+dispatch l 1 1 1
+list_close l
+execute q l
+queue_signal q f 92
+fence_event f 92 null
+frame_wait dev 0 1000 0
+list_reset l a
+set_heaps l views
+set_pipeline l pm
+compute_uav l 0 out
+compute_address l 1 mem
+dispatch l 1 1 1
+dispatch l 1 1 1
+list_close l
+execute q l
+queue_signal q f 93
+fence_event f 93 null
+frame_wait dev 0 1000 0
+list_reset l a
+set_heaps l views
+set_pipeline l pm
+compute_uav l 0 out
+compute_address l 1 mem
+dispatch l 1 1 1
+dispatch l 1 1 1
+list_close l
+execute q l
+queue_signal q f 94
+fence_event f 94 null
+frame_wait dev 0 1000 0
+list_reset l a
+set_heaps l views
+set_pipeline l pm
+compute_uav l 0 out
+compute_address l 1 mem
+dispatch l 1 1 1
+dispatch l 1 1 1
+list_close l
+execute q l
+queue_signal q f 95
+fence_event f 95 null
+frame_wait dev 0 1000 0
+list_reset l a
+set_heaps l views
+set_pipeline l pm
+compute_uav l 0 out
+compute_address l 1 mem
+dispatch l 1 1 1
+dispatch l 1 1 1
+list_close l
+execute q l
+queue_signal q f 96
+fence_event f 96 null
+frame_wait dev 0 1000 0
+list_reset l a
+set_heaps l views
+set_pipeline l pm
+compute_uav l 0 out
+compute_address l 1 mem
+dispatch l 1 1 1
+dispatch l 1 1 1
+list_close l
+execute q l
+queue_signal q f 97
+fence_event f 97 null
+frame_wait dev 0 1000 0
+list_reset l a
+set_heaps l views
+set_pipeline l pm
+compute_uav l 0 out
+compute_address l 1 mem
+dispatch l 1 1 1
+dispatch l 1 1 1
+list_close l
+execute q l
+queue_signal q f 98
+fence_event f 98 null
+frame_wait dev 0 1000 0
+list_reset l a
+set_heaps l views
+set_pipeline l pm
+compute_uav l 0 out
+compute_address l 1 mem
+dispatch l 1 1 1
+dispatch l 1 1 1
+list_close l
+execute q l
+queue_signal q f 99
+fence_event f 99 null
+frame_wait dev 0 1000 0
+list_reset l a
+set_heaps l views
+set_pipeline l pm
+compute_uav l 0 out
+compute_address l 1 mem
+dispatch l 1 1 1
+dispatch l 1 1 1
+list_close l
+execute q l
+queue_signal q f 100
+fence_event f 100 null
+frame_wait dev 0 1000 0
+list_reset l a
+set_heaps l views
+set_pipeline l pm
+compute_uav l 0 out
+compute_address l 1 mem
+dispatch l 1 1 1
+dispatch l 1 1 1
+list_close l
+execute q l
+queue_signal q f 101
+fence_event f 101 null
+list dev lr 0 a
+set_heaps lr views
+set_pipeline lr pm
+compute_uav lr 0 out
+compute_address lr 1 mem
+repeat 20000 dispatch lr 1 1 1
+set_pipeline lr p1
+repeat 20000 dispatch lr 1 1 1
+end

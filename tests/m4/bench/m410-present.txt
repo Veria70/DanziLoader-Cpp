@@ -1,0 +1,29 @@
+# M4.10: presents (time per call, no vertical sync): one plane of 1280x720,
+# then two planes (the second drawn over the first), each sent ahead with
+# the relay (the default); then the same with draws in between: reset, a
+# clear, close, execute, present.
+runtime
+create_device dev device11
+create_queue dev q 0
+create_fence dev f 0
+allocator dev a 0
+list dev l 0 a
+list_close l
+desc_heap dev rtvs 2 8
+committed dev rt 1 T3/1280x720/f28/F1
+committed dev hud 1 T3/1280x720/f28/F1
+rtv dev rtvs:0 rt
+rtv dev rtvs:1 hud
+list_reset l a
+clear_rtv l rtvs:0 1,0.5,0.25,1
+clear_rtv l rtvs:1 0,0.5,0,0.5
+list_close l
+execute q l
+queue_signal q f 1
+fence_event f 1 null
+present q rt
+quiet 1
+repeat 2000 present q rt
+repeat 300 present q rt hud
+repeat 300 present q rt
+end

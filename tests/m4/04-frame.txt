@@ -1,0 +1,25 @@
+# M4.3: frame pacing. Statistics and schedules; polls that time out (with
+# and without a token), blocking waits on a 2 ms clock (tokens count
+# frames, other events keep the title's token), a return to 60 Hz, kinds
+# past the known ones, and the title's loop (origin poll, blocking flip).
+runtime
+create_device dev device
+frame_statistics dev
+schedule dev
+frame_wait dev 0 0 0                    # the clock starts at 60 Hz: a poll times out
+frame_wait dev 0 0 2                    # token on time-out
+set_interval dev 2000
+frame_wait dev 0 1000 0
+frame_wait dev 0 1000 0
+frame_wait dev 2 1000 0
+frame_wait dev 2 forever 0
+frame_wait dev 1 1000 0 notoken
+frame_wait dev 0 1000 0 notoken         # the frame still counts
+frame_wait dev 0 1000 0
+set_interval dev 0
+frame_wait dev 0 0 0
+frame_wait dev 7 0 0                    # a later kind: as the flip
+frame_wait dev 0 100 2
+frame_pace dev 2000 20
+frame_wait dev 0 1000 0
+end

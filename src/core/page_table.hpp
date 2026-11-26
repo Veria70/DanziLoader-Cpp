@@ -1,6 +1,10 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-
-
+// Ordered sets and maps keyed by page (or block) number, for the journal and
+// the guards of `watch`. The reference keeps these in `BTreeMap`/`BTreeSet`;
+// these give the same answers in the same (ascending) order. Keys are held
+// in chunks of contiguous numbers (32 KiB each), so a range is a scan over
+// adjacent memory rather than a walk over tree nodes; chunks are allocated
+// on first use and kept.
 #pragma once
 
 #include <bit>

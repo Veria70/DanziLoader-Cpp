@@ -3,7 +3,9 @@
 DanziLoader-Cpp is a C++20 port of DanziLoader, which is itself based on
 victory-perf. It is a derivative work and is distributed under the same
 licence: **GPL-3.0-or-later** (see [LICENSE](LICENSE), copied unchanged from
-the reference checkout). The licence file and retained source notices identify the applicable terms.
+the reference checkout). Every source file carries
+`SPDX-License-Identifier: GPL-3.0-or-later`, and every ported file names the
+reference file it was ported from.
 
 ## Upstream projects (credits as given by the reference)
 
@@ -25,8 +27,10 @@ the reference checkout). The licence file and retained source notices identify t
   (GPL-3.0-or-later): ported modules and design ideas listed in the
   reference README.
 - **[ivall/xcl](https://github.com/ivall/xcl)** (GPL-2.0-only): referenced
-  by upstream solely for behavioural comparison. The upstream notes no
-  GPL-2.0-only code, and none is used here.
+  by upstream for behavioural comparison. None of its code is used here.
+  Note: the reference checkout's `victory-loader/src/console_insn.rs` and
+  `console_insn_decode.rs` state that they are ported from XCL
+  (GPL-2.0-only); this port does not take them in (milestone 6, M6.4).
 
 ## Asset policy
 
@@ -43,37 +47,32 @@ unchanged:
 time. The code is read from the reference and never copied into this
 repository. That code keeps its upstream licence and authorship.
 
-The card comparison shader in src/gpu/card_compare.inc is derived from CARD_COMPARE in the Rust reference host.rs. The shader uses the same GPL-3.0-or-later licence.
+## Third-party code
 
-## Ported modules
+- `third_party/blake3/`: the BLAKE3 team's C implementation (version 1.8.7,
+  from the `blake3` crate's `c/` folder). It is under CC0 1.0 or Apache-2.0
+  (with or without the LLVM exception); the licence files are kept beside
+  it. The port uses it for the keys of the reference's shader cache.
+- The `toml` crate and its companions from the toml-rs project (`toml_edit`,
+  `toml_parser`, `toml_datetime`, `toml_writer`; MIT OR Apache-2.0): the
+  behaviour reference for `src/core/toml.cpp`, which reproduces what the
+  reference's `toml` 1.2.2 (`toml_parser` 1.1.6, `toml_datetime` 1.1.3,
+  `toml_writer` 1.2.0) accepts, returns and reports. No code is taken from
+  them; `build/toml-oracle/` builds that crate version as a test oracle for
+  `tools/check_toml.py`.
+- `third_party/opus/`: libopus 1.6.1 from Xiph.Org (BSD-3-Clause; `COPYING`
+  and `AUTHORS` kept beside it; origin and checksum in `VENDOR.md`). The port
+  decodes the console's Opus streams (`xapu`) with it, where the reference
+  uses the `opus-pure` crate (MIT OR Apache-2.0); `build/opus-oracle` builds
+  that crate as a test oracle for `tools/check_opus.py`.
 
-- src/core/inplace.cpp — crates/victory-gpu/src/inplace.rs
-- src/core/inplace.hpp — crates/victory-gpu/src/inplace.rs
-- src/core/memcopy.cpp — crates/victory-gpu/src/memcopy.rs
-- src/core/memcopy.hpp — crates/victory-gpu/src/memcopy.rs
-- src/core/readback.cpp — crates/victory-gpu/src/readback.rs
-- src/core/readback.hpp — crates/victory-gpu/src/readback.rs
-- src/core/shadow.cpp — crates/victory-gpu/src/shadow.rs, host.rs
-- src/core/shadow.hpp — crates/victory-gpu/src/shadow.rs, host.rs
-- src/core/title_copy.cpp — crates/victory-gpu/src/host.rs
-- src/core/title_copy.hpp — crates/victory-gpu/src/host.rs
-- src/core/watch.cpp — crates/victory-gpu/src/watch.rs
-- src/core/watch.hpp — crates/victory-gpu/src/watch.rs
-- src/core/wide.hpp — crates/victory-gpu/src/shadow.rs
-- src/core/windows.cpp — crates/victory-gpu/src/shadow.rs
-- src/core/windows.hpp — crates/victory-gpu/src/shadow.rs
-- src/d3d12x/device.cpp — crates/victory-gpu/src/device.rs, console.rs
-- src/d3d12x/device.hpp — crates/victory-gpu/src/device.rs, console.rs, dxgi.rs
-- src/d3d12x/dxgi.cpp — crates/victory-gpu/src/dxgi.rs
-- src/d3d12x/object.cpp — crates/victory-gpu/src/object.rs
-- src/d3d12x/object.hpp — crates/victory-gpu/src/object.rs
-- src/gpu/card.cpp — crates/victory-gpu/src/host.rs
-- src/gpu/card.hpp — crates/victory-gpu/src/host.rs, shadow.rs
-- src/gpu/card_compare.inc — host.rs
-- src/gpu/device.hpp — crates/victory-gpu/src/host.rs
-- src/gpu/inplace_heap.cpp — crates/victory-gpu/src/inplace.rs
-- src/gpu/inplace_heap.hpp — crates/victory-gpu/src/inplace.rs
-- src/gpu/lookup.cpp — crates/victory-gpu/src/shadow.rs
-- src/gpu/lookup.hpp — crates/victory-gpu/src/shadow.rs
-- src/gpu/rebar.cpp — crates/victory-gpu/src/rebar.rs
-- src/gpu/rebar.hpp — crates/victory-gpu/src/rebar.rs
+## Console-instruction emulation
+
+`src/loader/emulate.cpp` / `emulate.hpp` (the emulation of the console
+CPU's instructions a host CPU lacks: `clzero` and its loops, SSE4a,
+`monitorx`/`mwaitx`, `rdpru`, `rdpid`, `clwb`, `clflushopt`, SHA, ADX,
+`rdseed`) were written independently for this port from the AMD64
+Architecture Programmer's Manual and the Intel SDM, and checked against the
+instructions executed natively (`tools/emulate_check.cpp`). They are not
+derived from XCL nor from the reference's XCL-derived
+`console_insn.rs`/`console_insn_decode.rs`, which this port does not use.

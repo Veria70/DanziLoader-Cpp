@@ -1,0 +1,171 @@
+# M4.4: heaps and resources as the title sees them. Sizes from the
+# console's layouts (every dimension, block-compressed, depth with stencil,
+# the console's own formats, explicit swizzle modes, MSAA, full chains,
+# formats and sizes without a layout, bad alignments), footprints for
+# uploads, custom heap properties; heaps, committed resources (three
+# creation methods, with and without clear values, the title's allocator
+# and its attributes), placed resources (aliasing, misplacement, the heap
+# kept alive), resources at title addresses, zeroed memory; page pools and
+# page mapping batches through the runtime's mapper.
+runtime
+create_device dev device11
+# Sizes.
+alloc_info dev B1
+alloc_info dev B65536
+alloc_info dev B65537
+alloc_info dev B0
+alloc_info dev B1000000/a4096
+alloc_info dev B100/a3
+alloc_info dev T3/256x256/f28
+alloc_info dev T3/256x256/m0/f28
+alloc_info dev T3/1024x1024/m0/f98
+alloc_info dev T3/4096x4096/m0/f71
+alloc_info dev T3/1920x1080/f28/F1
+alloc_info dev T3/1920x1080/f40/F2
+alloc_info dev T3/1920x1080/f45/F2
+alloc_info dev T3/1920x1080/f20/F2
+alloc_info dev T3/1280x720/f118/F2
+alloc_info dev T3/1280x720/f116/F1
+alloc_info dev T3/1280x720/f10/F4
+alloc_info dev T3/512x512x6/m0/f28
+alloc_info dev T4/128x128x64/f10
+alloc_info dev T4/32x32x32/m0/f61
+alloc_info dev T2/4096/f28
+alloc_info dev T2/4096x1x4/m0/f54
+alloc_info dev T3/1920x1080/f28/F1/s4
+alloc_info dev T3/1920x1080/f28/F1/s4/a65536
+alloc_info dev T3/256x256/f28/l1
+alloc_info dev T3/256x256/f28/l0x109
+alloc_info dev T3/256x256/f28/l0x105
+alloc_info dev T3/256x256/f28/l0x11b
+alloc_info dev T3/256x256/f28/l0x103
+alloc_info dev T3/256x256/f28/l0x200
+alloc_info dev T3/256x256/f28/a4096
+alloc_info dev T3/256x256/f28/a3
+alloc_info dev T3/256x256/f0
+alloc_info dev T3/20000x8/f28
+alloc_info dev T3/20000x8/f0
+alloc_info dev T3/20000x8/f115
+alloc_info dev T3/256x256/f190
+alloc_info dev T3/256x256/f189
+alloc_info dev T3/0x0/f28
+alloc_info dev T5/16x16/f28
+alloc_info dev T3/256x256/f28 B4096 T3/64x64/f71 B200000
+alloc_info dev null
+alloc_info2 dev T3/256x256/f28 B4096 T3/64x64/f71 B200000
+alloc_info2 dev B4096 T3/256x256/f0 B4096
+alloc_info2 dev null
+# Upload footprints.
+footprints dev B1000 0 1 0
+footprints dev B1000 0 2 0
+footprints dev T3/256x256/m0/f28 0 9 0
+footprints dev T3/256x256/m0/f28 3 3 100
+footprints dev T3/256x256x4/m3/f98 0 13 0
+footprints dev T4/64x64x16/m0/f10 0 7 0
+footprints dev T3/250x130/m0/f71 0 8 512
+footprints dev T3/256x256/f0 0 2 0
+footprints dev null 0 2 0
+# Custom heap properties.
+custom_heap dev 0 1
+custom_heap dev 1 2
+custom_heap dev 3 3
+custom_heap dev 1 4
+custom_heap dev 1 0
+# Heaps.
+heap dev h 0x400000
+heap dev h4 0x800000 1 0x400000
+heap dev hbad 0x100000 1 3
+heap dev hzero 0
+heap dev hup 0x100000 2 0 0x4
+heap dev hno 0x100000 1 0 0 noout
+heap dev hwrong 0x100000 1 0 0 fence
+heap_desc h
+heap_desc h4
+heap_desc hup
+query h pageable hq
+release h
+get_parent h 7 device p
+# Committed resources (from the title's allocator).
+committed dev cb 2 B65536
+committed dev cbig 1 B3000000
+committed dev ct 1 T3/1920x1080/f28/F1 4 28
+committed dev cd 1 T3/1920x1080/f45/F2 0x10 45
+committed_x dev cx 1 T3/512x512/m0/f98
+committed3 dev c3 1 T3/1920x1080/f87/F1 0 87
+committed dev cbad 1 T3/256x256/f0
+committed dev cnodesc 1 B4096 0 none nodesc
+committed dev cnoout 1 B4096 0 none noout
+committed dev cwrong 1 B4096 0 none fence
+resource cb
+resource cbig
+resource ct
+resource cd
+resource cx
+resource c3
+peek cbig 0 16
+peek cbig 2999984 16
+poke cb 16 0102030405
+peek cb 14 8
+release cbig
+release ct
+# Placed resources.
+placed dev p0 h 0 B65536
+placed dev p1 h 0x10000 T3/256x256/f28
+placed dev p2 h 0 B4096
+placed dev pmis h 0x1000 B4096
+placed dev pend h 0x3f0000 B0x20000
+placed dev pnull null 0 B4096
+placed dev pmsaa h4 0 T3/256x256/f28/F1/s4
+placed dev pbad h 0 T3/256x256/f0
+placed dev pwrong h 0 B4096 fence
+resource p0
+resource p1
+resource pmsaa
+va_delta p1 p0
+va_delta p2 p0
+poke p0 0 aabbccdd
+peek p2 0 4
+peek p1 0 8
+heap_desc h
+release h
+peek p0 0 4
+release p2
+release p1
+release p0
+# At title addresses.
+title_memory tm 0x200000
+at_address dev a0 tm 0 B65536
+at_address dev a1 tm 0x10000 T3/256x256/f28/l0x105
+at_address dev azero 0 0 B4096
+resource a0
+resource a1
+va_delta a0 tm
+va_delta a1 tm
+poke a0 8 77
+peek a0 8 1
+release a0
+release a1
+# Page pools and page mapping batches.
+create_queue dev q 0
+page_pool dev 0x10000000 16
+page_pool dev 0x20000000 4
+page_pool dev 0x10001000 4
+page_pool dev 0x10000000 0
+page_pool dev 0x10000000 4 noout
+unpage_pool dev 1
+unpage_pool dev 1
+unpage_pool dev 0
+unpage_pool dev 9
+unpage_pool dev 2
+page_map q 0x40000000 8 0x50000000 0:0:2 1:3:3 2:0:1 3:0:4 0:7:1
+page_map q 0x40000000 8 0x50000000 0:7:2
+page_map q 0x40000000 8 0x50000000 1:8:2
+page_map q 0x40000000 8 0x50000000 4:0:1 0:1:1
+page_map q 0x40000000 8 0xbad0000 0:0:1 0:1:1
+page_map q 0x40000000 8 nobatch
+release cb
+release cd
+release cx
+release c3
+release h4
+end

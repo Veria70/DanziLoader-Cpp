@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-
-
+// The reference's own tests of crates/victory-gpu/src/watch.rs, ported one
+// for one (same names, same steps, same assertions), against the C++ port.
 #include <algorithm>
 #include <atomic>
 #include <cstring>

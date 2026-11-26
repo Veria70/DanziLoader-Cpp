@@ -1,6 +1,19 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-
-
+// Differential test driver for the dirty-page range selector.
+//
+//   dirty-diff gen <seed> <scenario.txt>
+//   dirty-diff compare <oracle-out> <cpp-out>
+//   dirty-diff run <scenario.txt> <oracle.exe> <cpp.exe> <work-dir>
+//   dirty-diff suite <scenario-dir> <oracle.exe> <cpp.exe> <work-dir>
+//   dirty-diff fuzz <first-seed> <count> <oracle.exe> <cpp.exe> <work-dir>
+//   dirty-diff genbench <dir>
+//   dirty-diff gencardbench <dir>   (milestone 3: copies in the card's memory)
+//   dirty-diff bench <fixture-dir> <oracle.exe> <cpp.exe> <work-dir> <runs> [cpu]
+//
+// Each scenario runs in two fresh processes (the selector's state is
+// process-wide): the Rust oracle (the reference's own code) and the C++
+// port. Both logs and every host copy's final bytes are compared; the first
+// mismatch is printed with the operation it belongs to.
 #include <algorithm>
 #include <chrono>
 #include <cstdint>

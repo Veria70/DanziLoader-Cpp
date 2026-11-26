@@ -1,0 +1,44 @@
+# M4.5 calls the title makes thousands of times a frame, each 10,000 times
+# in a row (time per call): constant buffer views (into a CPU heap and into
+# a shader-visible one, named whole or as an entry), shader and unordered
+# views of resources (the view already known), samplers, views of placed
+# memory, target views, and copies (single runs into CPU and shader-visible
+# heaps, and gathered ranges).
+runtime
+create_device dev device11
+desc_heap dev views 0 4096 flags=1
+desc_heap dev cpu 0 4096
+desc_heap dev samplers 1 64 flags=1
+desc_heap dev rtvs 2 16
+committed dev tex 1 T3/256x256/f28
+committed dev buf 1 B65536
+committed dev rt 1 T3/1920x1080/f28/F1
+srv dev cpu:100 tex
+quiet 1
+repeat 10000 cbv dev cpu:0 0x12340000 256
+repeat 10000 cbv dev views:0 0x12340000 256
+repeat 10000 cbv dev cpu:1 0x800000000000 256
+repeat 10000 srv dev cpu:2 tex
+repeat 10000 srv dev views:2 tex w:28,4,5768,0,1,0,0,0,0,0
+repeat 10000 uav dev cpu:3 buf null w:0,1,0,0,256,4
+repeat 10000 sampler dev samplers:0 w:0x15,3,3,3,0,16,4,0,0,0,0,0x7f7fffff,0
+repeat 10000 sampler_x dev samplers:1 w:0,1,0,2,0,0,3,3,3,0,0x447a0000
+repeat 10000 placed_srv dev cpu:4 w:3,0,256,0,256,1,1,28,1,0,0,0,0,0 w:28,4,5768,0,1,0,0,0,0,0,0x10000,0,0,0,0,0
+repeat 10000 rtv dev rtvs:0 rt w:28,4,0,0,0,0
+repeat 10000 desc_copy1 dev 64 cpu:1000 cpu:0 0
+repeat 10000 desc_copy1 dev 64 views:1000 cpu:0 0
+repeat 10000 desc_copy dev 0 d:views:2000x16,views:2100x16 s:cpu:0x8,cpu:100x8,cpu:200x16
+repeat 10000 cbv dev cpu:0 0x12340000 256
+repeat 10000 cbv dev views:0 0x12340000 256
+repeat 10000 cbv dev cpu:1 0x800000000000 256
+repeat 10000 srv dev cpu:2 tex
+repeat 10000 srv dev views:2 tex w:28,4,5768,0,1,0,0,0,0,0
+repeat 10000 uav dev cpu:3 buf null w:0,1,0,0,256,4
+repeat 10000 sampler dev samplers:0 w:0x15,3,3,3,0,16,4,0,0,0,0,0x7f7fffff,0
+repeat 10000 sampler_x dev samplers:1 w:0,1,0,2,0,0,3,3,3,0,0x447a0000
+repeat 10000 placed_srv dev cpu:4 w:3,0,256,0,256,1,1,28,1,0,0,0,0,0 w:28,4,5768,0,1,0,0,0,0,0,0x10000,0,0,0,0,0
+repeat 10000 rtv dev rtvs:0 rt w:28,4,0,0,0,0
+repeat 10000 desc_copy1 dev 64 cpu:1000 cpu:0 0
+repeat 10000 desc_copy1 dev 64 views:1000 cpu:0 0
+repeat 10000 desc_copy dev 0 d:views:2000x16,views:2100x16 s:cpu:0x8,cpu:100x8,cpu:200x16
+end

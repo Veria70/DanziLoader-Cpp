@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-
+// The D3D12 device layer (milestone 3), on the hardware adapter and on WARP.
 #include <d3dcompiler.h>
 
 #include <algorithm>

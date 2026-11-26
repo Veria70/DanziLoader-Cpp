@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-
-
+// Tests of the selector port: the reference's own CopiedPages test, ported,
+// and checks of the selector's contract on real write-watched memory.
 #include "check.hpp"
 #include "core/shadow.hpp"
 #include "core/watch.hpp"

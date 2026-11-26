@@ -1,8 +1,11 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Port of crates/victory-gpu/src/device.rs, console.rs and dxgi.rs
-
-
+// (DanziLoader / victory-perf, see NOTICE.md): the device titles get from
+// device creation, laid out as their inlined code expects; its DXGI side
+// (device, adapter, factory, output); which console the title sees.
 #pragma once
+
+#include <atomic>
 
 #include "object.hpp"
 
@@ -37,7 +40,11 @@ HRESULT __stdcall configure_virtual_memory(VirtualMemory* config);
 
 enum class Console { SeriesX, SeriesS };
 void set_console(Console c);
-Console current_console();
+namespace detail {
+extern std::atomic<bool> SERIES_S;
+}
+
+inline Console current_console() { return detail::SERIES_S.load(std::memory_order_relaxed) ? Console::SeriesS : Console::SeriesX; }
 
 std::pair<std::size_t, std::size_t> title_memory(Console c);
 

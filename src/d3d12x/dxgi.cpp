@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Port of crates/victory-gpu/src/dxgi.rs (DanziLoader / victory-perf, see
-
-
+// NOTICE.md): the DXGI side of the device (DXGI device, adapter, factory,
+// output), what the title walks at startup to learn the GPU and display.
 #include <windows.h>
 
 #include <cstdlib>
@@ -9,6 +9,9 @@
 #include <optional>
 #include <string>
 
+#include <immintrin.h>
+
+#include "core/log.hpp"
 #include "device.hpp"
 
 namespace danzi::d3d12x {
@@ -90,7 +93,15 @@ HRESULT __stdcall adapter_description(This, AdapterDescription* out) {
     if (!out) {
         return E_INVALIDARG_;
     }
-    std::memcpy(out, &DESCRIBED[current_console() == Console::SeriesS ? 1 : 0], sizeof *out);
+
+
+    const auto* from = reinterpret_cast<const std::uint8_t*>(&DESCRIBED[current_console() == Console::SeriesS ? 1 : 0]);
+    auto* to = reinterpret_cast<std::uint8_t*>(out);
+    static_assert(sizeof(AdapterDescription) == 9 * 32 + 16);
+    for (int i = 0; i < 9; ++i) {
+        _mm256_storeu_si256(reinterpret_cast<__m256i*>(to + 32 * i), _mm256_loadu_si256(reinterpret_cast<const __m256i*>(from + 32 * i)));
+    }
+    _mm_storeu_si128(reinterpret_cast<__m128i*>(to + 288), _mm_loadu_si128(reinterpret_cast<const __m128i*>(from + 288)));
     return S_OK_;
 }
 
@@ -158,6 +169,11 @@ std::pair<std::uint32_t, std::uint32_t> display_size() {
         }
         return std::pair<std::uint32_t, std::uint32_t>{3840, 2160};
     }();
+    static const bool said = [] {
+        log::info("victory_gpu::dxgi", "display mode reported to the title", {{"width", log::debug(size.first)}, {"height", log::debug(size.second)}});
+        return true;
+    }();
+    (void)said;
     return size;
 }
 

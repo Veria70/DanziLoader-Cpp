@@ -1,0 +1,222 @@
+# M6: gameinput.dll (`gameinput.rs`): GameInputCreate (ordinal 1), the input
+# object, its devices and readings, without depending on the host's devices:
+# only the keyboard device is always connected (no keys reach it while the
+# runner's window lacks focus); a pad slot or the stand-in pad depends on
+# whether a pad is plugged in, so their readings' contents, timestamps and
+# addresses are never printed. Device callbacks are the no-op `@work`.
+# (The log's first-poll line for the stand-in pad, device 4, assumes no pad
+# is plugged in.)
+call gameinput.dll #1:32 null
+buf out 8
+call gameinput.dll #1:32 &out
+load gi out 0
+call gameinput.dll #2:32 &out
+# QueryInterface fails and clears; AddRef and Release.
+buf q 8
+store q 0 0x1234
+vcall $gi 0x00:32 null &q
+dump q 8
+vcall $gi 0x00:32 null null
+vcall $gi 0x08:32
+vcall $gi 0x10:32
+vcall $gi 0x18:0
+# Devices by id: "victory", then the device's index + 1 in the last byte.
+buf id 32
+store id 0 0x0079726f74636976
+store id 24 0x0600000000000000
+buf dev 8
+vcall $gi 0x80:32 &id &dev
+load kb dev 0
+store id 24 0x0500000000000000
+vcall $gi 0x80:32 &id &dev
+load standin dev 0
+store id 24 0x0100000000000000
+vcall $gi 0x80:32 &id &dev
+load pad0 dev 0
+store id 24 0x0700000000000000
+store dev 0 0x55
+vcall $gi 0x80:32 &id &dev
+dump dev 8
+store dev 0 0x55
+vcall $gi 0x80:32 null &dev
+dump dev 8
+vcall $gi 0x80:32 &id null
+store id 0 0x0079726f74636977
+store id 24 0x0600000000000000
+vcall $gi 0x80:32 &id &dev
+# The keyboard device: connected; methods it lacks; rumble (none on it or
+# the stand-in; zero speeds on pad slot 0).
+store q 0 0x1234
+vcall $kb 0x00:32 null &q
+dump q 8
+vcall $kb 0x08:32
+vcall $kb 0x10:32
+vcall $kb 0x18:0
+vcall $kb 0x20:32
+vcall $kb 0x28:32
+vcall $kb 0x30:32
+vcall $kb 0x38:32
+vcall $kb 0x40:32
+vcall $kb 0x48:32
+vcall $kb 0x58:32
+vcall $kb 0x60:32
+vcall $kb 0x68:32
+vcall $kb 0x70:32
+vcall $kb 0x78:32
+vcall $kb 0x80:32
+vcall $kb 0x88:32
+vcall $kb 0x90:32
+vcall $kb 0x98:32
+vcall $kb 0xa0:32
+buf lv 16
+store lv 0 0x3f8000003f000000
+store lv 8 0x3f8000003f800000
+vcall $kb 0x50:0 &lv
+vcall $standin 0x50:0 &lv
+vcall $standin 0x50:0 null
+vcall $pad0 0x50:0 null
+vcall $standin 0x00:32 null &q
+vcall $standin 0x28:32
+vcall $pad0 0xa0:32
+# The keyboard's reading (no keys).
+buf r 8
+vcall $gi 0x20:32 0x10 $kb &r
+load kr r 0
+vcall $kr 0x18:32
+vcall $kr 0x20 0x10
+vcall $kr 0x20 0x40000
+vcall $kr 0x20 0
+vcall $kr 0x28:0
+buf rd 8
+vcall $kr 0x30:0 &rd
+load rdev rd 0
+vcall $rdev 0x20:32
+vcall $kr 0x30:0 null
+vcall $kr 0x38
+vcall $kr 0x40
+vcall $kr 0x48
+vcall $kr 0x50
+vcall $kr 0x58
+vcall $kr 0x60
+vcall $kr 0x68
+vcall $kr 0x80
+vcall $kr 0x88
+vcall $kr 0x90
+vcall $kr 0x98
+vcall $kr 0xa0
+vcall $kr 0xa8
+vcall $kr 0xb8
+vcall $kr 0xc0
+vcall $kr 0x70:32
+buf ks 96
+vcall $kr 0x78:32 8 &ks
+vcall $kr 0x78:32 8 null
+vcall $kr 0x78:32 0 &ks
+buf ps 28
+vcall $kr 0xb0:8 &ps
+vcall $kr 0xb0:8 null
+dump ps 28
+store q 0 0x1234
+vcall $kr 0x00:32 null &q
+dump q 8
+vcall $kr 0x08:32
+vcall $kr 0x10:32
+# Next and previous: none on either side; bad references and devices.
+store r 0 0x99
+vcall $gi 0x28:32 $kr 0x10 $kb &r
+dump r 8
+vcall $gi 0x30:32 $kr 0x10 $kb &r
+vcall $gi 0x28:32 $kr 0x10 null &r
+vcall $gi 0x30:32 $kr 0xffffffff null &r
+vcall $gi 0x28:32 $kr 0 null &r
+store r 0 0x99
+vcall $gi 0x28:32 null 0x10 null &r
+dump r 8
+vcall $gi 0x30:32 null 0x10 $kb null
+vcall $gi 0x28:32 $kr 0x10 $standin &r
+vcall $gi 0x30:32 $kr 0x10 &id &r
+vcall $gi 0x28:32 $kr 0x10 $kb null
+# The reading at a time: the newest kept, or an unknown device.
+vcall $gi 0x38:32 0xffffffffffffffff $kb &r
+load kr2 r 0
+vcall $kr2 0x20 0x10
+vcall $kr2 0x70:32
+vcall $kr2 0x10:32
+vcall $gi 0x38:32 0xffffffffffffffff null &r
+vcall $gi 0x38:32 0xffffffffffffffff &id &r
+vcall $gi 0x38:32 0xffffffffffffffff $kb null
+# The current reading of a kind on any device; kinds a device lacks.
+vcall $gi 0x20:32 0x10 null &r
+load kr3 r 0
+vcall $kr3 0x18:32
+vcall $kr3 0x20 0x10
+vcall $kr3 0x10:32
+store r 0 0x99
+vcall $gi 0x20:32 0 null &r
+dump r 8
+vcall $gi 0x20:32 0x40000 $kb &r
+vcall $gi 0x20:32 0x10 &id &r
+vcall $gi 0x20:32 0x10 $kb null
+vcall $gi 0x20:32 0x40000 null null
+vcall $gi 0x20:32 0x40000 null &r
+load pr r 0
+vcall $pr 0x18:32
+vcall $pr 0x70:32
+vcall $pr 0x78:32 8 &ks
+vcall $pr 0xb0:8 &ps
+vcall $pr 0xb0:8 null
+vcall $pr 0x20 0x10
+vcall $pr 0x10:0
+# Device callbacks: none without a callback; a blocking enumeration of the
+# keyboard; an asynchronous one delivered by the next poll; tokens.
+buf tok 8
+vcall $gi 0x48:32 null 0x10 3 2 null null &tok
+dump tok 8
+vcall $gi 0x48:32 null 0x10 3 2 null @work &tok
+dump tok 8
+load t1 tok 0
+vcall $gi 0x68:8 $t1 5000
+vcall $gi 0x48:32 $kb 0x40000 3 1 null @work &tok
+dump tok 8
+load t2 tok 0
+vcall $gi 0x60:0 $t2
+vcall $gi 0x68:8 $t2 0
+vcall $gi 0x68:8 12345 0
+vcall $gi 0x48:32 null 0x40000 0 2 null @work &tok
+dump tok 8
+load t3 tok 0
+vcall $gi 0x48:32 $kb 0x10 3 1 null @work null
+vcall $gi 0x48:32 null 0x40010 3 0 null @work &tok
+load t4 tok 0
+sleep 60
+vcall $gi 0x68:8 $t3 0xffffffffffffffff
+vcall $gi 0x68:8 $t4 1000000
+vcall $gi 0x60:0 99
+# Reading, guide button and keyboard layout callbacks: tokens only.
+vcall $gi 0x40:32 null 0x40000 0 null null &tok
+dump tok 8
+vcall $gi 0x40:32 null 0x40000 0 null null null
+vcall $gi 0x50:32 null null null &tok
+dump tok 8
+vcall $gi 0x58:32 null null null &tok
+dump tok 8
+vcall $gi 0x58:32 null null null null
+# Dispatcher, aggregate device, lookups by object, handle or string.
+store q 0 0x1234
+vcall $gi 0x70:32 &q
+dump q 8
+vcall $gi 0x70:32 null
+store q 0 0x1234
+vcall $gi 0x78:32 0x40000 &q
+dump q 8
+store q 0 0x1234
+vcall $gi 0x88:32 $kb &q
+dump q 8
+vcall $gi 0x90:32 null &q
+vcall $gi 0x98:32 &id &q
+vcall $gi 0x98:32 &id null
+vcall $gi 0xa0:32 0x45e 0x2ea 0 0
+vcall $gi 0xa8:0 1
+# The keyboard's reading let go by the title.
+vcall $kr 0x10:32
+vcall $kb 0x20:32

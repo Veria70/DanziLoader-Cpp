@@ -17,7 +17,7 @@ popd
 python -I "%ROOT%\tools\snapshot_reference.py" "%DANZI_REFERENCE%" "%ROOT%\build\m4-reference" || exit /b 1
 pushd "%ROOT%\build\m4-reference" || exit /b 1
 set DANZILOADER_VERSION=oracle
-cargo build --release --offline -p victory-ref-backend --target-dir "%ROOT%\build\m4-target" || (popd & exit /b 1)
+cargo build --release --offline -p victory-ref-backend -p shader-oracle -p m6-oracle --target-dir "%ROOT%\build\m4-target" || (popd & exit /b 1)
 popd
 
 pushd "%ROOT%" || exit /b 1

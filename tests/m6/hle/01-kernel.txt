@@ -1,0 +1,80 @@
+# M6.6: the `kernel` module. Module handles name the title's images and our
+# console modules (pseudo handles); paths name the title's original files;
+# GetProcAddress finds our exports behind pseudo handles and our overrides
+# behind host modules; the title's filter stands behind ours.
+main-image-none
+call kernel32.dll GetModuleHandleW null
+wstr k32 kernel32.dll
+call kernel32.dll GetModuleHandleW &k32
+wstr xgr xgameruntime.dll
+call kernel32.dll GetModuleHandleW &xgr
+str xgra XGameRuntime
+call kernel32.dll GetModuleHandleA &xgra
+str path C:\Windows\System32\XMEM.DLL
+call kernel32.dll GetModuleHandleA &path
+str nope wininet.dll
+call kernel32.dll GetModuleHandleA &nope
+call kernel32.dll LoadLibraryA &nope
+call kernel32.dll LoadLibraryExA &nope null 2
+str xmem xmem.dll
+call kernel32.dll LoadLibraryA &xmem
+str alloc XMemAllocDefault
+call kernel32.dll GetProcAddress $last &alloc
+call kernel32.dll LoadLibraryA &xmem
+str none NoSuchExport
+call kernel32.dll GetProcAddress $last &none
+call kernel32.dll LoadLibraryA &xmem
+call kernel32.dll GetProcAddress $last 5
+call kernel32.dll LoadLibraryA &xmem
+call kernel32.dll FreeLibrary:32 $last
+wstr dstorage xcrdapi
+call kernel32.dll LoadLibraryW &dstorage
+call kernel32.dll LoadLibraryExW &dstorage null 0x20
+# Host modules: our overrides first.
+call kernel32.dll GetModuleHandleW &k32
+str gmh GetModuleHandleW
+call kernel32.dll GetProcAddress $last &gmh
+call kernel32.dll GetModuleHandleW &k32
+str sleep Sleep
+call kernel32.dll GetProcAddress $last &sleep
+call kernel32.dll GetModuleHandleW &k32
+call kernel32.dll GetProcAddress $last 1
+str ws2 ws2_32.dll
+call kernel32.dll LoadLibraryA &ws2
+str connect connect
+call kernel32.dll GetProcAddress $last &connect
+# The title's own image: a host module stands in as the main image.
+main-image kernel32.dll
+call kernel32.dll GetModuleHandleW null
+call kernel32.dll GetModuleHandleA null
+call kernel32.dll GetProcAddress null &gmh
+image-path kernel32.dll C:\Titles\Game\game_title.exe
+buf out 520
+call kernel32.dll GetModuleFileNameW:32 null &out 260
+wtext out
+buf small 16
+call kernel32.dll GetModuleFileNameW:32 null &small 8
+wtext small
+buf outa 260
+call kernel32.dll GetModuleFileNameA:32 null &outa 260
+text outa
+buf smalla 8
+call kernel32.dll GetModuleFileNameA:32 null &smalla 4
+text smalla
+call kernel32.dll GetModuleFileNameA:32 null &smalla 0
+str title game_title.exe
+call kernel32.dll GetModuleHandleA &title
+str titledll game_title
+call kernel32.dll GetModuleHandleA &titledll
+call kernel32.dll FreeLibrary:32 $last
+# The title's unhandled-exception filter.
+call kernel32.dll SetUnhandledExceptionFilter 0x1234
+call kernel32.dll SetUnhandledExceptionFilter 0x5678
+call kernel32.dll SetUnhandledExceptionFilter null
+call kernel32.dll SetUnhandledExceptionFilter null
+str said  the title says hello
+call kernel32.dll OutputDebugStringA:0 &said
+call kernel32.dll GetModuleHandleW &k32
+call kernel32.dll DisableThreadLibraryCalls:32 $last
+call kernel32.dll LoadLibraryA &xmem
+call kernel32.dll DisableThreadLibraryCalls:32 $last

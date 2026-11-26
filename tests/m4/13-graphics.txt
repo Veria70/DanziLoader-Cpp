@@ -1,0 +1,144 @@
+# M4.7d: draws with console shaders made by the driver (GFX10 code in the
+# console's container layout, signature parts), translated by the
+# reference's translator into the shader cache the port reads (its own
+# translations: tools/check_own_translations.py, milestone 5). Pipelines
+# from streams (rasterizer, depth, input layout,
+# target formats); targets through their views; viewports and scissors;
+# a depth test against cleared depth; vertices from a vertex buffer; the
+# console's rectangles (three corners, the fourth made: by the reference's
+# geometry stage or on the CPU, the same for a vertex shader that passes
+# its input on); an indexed draw. Every target read back and hashed.
+runtime
+shader_cache c:/tmp/m4-shader-cache c:/tmp/m4-shader-cache/build.bin
+create_device dev device11
+create_queue dev q 0
+create_fence dev f 0
+allocator dev a 0
+list dev l 0 a
+list_close l
+desc_heap dev views 0 4096 flags=1
+desc_heap dev rtvs 2 8
+desc_heap dev dsvs 3 8
+committed dev back 3 B1048576
+committed dev rt 1 T3/64x64/f28/F1
+committed dev dp 1 T3/64x64/f40/F2
+committed dev vb 2 B65536
+committed dev ib 2 B4096
+rtv dev rtvs:0 rt
+dsv dev dsvs:0 dp
+vs_fullscreen vs
+vs_input vsi
+ps_color ps 1.0 0.5 0.25 1.0
+ps_color ps2 0.0 1.0 0.0 1.0
+graphics_pipeline dev g vs ps 28
+graphics_pipeline dev gd vs ps2 28 depth=40
+graphics_pipeline dev gi vsi ps2 28 input
+# Over the whole target.
+list_reset l a
+set_heaps l views
+clear_rtv l rtvs:0 0,0,0,0
+set_pipeline l g
+targets l rtvs:0
+viewport l 0 0 64 64
+scissor l 0 0 64 64
+topology l 4
+draw l 3 1
+copy_tex l back:fp:0:28:64:64:1:256 0 0 0 rt:sub:0
+list_close l
+execute q l
+queue_signal q f 1
+fence_event f 1 null
+peek back 0 8
+hash back 16384
+# A scissor rectangle, then a viewport in a corner.
+list_reset l a
+set_heaps l views
+clear_rtv l rtvs:0 0,0,0,0
+set_pipeline l g
+targets l rtvs:0
+viewport l 0 0 64 64
+scissor l 8 8 24 40
+topology l 4
+draw l 3 1
+set_pipeline l gi
+viewport l 32 32 32 32
+scissor l 0 0 64 64
+fill_floats vb -1 -1 0 1 -1 3 0 1 3 -1 0 1
+vertex_buffer l 0 vb 48 16
+draw l 3 1
+copy_tex l back:fp:0:28:64:64:1:256 0 0 0 rt:sub:0
+list_close l
+execute q l
+queue_signal q f 2
+fence_event f 2 null
+peek back 0 8
+peek back 2080 8
+peek back 12160 8
+hash back 16384
+# Depth: cleared to 0 the triangle (at depth 0) fails; to 1 it passes.
+list_reset l a
+set_heaps l views
+clear_rtv l rtvs:0 0,0,0,0
+clear_dsv l dsvs:0 1 0 0
+set_pipeline l gd
+targets l rtvs:0 dsvs:0
+viewport l 0 0 32 64
+scissor l 0 0 64 64
+topology l 4
+draw l 3 1
+clear_dsv l dsvs:0 1 1 0
+viewport l 32 0 32 64
+draw l 3 1
+copy_tex l back:fp:0:28:64:64:1:256 0 0 0 rt:sub:0
+list_close l
+execute q l
+queue_signal q f 3
+fence_event f 3 null
+peek back 0 8
+peek back 200 8
+hash back 16384
+# Rectangles (topology 17): three corners each.
+list_reset l a
+set_heaps l views
+clear_rtv l rtvs:0 0,0,0,0
+set_pipeline l gi
+targets l rtvs:0
+viewport l 0 0 64 64
+scissor l 0 0 64 64
+topology l 17
+fill_floats vb -0.5 0.5 0 1 -0.5 -0.5 0 1 0.5 -0.5 0 1
+vertex_buffer l 0 vb 48 16
+draw l 3 1
+copy_tex l back:fp:0:28:64:64:1:256 0 0 0 rt:sub:0
+list_close l
+execute q l
+queue_signal q f 4
+fence_event f 4 null
+peek back 4160 8
+peek back 4280 8
+peek back 11904 8
+hash back 16384
+# Indexed: a quad of four vertices, six 16-bit indices.
+list_reset l a
+set_heaps l views
+clear_rtv l rtvs:0 0,0,0,0
+set_pipeline l gi
+targets l rtvs:0
+viewport l 0 0 64 64
+scissor l 0 0 64 64
+topology l 4
+fill_floats vb -1 -1 0 1 -1 0 0 1 0 0 0 1 0 -1 0 1
+fill_u16 ib 0 1 2 0 2 3
+vertex_buffer l 0 vb 64 16
+index_buffer l ib 12 57
+draw_indexed l 6 1
+copy_tex l back:fp:0:28:64:64:1:256 0 0 0 rt:sub:0
+list_close l
+execute q l
+queue_signal q f 5
+fence_event f 5 null
+peek back 8192 8
+peek back 0 8
+hash back 16384
+release l
+end

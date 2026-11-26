@@ -1,7 +1,21 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Port of the host copies of title memory, crates/victory-gpu/src/shadow.rs
-
-
+// (DanziLoader / victory-perf, see NOTICE.md), and of the host's landing of
+// shader writes (`hand_back`, `relay_hand_back` in host.rs).
+//
+// A title buffer's host copy. The ranges each submission reads are brought
+// up to date from title memory before it runs: the 64 KiB pages the title
+// wrote since they were last copied (`watch`), all of it where neither
+// write watching nor guards work. Ranges shaders may write (`writing`) are
+// left alone by every refresh; their bytes before the submission are kept
+// (the snapshot), and after it what differs goes back into title memory,
+// only those bytes (`copy_back_with`, or `relay_merge` with the relay).
+//
+// Ported: milestones 1 and 2 (everything a copy in the PC's memory does),
+// and milestone 3's copies in the card's memory, their CPU side (`Card`,
+// `card_dirty`, `card_merge`; the device side is `gpu/card.*`).
+// Not yet: in-place copies, windows outside buffers, the
+// `VICTORY_REFRESH_CHECK=1` diagnostic and the frame-line counters.
 #pragma once
 
 #include <d3d12.h>
@@ -87,6 +101,9 @@ extern std::atomic<std::uint64_t> CARD_STATS[7];
 
 std::array<std::uint64_t, 10> card_stats();
 
+
+void back_line(double frames);
+
 inline std::uint64_t card_hash_bytes(std::uint64_t size) { return (size / PIECE + 2) * 16; }
 
 
@@ -126,6 +143,11 @@ public:
     Shadow& operator=(const Shadow&) = delete;
 
     std::uint64_t start() const { return start_; }
+
+    std::uint64_t id() const { return id_; }
+
+
+    std::atomic<std::uint64_t> used{0};
     std::uint64_t len() const { return len_; }
     std::uint8_t* data() const { return data_; }
 
@@ -246,6 +268,7 @@ private:
 
     std::uint8_t* data_;
     std::uint64_t start_;
+    std::uint64_t id_;
     std::uint64_t len_;
 
 

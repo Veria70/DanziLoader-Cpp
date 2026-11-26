@@ -1,0 +1,48 @@
+# M4.7c/M4.9 (first part): compute (time per call). Frames in small - reset,
+# heaps, pipeline, a root UAV, 1 or 16 dispatches, close, execute, a fence
+# signalled behind (the relay) and waited for; then recording calls alone:
+# root arguments, a dispatch with a root UAV, a constant buffer table and
+# root constants, descriptor writes into a shader-visible heap (mirrored
+# into its host heap once it is made).
+runtime
+shader_cache c:/tmp/m4-shader-cache c:/tmp/m4-shader-cache/build.bin
+create_device dev device11
+create_queue dev q 0
+create_fence dev f 0
+allocator dev a 0
+list dev l 0 a
+list_close l
+desc_heap dev views 0 4096 flags=1
+committed dev buf 1 B65536
+committed dev cb 2 B65536
+fill cb 256 1 5
+cs_store cs1 0x12345678
+cs_cbv cs4
+cs_const cs2
+compute_pipeline dev p1 cs1
+compute_pipeline dev p2 cs2
+compute_pipeline dev p4 cs4
+cbv dev views:6 cb 256
+list dev lr 0 a
+set_heaps lr views
+quiet 1
+repeat 1000 dispatch_cycle q l a f views p1 buf 1
+repeat 1000 dispatch_cycle q l a f views p1 buf 16
+repeat 20000 compute_uav lr 0 buf
+repeat 20000 compute_constant lr 1 5 0
+repeat 20000 compute_table lr 1 views:6
+repeat 20000 set_pipeline lr p1
+set_pipeline lr p1
+compute_uav lr 0 buf
+repeat 20000 dispatch lr 1 1 1
+set_pipeline lr p2
+compute_constant lr 1 5 0
+repeat 20000 dispatch lr 1 1 1
+set_pipeline lr p4
+compute_table lr 1 views:6
+repeat 20000 dispatch lr 1 1 1
+repeat 20000 uav dev views:9 buf null w:39,1,0,0,256,0,0,0,1,0
+repeat 20000 cbv dev views:10 cb 256
+repeat 1000 dispatch_cycle q l a f views p1 buf 1
+repeat 1000 dispatch_cycle q l a f views p1 buf 16
+end

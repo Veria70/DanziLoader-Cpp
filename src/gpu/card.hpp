@@ -1,6 +1,16 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-
-
+// Copies of big title buffers in the card's own memory (milestone 3): port
+// of the host's card path in crates/victory-gpu/src/host.rs (`CardWork`,
+// `CARD_COMPARE`, `card_ready`, `card_before`, `card_back`, `card_done`;
+// DanziLoader / victory-perf, see NOTICE.md) and of `card_for`
+// (shadow.rs).
+//
+// Before a submission the ranges that changed on the copies' CPU side go
+// up (a list of ours, run at once) and their pieces are hashed again; the
+// ranges the submission's shaders may write get a compare after its lists.
+// After it ran, the pieces the compare flagged come down (inline through a
+// ring the compare fills, else in one fetch) and only the bytes the shaders
+// changed go into title memory (`Shadow::card_merge`).
 #pragma once
 
 #include <algorithm>
@@ -28,6 +38,9 @@ bool card_inline_fetch();
 
 
 bool rehash_runs();
+
+
+std::array<std::uint64_t, 3> take_card_passes();
 
 
 bool wide_merge();
@@ -143,7 +156,8 @@ public:
 private:
     struct Work;
     struct RelayFetch;
-    bool make_work();
+
+    bool make_work(HRESULT& error);
     std::optional<Prelude> prelude();
     std::unique_ptr<RelayFetch> make_relay_fetch();
     std::optional<Prelude> record_download(Work& work, bool from_zero);

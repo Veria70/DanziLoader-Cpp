@@ -7,6 +7,7 @@
 #include <mutex>
 
 #include "env.hpp"
+#include "log.hpp"
 #include "memcopy.hpp"
 
 namespace danzi::readback {
@@ -34,7 +35,11 @@ bool enabled() {
         std::wstring s = *v;
         auto b = s.find_first_not_of(L" \t\r\n");
         auto e = s.find_last_not_of(L" \t\r\n");
-        return b != std::wstring::npos && s.substr(b, e - b + 1) == L"1";
+        bool only = b != std::wstring::npos && s.substr(b, e - b + 1) == L"1";
+        if (only) {
+            log::warn("victory_gpu::readback", "VICTORY_COPY_BACK_ONLY_READBACK: shader writes are copied back only for the title's read-back buffers");
+        }
+        return only;
     }();
     return on;
 }
@@ -64,6 +69,10 @@ std::optional<std::pair<usize, usize>> function_at(usize base, std::uint32_t rva
 void tag(std::uint64_t start, std::uint64_t len) {
     std::lock_guard lock(TAGGED_LOCK);
     TAGGED.insert(start, start + len);
+    usize n = TAGGED.size();
+    if (n != 0 && (n & (n - 1)) == 0) {
+        log::warn("victory_gpu::readback", "read-back buffers tagged", {{"n", log::debug(n)}, {"start", log::hex(start)}, {"len", log::debug(len)}});
+    }
 }
 
 bool tagged_in(std::uint64_t start, std::uint64_t len) {
@@ -75,7 +84,14 @@ bool copy_back(std::uint64_t start, std::uint64_t len) {
     if (!enabled()) {
         return true;
     }
-    return tagged_in(start, len);
+    bool back = tagged_in(start, len);
+    if (back) {
+        memcopy::add(memcopy::M::BackGoes, 1);
+    } else {
+        memcopy::add(memcopy::M::BackKept, 1);
+        memcopy::add(memcopy::M::BackKeptBytes, len);
+    }
+    return back;
 }
 
 void untag(std::uint64_t start) {

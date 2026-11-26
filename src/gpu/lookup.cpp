@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Port of the host copies' registry of crates/victory-gpu/src/shadow.rs
-
+// (see lookup.hpp).
 #include "lookup.hpp"
 
 #include <vector>
@@ -163,15 +163,21 @@ std::shared_ptr<shadow::Shadow> Registry::loose(std::uint64_t address, std::uint
         w = windows::holder(keys, address, end).value_or(named);
     }
     auto [start, len] = w;
+    std::uint64_t now = clock_ ? clock_() : 0;
     if (auto found = loose_.find(w); found != loose_.end()) {
+        if (found->second->used.load(std::memory_order_relaxed) != now) {
+            found->second->used.store(now, std::memory_order_relaxed);
+        }
         return found->second;
     }
 
     if (auto s = placed_copy(start, len, true)) {
+        s->used.store(now, std::memory_order_relaxed);
         loose_[w] = s;
         return s;
     }
     if (auto s = rebar_copy(rebar::Kind::Window, start, len, len, true)) {
+        s->used.store(now, std::memory_order_relaxed);
         loose_[w] = s;
         return s;
     }
@@ -181,6 +187,7 @@ std::shared_ptr<shadow::Shadow> Registry::loose(std::uint64_t address, std::uint
     }
     auto s = std::make_shared<shadow::Shadow>(staging->second, start, len);
     s->set_window(true);
+    s->used.store(now, std::memory_order_relaxed);
 
 
     if (auto on_card = host_.window_card_for(len)) {

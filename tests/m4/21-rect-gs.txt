@@ -1,0 +1,71 @@
+# M5.10: a pipeline the title makes for the console's rectangles
+# (primitive topology type 19): it gets the geometry stage that completes
+# each rectangle from its three corners (`rect_list_gs`, the port's own
+# translator since milestone 5), with and without the pixel shader's
+# inputs to match. Rectangle draws (topology 17), direct and indexed; every
+# target read back and hashed.
+runtime
+shader_cache c:/tmp/m4-shader-cache c:/tmp/m4-shader-cache/build.bin
+create_device dev device11
+create_queue dev q 0
+create_fence dev f 0
+allocator dev a 0
+list dev l 0 a
+list_close l
+desc_heap dev views 0 4096 flags=1
+desc_heap dev rtvs 2 8
+committed dev back 3 B1048576
+committed dev rt 1 T3/64x64/f28/F1
+committed dev vb 2 B65536
+committed dev ib 2 B4096
+rtv dev rtvs:0 rt
+vs_input vsi
+ps_color ps2 0.0 1.0 0.0 1.0
+ps_color ps3 1.0 0.0 1.0 1.0
+graphics_pipeline dev gr vsi ps2 28 input topology=19
+graphics_pipeline dev gr3 vsi ps3 28 input topology=19
+# Two rectangles, three corners each.
+list_reset l a
+set_heaps l views
+clear_rtv l rtvs:0 0,0,0,0
+set_pipeline l gr
+targets l rtvs:0
+viewport l 0 0 64 64
+scissor l 0 0 64 64
+topology l 17
+fill_floats vb -0.75 0.75 0 1 -0.75 0.25 0 1 -0.25 0.25 0 1 0.25 -0.25 0 1 0.25 -0.75 0 1 0.75 -0.75 0 1
+vertex_buffer l 0 vb 96 16
+draw l 6 1
+copy_tex l back:fp:0:28:64:64:1:256 0 0 0 rt:sub:0
+list_close l
+execute q l
+queue_signal q f 1
+fence_event f 1 null
+peek back 2080 8
+peek back 2320 8
+peek back 12400 8
+hash back 16384
+# Indexed, with the other pixel shader: one rectangle from the first,
+# reversed corners.
+list_reset l a
+set_heaps l views
+clear_rtv l rtvs:0 0,0,0,0
+set_pipeline l gr3
+targets l rtvs:0
+viewport l 0 0 64 64
+scissor l 0 0 64 64
+topology l 17
+fill_u16 ib 2 1 0
+vertex_buffer l 0 vb 96 16
+index_buffer l ib 6 57
+draw_indexed l 3 1
+copy_tex l back:fp:0:28:64:64:1:256 0 0 0 rt:sub:0
+list_close l
+execute q l
+queue_signal q f 2
+fence_event f 2 null
+peek back 2080 8
+peek back 8192 8
+hash back 16384
+release l
+end

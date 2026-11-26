@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Port of the host's card path, crates/victory-gpu/src/host.rs (see
-
+// card.hpp and NOTICE.md).
 #include "card.hpp"
 
 #include <d3dcompiler.h>
@@ -14,6 +14,7 @@
 #include <unordered_map>
 
 #include "core/env.hpp"
+#include "core/log.hpp"
 #include "core/readback.hpp"
 #include "core/windows.hpp"
 #include "core/wide.hpp"
@@ -120,7 +121,7 @@ void main(uint3 id : SV_DispatchThreadID) {
     uint on = (count > 0u && ((lo < e && hi > s0) || (e > 2048u && lo < e - 2048u))) ? 1u : 0u;
     marks.Store2(id.x * 8u, uint2(on, 0u));
     if (id.x < 12u) {
-        
+        // Block k of slots [0, 1), [1, 2), [2, 4) ... [1024, 2048).
         uint glo = id.x == 0u ? 0u : (1u << (id.x - 1u));
         uint ghi = 1u << id.x;
         uint gon = (count > 0u && ((glo < e && ghi > s0) || (e > 2048u && glo < e - 2048u))) ? 1u : 0u;
@@ -197,6 +198,13 @@ std::uint32_t inline_pieces_within(const std::vector<CardRange>& ranges, std::ui
 bool card_inline_fetch() {
     static const bool on = env::not_set_or_not(L"VICTORY_CARD_INLINE_FETCH", L"0");
     return on;
+}
+
+std::atomic<std::uint64_t> CARD_PASSES[3]{};
+
+std::array<std::uint64_t, 3> take_card_passes() {
+    return {CARD_PASSES[0].exchange(0, std::memory_order_relaxed), CARD_PASSES[1].exchange(0, std::memory_order_relaxed),
+            CARD_PASSES[2].exchange(0, std::memory_order_relaxed)};
 }
 
 bool rehash_runs() {
@@ -413,14 +421,20 @@ std::unique_ptr<CardHost::RelayFetch> CardHost::make_relay_fetch() {
 std::optional<Prelude> CardHost::prelude() { return device_.make_prelude(); }
 
 bool CardHost::card_ready() {
-    std::call_once(ready_once_, [&] { ready_ = make_work(); });
+    std::call_once(ready_once_, [&] {
+        HRESULT error = S_OK;
+        ready_ = make_work(error);
+        if (!ready_) {
+            log::warn("victory_gpu::host", "no host copies in the card's memory: the compare could not be made", {{"error", log::hresult(error)}});
+        }
+    });
     return ready_;
 }
 
-bool CardHost::make_work() {
+bool CardHost::make_work(HRESULT& error) {
     ComPtr<ID3DBlob> code;
     const std::string source = card_compare_source();
-    if (FAILED(D3DCompile(source.data(), source.size(), "card compare", nullptr, nullptr, "main", "cs_5_1", 0, 0, &code, nullptr)) || !code) {
+    if (FAILED(error = D3DCompile(source.data(), source.size(), "card compare", nullptr, nullptr, "main", "cs_5_1", 0, 0, &code, nullptr)) || !code) {
         return false;
     }
     auto w = std::make_unique<Work>();
@@ -487,13 +501,13 @@ bool CardHost::make_work() {
             }
         }
     }
-    if (FAILED(device_.device()->CreateRootSignature(0, code->GetBufferPointer(), code->GetBufferSize(), IID_PPV_ARGS(&w->root)))) {
+    if (FAILED(error = device_.device()->CreateRootSignature(0, code->GetBufferPointer(), code->GetBufferSize(), IID_PPV_ARGS(&w->root)))) {
         return false;
     }
     D3D12_COMPUTE_PIPELINE_STATE_DESC pd{};
     pd.pRootSignature = w->root.Get();
     pd.CS = {code->GetBufferPointer(), code->GetBufferSize()};
-    if (FAILED(device_.device()->CreateComputePipelineState(&pd, IID_PPV_ARGS(&w->pso)))) {
+    if (FAILED(error = device_.device()->CreateComputePipelineState(&pd, IID_PPV_ARGS(&w->pso)))) {
         return false;
     }
     auto a = prelude(), b = prelude(), c = prelude();
@@ -619,6 +633,12 @@ std::unique_ptr<shadow::Shadow> CardHost::make_carded(std::uint64_t start, std::
         return nullptr;
     }
     auto on_card = card_for(size);
+    if (on_card) {
+        log::info("victory_gpu::shadow", "a buffer's host copy is in the card's memory", {{"start", log::hex(start)}, {"len", log::debug(len)}});
+    }
+    if (len >= std::uint64_t{16} << 20) {
+        log::info("victory_gpu::shadow", "large buffer copied to the host", {{"start", log::hex(start)}, {"len", log::debug(len)}});
+    }
     if (!on_card) {
 
         auto s = std::make_unique<shadow::Shadow>(staging->second, start, len);
@@ -764,6 +784,12 @@ std::optional<CardPlan> CardHost::card_before(std::span<const GpuWrite> writes, 
             if (rehash_runs()) {
                 runs = shadow::joined_piece_runs(std::move(runs));
             }
+            CARD_PASSES[0].fetch_add(runs.size(), std::memory_order_relaxed);
+            std::uint64_t pieces = 0;
+            for (const auto& run : runs) {
+                pieces += run.pieces;
+            }
+            CARD_PASSES[1].fetch_add(pieces, std::memory_order_relaxed);
             for (const auto& run : runs) {
                 if (run.pieces == 0) {
                     continue;
@@ -874,6 +900,7 @@ std::optional<CardPlan> CardHost::card_before(std::span<const GpuWrite> writes, 
             list->SetComputeRootShaderResourceView(1, r.shadow->buffer()->GetGPUVirtualAddress());
             list->SetComputeRootUnorderedAccessView(2, sides->before->GetGPUVirtualAddress());
             list->Dispatch(r.span.pieces, 1, 1);
+            CARD_PASSES[2].fetch_add(1, std::memory_order_relaxed);
         }
         if (marks) {
 

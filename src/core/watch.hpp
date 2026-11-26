@@ -1,7 +1,21 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Port of crates/victory-gpu/src/watch.rs (DanziLoader / victory-perf, see
-
-
+// NOTICE.md).
+//
+// Which title memory the title wrote since a host copy took it. The runtime
+// reserves title GPU memory with write watching, so the kernel keeps a dirty
+// bit per 4 KiB page; asking for a range's written pages also clears them.
+// Host copies of the same memory can overlap (nested buffers, textures in
+// buffers), so what one asks is kept here for the others: a journal of each
+// page's last write, numbered by the asking.
+//
+// Physical-page views (xmem's sections) cannot be write-watched. There a
+// copy leaves each 64 KiB block it took read-only, and a vectored handler
+// takes the first write to it: it notes the block as written and gives the
+// write access back. The runtime tells us when it maps or unmaps views
+// (`title_memory_remapped`), which resets their protection. Writes into
+// physical pages through another view are seen too (`writing`, and every
+// view of a guarded page is guarded with it, up to `MANY_VIEWS`).
 #pragma once
 
 #include <cstdint>

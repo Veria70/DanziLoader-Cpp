@@ -1,0 +1,107 @@
+# M4.7c/M4.9 (first part): compute dispatches with console shaders made by
+# the driver (GFX10 code in the console's container layout), translated by
+# the reference's translator into the shader cache the port reads (until
+# milestone 5 ports the translator). Root UAVs as one-view tables in the
+# host view heap's dynamic slots; root constants as user data; a UAV read
+# through a descriptor table (the host slot mirrored from the title's); a
+# constant buffer read through a table made afresh in dynamic slots; what
+# the shaders wrote copied back into title buffers, read after a fence
+# signalled behind the submission (the relay, on by default).
+runtime
+shader_cache c:/tmp/m4-shader-cache c:/tmp/m4-shader-cache/build.bin
+create_device dev device11
+create_queue dev q 0
+create_fence dev f 0
+allocator dev a 0
+list dev l 0 a
+list_close l
+desc_heap dev views 0 4096 flags=1
+committed dev buf 1 B65536
+committed dev buf2 1 B65536
+committed dev cb 2 B65536
+fill buf 1024 0 0
+fill buf2 1024 0 0
+fill cb 256 1 5
+cs_store cs1 0x12345678
+cs_const cs2
+cs_table cs3 0xCAFEF00D
+cs_cbv cs4
+compute_pipeline dev p1 cs1
+compute_pipeline dev p2 cs2
+compute_pipeline dev p3 cs3
+compute_pipeline dev p4 cs4
+uav dev views:5 buf2 null w:39,1,0,0,256,0,0,0,1,0
+cbv dev views:6 cb 256
+# A root UAV.
+list_reset l a
+set_heaps l views
+set_pipeline l p1
+compute_uav l 0 buf
+dispatch l 1 1 1
+list_close l
+execute q l
+queue_signal q f 1
+fence_event f 1 null
+peek buf 0 16
+peek buf 252 8
+hash buf 1024
+# Root constants, at an offset into the buffer.
+list_reset l a
+set_heaps l views
+set_pipeline l p2
+compute_uav l 0 buf+512
+compute_constant l 1 0x0BADBEEF 0
+dispatch l 1 1 1
+list_close l
+execute q l
+queue_signal q f 2
+fence_event f 2 null
+peek buf 508 8
+peek buf 764 8
+hash buf 1024
+# A UAV through a descriptor table.
+list_reset l a
+set_heaps l views
+set_pipeline l p3
+compute_table l 0 views:5
+dispatch l 1 1 1
+list_close l
+execute q l
+queue_signal q f 3
+fence_event f 3 null
+peek buf2 0 16
+peek buf2 252 8
+hash buf2 1024
+# A constant buffer through a table (made afresh), then the title writes it
+# again and the next dispatch sees the new value; two dispatches in one list.
+list_reset l a
+set_heaps l views
+set_pipeline l p4
+compute_uav l 0 buf
+compute_table l 1 views:6
+dispatch l 1 1 1
+list_close l
+execute q l
+queue_signal q f 4
+fence_event f 4 null
+peek buf 0 16
+fill cb 4 7 3
+list_reset l a
+set_heaps l views
+set_pipeline l p4
+compute_uav l 0 buf+256
+compute_table l 1 views:6
+dispatch l 1 1 1
+set_pipeline l p1
+compute_uav l 0 buf2+512
+dispatch l 1 1 1
+list_close l
+execute q l
+queue_signal q f 5
+fence_event f 5 null
+peek buf 256 16
+peek buf2 512 8
+hash buf 1024
+hash buf2 1024
+release l
+end

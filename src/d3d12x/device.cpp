@@ -1,10 +1,21 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Port of crates/victory-gpu/src/device.rs and console.rs (see device.hpp).
 #include "device.hpp"
+#include "descriptor.hpp"
+#include "list.hpp"
+#include "pipeline.hpp"
+#include "resource.hpp"
+#include "root.hpp"
+#include "sync.hpp"
+#include "core/log.hpp"
+#include "core/title_copy.hpp"
 
 #include <windows.h>
 
 #include <algorithm>
+#include <optional>
+#include <string>
+#include <vector>
 
 namespace danzi::d3d12x {
 
@@ -38,7 +49,6 @@ static_assert(sizeof(Device) == 0x58);
 static_assert(offsetof(Device, out_of_line) == 0x18);
 
 std::atomic<bool> NEWER{false};
-std::atomic<bool> SERIES_S{false};
 
 HRESULT __stdcall query_interface(This self, const Iid* iid, This* out) {
     This found = is_device(iid) ? self : is(iid, DXGI_DEVICE_IIDS) ? dxgi_device() : nullptr;
@@ -46,12 +56,6 @@ HRESULT __stdcall query_interface(This self, const Iid* iid, This* out) {
 }
 
 std::uint32_t __stdcall node_count(This) { return 1; }
-
-
-std::uint32_t __stdcall increment_size(This, std::uint32_t kind) {
-    constexpr std::uint32_t SIZES[4] = {32, 16, 128, 128};
-    return kind < 4 ? SIZES[kind] : 0;
-}
 
 
 constexpr std::uint32_t OPTIONS[16] = {1, 1, 2, 3, 3, 1, 1, 1, 3, 40, 0, 0, 0, 0, 1, 2};
@@ -70,7 +74,9 @@ HRESULT __stdcall check_feature_support(This, std::uint32_t feature, void* data,
         case 2: expected = sizeof(FeatureLevels); break;
         case 3: expected = 12; break;
         case 4: expected = 16; break;
-        default: return E_NOTIMPL_;
+        default:
+            log::warn("victory_gpu::device", "device feature query not implemented", {{"feature", log::debug(feature)}, {"size", log::debug(size)}});
+            return E_NOTIMPL_;
     }
     if (!data || size != expected) {
         return E_INVALIDARG_;
@@ -124,9 +130,42 @@ HRESULT __stdcall check_feature_support(This, std::uint32_t feature, void* data,
 }
 
 
-HRESULT __stdcall unknown_pipeline(This, const std::uint8_t*, const Iid*, This* out) {
+std::atomic<std::uint32_t> UNKNOWN_PIPELINE_CALLS[2]{};
+
+
+std::optional<std::vector<std::uint64_t>> words(std::uint64_t at) {
+    std::vector<std::uint64_t> w(16);
+    if (at == 0 || !host::read_into(reinterpret_cast<const std::uint8_t*>(at), reinterpret_cast<std::uint8_t*>(w.data()), 128)) {
+        return std::nullopt;
+    }
+    return w;
+}
+
+
+std::string words_text(const std::optional<std::vector<std::uint64_t>>& w) {
+    if (!w) {
+        return "None";
+    }
+    std::string text = "Some([";
+    for (std::size_t i = 0; i < w->size(); ++i) {
+        char b[24];
+        std::snprintf(b, sizeof b, i == 0 ? "%llx" : ", %llx", static_cast<unsigned long long>((*w)[i]));
+        text += b;
+    }
+    return text + "])";
+}
+
+template <std::size_t SLOT>
+HRESULT __stdcall unknown_pipeline(This, const std::uint8_t* desc, const Iid*, This* out) {
+    std::uint32_t calls = UNKNOWN_PIPELINE_CALLS[SLOT == 0x218 ? 1 : 0].fetch_add(1, std::memory_order_relaxed) + 1;
     if (out) {
         *out = nullptr;
+    }
+    if ((calls <= 4 || (calls & (calls - 1)) == 0) && log::enabled(log::Level::Warn, "victory_gpu::device")) {
+        auto description = words(reinterpret_cast<std::uint64_t>(desc));
+        auto first = description ? words((*description)[0]) : std::nullopt;
+        log::warn("victory_gpu::device", "a pipeline creation method that is not implemented: the title goes without this pipeline",
+                  {{"slot", log::hex(SLOT)}, {"calls", log::debug(calls)}, {"description", words_text(description)}, {"first_points_at", words_text(first)}});
     }
     return E_NOTIMPL_;
 }
@@ -139,10 +178,52 @@ const void* const* functions() {
         f[0] = fn(&query_interface);
         f[7] = fn(&node_count);
         f[13] = fn(&check_feature_support);
-        f[15] = fn(&increment_size);
-        f[57] = fn(&unknown_pipeline);
-        f[67] = fn(&unknown_pipeline);
+        f[14] = fn(&create_descriptor_heap);
+        f[15] = fn(&descriptor_increment_size);
+        f[16] = fn(&create_root_signature);
+        f[39] = fn(&create_query_heap);
+        f[41] = fn(&create_command_signature);
+        f[17] = fn(&create_cbv);
+        f[18] = fn(&create_srv);
+        f[19] = fn(&create_uav);
+        f[20] = fn(&create_rtv);
+        f[21] = fn(&create_dsv);
+        f[22] = fn(&create_sampler);
+        f[23] = fn(&copy_descriptors);
+        f[24] = fn(&copy_descriptors_simple);
+        f[61] = fn(&create_sampler_x);
+        f[70] = fn(&create_placed_srv);
+        f[71] = fn(&create_placed_uav);
+        f[10] = fn(&create_graphics_pipeline);
+        f[11] = fn(&create_compute_pipeline);
+        f[62] = fn(&create_compute_pipeline_x);
+        f[86] = fn(&create_pipeline_stream);
+        f[57] = fn(&unknown_pipeline<0x1c8>);
+        f[67] = fn(&unknown_pipeline<0x218>);
         f[69] = fn(&ignore);   
+        f[8] = fn(&create_queue);
+        f[9] = fn(&create_allocator);
+        f[12] = fn(&create_list);
+        f[73] = fn(&create_list_x);
+        f[25] = fn(&allocation_info);
+        f[26] = fn(&custom_heap_properties);
+        f[27] = fn(&create_committed);
+        f[28] = fn(&create_heap);
+        f[29] = fn(&create_placed);
+        f[38] = fn(&copyable_footprints);
+        f[74] = fn(&register_page_pool);
+        f[75] = fn(&unregister_page_pool);
+
+        f[76] = fn(&create_committed);
+        f[108] = fn(&allocation_info2);
+        f[127] = fn(&create_committed3);
+        f[133] = fn(&create_at_address);
+        f[36] = fn(&create_fence);
+        f[48] = fn(&create_queue_x);
+        f[78] = fn(&frame_set_interval);
+        f[79] = fn(&frame_schedule);
+        f[80] = fn(&frame_wait);
+        f[81] = fn(&frame_statistics);
         return f;
     }();
     return table.data();
@@ -163,7 +244,13 @@ HRESULT __stdcall create_device(const void*, const std::uint32_t* parameters, co
     if (!parameters || !iid) {
         return E_INVALIDARG_;
     }
+    std::uint32_t version = *parameters;
+    log::info("victory_gpu::device", "D3D12.X device", {{"version", log::hex(version)}});
+    if (version != CHECKED_VERSION) {
+        log::warn("victory_gpu::device", "device layouts were checked against " + log::hex(CHECKED_VERSION) + " only", {{"version", log::hex(version)}});
+    }
     if (!is_device(iid)) {
+        log::warn("victory_gpu::device", "device created as an unknown interface", {{"iid", guid_text(*iid)}});
         return E_NOINTERFACE_;
     }
     if (!out) {
@@ -179,6 +266,8 @@ HRESULT __stdcall configure_virtual_memory(VirtualMemory* config) {
     if (!config) {
         return E_INVALIDARG_;
     }
+    log::info("victory_gpu::device", "graphics virtual memory",
+              {{"flags", log::debug(config->flags)}, {"page_table_pages", log::debug(config->page_table_pages)}, {"preserved_bytes", log::debug(config->preserved_bytes)}});
 
     SYSTEM_INFO info;
     GetSystemInfo(&info);
@@ -187,9 +276,9 @@ HRESULT __stdcall configure_virtual_memory(VirtualMemory* config) {
     return S_OK_;
 }
 
-void set_console(Console c) { SERIES_S.store(c == Console::SeriesS, std::memory_order_relaxed); }
+std::atomic<bool> detail::SERIES_S{false};
 
-Console current_console() { return SERIES_S.load(std::memory_order_relaxed) ? Console::SeriesS : Console::SeriesX; }
+void set_console(Console c) { detail::SERIES_S.store(c == Console::SeriesS, std::memory_order_relaxed); }
 
 std::pair<std::size_t, std::size_t> title_memory(Console c) {
     constexpr std::size_t GIB = std::size_t{1} << 30;

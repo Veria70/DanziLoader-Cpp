@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-
-
+// Hybrid write tracking against the ground truth: every page written since
+// the last asking is reported, whichever way it was written (a CPU write that
+// faults on a cold block, one into a hot block, a kernel write told through
+// `watch::writing`), through many hot/cold transitions.
 #include <random>
 #include <set>
 

@@ -1,7 +1,13 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Port of the view registry of crates/victory-gpu/src/inplace.rs
-
-
+// (DanziLoader / victory-perf, see NOTICE.md): the title's views of its
+// physical pages, as the runtime maps them. A write through one view of a
+// page is a write of the bytes every other view shows (`watch` guards them
+// all).
+//
+// Not ported yet: placing D3D12 heaps on title memory ("in place"). Until it
+// is, nothing is ever placed, and `title_memory_freeing` has nothing to let
+// go, exactly as the reference with nothing placed.
 #pragma once
 
 #include <atomic>
@@ -62,5 +68,8 @@ bool private_whole(usize at, usize len);
 void title_memory_freeing(usize at, usize len);
 using FreeingHook = std::uint64_t (*)(void* context, std::uint64_t at, std::uint64_t len);
 void set_freeing_hook(FreeingHook hook, void* context);
+
+
+void tick(std::uint64_t now_ms);
 
 }   

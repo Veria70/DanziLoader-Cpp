@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Port of crates/victory-gpu/src/watch.rs. Function by function; the
-
-
+// comments say what the reference's comments say where it matters for the
+// behavior. Diagnostics counters (`feature = "diagnostics"`) are left out,
+// as in the reference's plain release build.
 #include "watch.hpp"
 
 #include <algorithm>

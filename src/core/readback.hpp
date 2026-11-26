@@ -1,7 +1,13 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Port of parts of crates/victory-gpu/src/readback.rs (DanziLoader /
-
-
+// victory-perf, see NOTICE.md): the title's read-back buffers, tagged when
+// made and never placed where the CPU reads slowly (`rebar`), and the copy
+// back of shader writes limited to them (`VICTORY_COPY_BACK_ONLY_READBACK`,
+// testing, off by default).
+//
+// Ported now: the tags and the lookup of a function's range in a mapped
+// image. Waits for the runtime (milestone 6): finding the title's creator
+// on the stack when a buffer is made (`creating_readback`).
 #pragma once
 
 #include <cstdint>

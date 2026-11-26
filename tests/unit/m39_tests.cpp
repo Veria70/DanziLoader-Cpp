@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-
-
+// M3.9: the reference's own unit tests of rebar.rs, memcopy.rs and
+// readback.rs (DanziLoader / victory-perf, see NOTICE.md), ported.
 #include <windows.h>
 
 #include <set>

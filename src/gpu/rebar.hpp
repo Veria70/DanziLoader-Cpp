@@ -1,7 +1,15 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Port of crates/victory-gpu/src/rebar.rs (DanziLoader / victory-perf, see
-
-
+// NOTICE.md): `VICTORY_REBAR` (opt-in, off by default), host copies in the
+// card's memory that the CPU maps (Resizable BAR, D3D12's GPU upload heap).
+// The placement rule, the probe at the host's start, and the bytes placed.
+//
+// Where the port differs (M3.9): the reference places level 2's small title
+// buffers, which shaders may write, in a GPU upload heap and then reads them
+// on the CPU for snapshots and copy-backs. On the RTX 5080 that read runs at
+// 5.7 MB/s (11.8 s for 64 MiB). The port gives such a copy the card path
+// instead (`CardHost::make_copy`): the card side in VRAM, its CPU side in
+// the PC's memory, never read over the bus.
 #pragma once
 
 #include <cstdint>

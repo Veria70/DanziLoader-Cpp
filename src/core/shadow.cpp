@@ -1,15 +1,17 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Port of crates/victory-gpu/src/shadow.rs (host copies of title memory) and
-
+// of `hand_back`, `relay_hand_back`, `join_ranges` from host.rs.
 #include "shadow.hpp"
 
 #include <algorithm>
+#include <cstdio>
 #include <cstring>
 #include <optional>
 #include <string>
 
 #include "env.hpp"
 #include "inplace.hpp"
+#include "log.hpp"
 #include "fastmem.hpp"
 #include "title_copy.hpp"
 #include "watch.hpp"
@@ -18,6 +20,19 @@
 namespace danzi::shadow {
 
 namespace {
+
+
+std::atomic<std::uint64_t> BACK_CLASS[7]{};
+
+
+void compared(bool window, usize len, usize from, usize to) {
+    usize bytes = window ? 2 : 3, ranges = window ? 5 : 6;
+    BACK_CLASS[bytes].fetch_add(to - from, std::memory_order_relaxed);
+    BACK_CLASS[ranges].fetch_add(1, std::memory_order_relaxed);
+    if (!window && len >= usize{1} << 20) {
+        BACK_CLASS[4].fetch_add(to - from, std::memory_order_relaxed);
+    }
+}
 
 using watch::PAGE;
 
@@ -515,8 +530,10 @@ std::vector<Range> Flights::done(std::span<const Range> ranges) {
     return free;
 }
 
+std::atomic<std::uint64_t> SHADOW_IDS{0};
+
 Shadow::Shadow(std::uint8_t* data, std::uint64_t start, std::uint64_t len)
-    : data_(data), start_(start), len_(len), copied_(static_cast<usize>(div_ceil(start + len, PAGE) - start / PAGE)) {}
+    : data_(data), start_(start), id_(SHADOW_IDS.fetch_add(1, std::memory_order_relaxed) + 1), len_(len), copied_(static_cast<usize>(div_ceil(start + len, PAGE) - start / PAGE)) {}
 
 Shadow::~Shadow() {
     if (placed_) {
@@ -756,6 +773,11 @@ void Shadow::writing(usize address, usize len) {
         parts = std::move(rest);
     }
     pending_.push_back(range);
+    usize taken = 0;
+    for (const auto& [from, to] : parts) {
+        taken += saturating_sub(to, from);
+    }
+    BACK_CLASS[window_ ? 0 : 1].fetch_add(taken, std::memory_order_relaxed);
     usize total = len_;
     std::lock_guard before(before_lock_);
     if (!before_) {
@@ -1206,6 +1228,7 @@ usize Shadow::copy_back_with(usize address, usize len, const std::vector<Piece>*
     usize written = 0;
     auto [from, to] = inside(address, len);
     usize start = start_;
+    compared(window_, len_, from, to);
     if (!before_ || from >= to) {
         return written;
     }
@@ -1402,6 +1425,10 @@ void relay_hand_back(std::span<const Declared> back) {
         std::vector<Range> spans;
         join_ranges(spans, declared);
         for (const auto& [from, to] : spans) {
+            auto [a, e] = shadow->inside(from, to - from);
+            compared(shadow->window(), shadow->len(), a, e);
+        }
+        for (const auto& [from, to] : spans) {
             work.emplace_back(shadow, from, to);
         }
     }
@@ -1417,6 +1444,28 @@ void relay_hand_back(std::span<const Declared> back) {
             shadow->relay_merge(at, n, now, title);
         }
     }
+}
+
+void back_line(double frames) {
+    double c[7];
+    bool any = false;
+    for (usize i = 0; i < 7; ++i) {
+        c[i] = static_cast<double>(BACK_CLASS[i].exchange(0, std::memory_order_relaxed)) / frames;
+        any = any || c[i] != 0.0;
+    }
+    if (!any) {
+        return;
+    }
+    auto f = [](double v, int places) {
+        char b[64];
+        std::snprintf(b, sizeof b, "%.*f", places, v);
+        return std::string(b);
+    };
+    auto mb = [&](double v) { return f(v / static_cast<double>(1 << 20), 1); };
+    log::info("victory_gpu::shadow", "shader writes looked for on the CPU per frame: " + mb(c[2]) + " MB compared in " + f(c[5], 0) +
+                                         " ranges of windows outside buffers (" + mb(c[0]) + " MB snapshotted), " + mb(c[3]) + " MB in " + f(c[6], 0) +
+                                         " ranges of title buffers' copies (" + mb(c[1]) + " MB snapshotted), of them " + mb(c[4]) +
+                                         " MB in copies of 1 MiB or more (VICTORY_CARD_BUFFERS_MIN_MB=1 would have the card look there)");
 }
 
 }   

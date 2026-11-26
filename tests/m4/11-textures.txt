@@ -1,0 +1,154 @@
+# M4.7b: textures on the host. Texels the title writes into its memory
+# (linear, tiled 4 KiB S, block-compressed with mips) uploaded through
+# staging buffers and read back into title buffers; a buffer copied into a
+# texture and read back (its title memory left alone); texture to texture
+# copies with a box and whole; clears of a target (whole and a rectangle)
+# and of depth; an MSAA resolve; a depth texture with a colour twin; and
+# barriers on textures. Every result is read back and hashed, after a fence
+# signalled behind the submission (the relay, on by default).
+runtime
+create_device dev device11
+create_queue dev q 0
+create_fence dev f 0
+allocator dev a 0
+list dev l 0 a
+list_close l
+desc_heap dev rtvs 2 8
+desc_heap dev dsvs 3 8
+committed dev back 3 B1048576
+committed dev up 2 B1048576
+# A linear texture the title fills.
+committed dev lin 1 T3/64x64/f28/l1
+fill lin 16384 7 3
+list_reset l a
+copy_tex l back:fp:0:28:64:64:1:256 0 0 0 lin:sub:0
+list_close l
+execute q l
+queue_signal q f 1
+fence_event f 1 null
+hash back 16384
+peek back 0 16
+peek back 256 16
+# A tiled one (4 KiB S).
+committed dev til 1 T3/64x64/f28
+fill til 16384 13 1
+list_reset l a
+copy_tex l back:fp:0:28:64:64:1:256 0 0 0 til:sub:0
+list_close l
+execute q l
+queue_signal q f 2
+fence_event f 2 null
+hash back 16384
+peek back 0 16
+# Block-compressed with mips: mip 2 read back.
+committed dev bc 1 T3/128x128/m0/f71
+fill bc 10936 5 9
+list_reset l a
+copy_tex l back:fp:0:71:32:32:1:256 0 0 0 bc:sub:2
+list_close l
+execute q l
+queue_signal q f 3
+fence_event f 3 null
+hash back 2048
+# The title writes its memory again: uploaded again.
+fill til 4096 11 2
+list_reset l a
+copy_tex l back:fp:0:28:64:64:1:256 0 0 0 til:sub:0 x
+list_close l
+execute q l
+queue_signal q f 4
+fence_event f 4 null
+hash back 16384
+# A buffer into a texture, read back in the same list; its title memory stays.
+fill up 65536 3 7
+committed dev dt 1 T3/32x32/f28
+list_reset l a
+copy_tex l dt:sub:0 0 0 0 up:fp:0:28:32:32:1:128
+copy_tex l back:fp:0:28:32:32:1:256 0 0 0 dt:sub:0
+list_close l
+execute q l
+queue_signal q f 5
+fence_event f 5 null
+hash back 8192
+hash dt 4096
+# Texture to texture: a box of the tiled one into another, then whole.
+committed dev dt2 1 T3/32x32/f28
+list_reset l a
+copy_tex l dt2:sub:0 8 8 0 til:sub:0 box:0,0,0,16,16,1
+copy_tex l back:fp:0:28:32:32:1:256 0 0 0 dt2:sub:0
+list_close l
+execute q l
+queue_signal q f 6
+fence_event f 6 null
+hash back 8192
+list_reset l a
+copy_res l dt2 dt
+copy_tex l back:fp:0:28:32:32:1:256 0 0 0 dt2:sub:0
+list_close l
+execute q l
+queue_signal q f 7
+fence_event f 7 null
+hash back 8192
+# Clears of a target, whole and a rectangle.
+committed dev rt 1 T3/32x32/f28/F1
+rtv dev rtvs:0 rt
+list_reset l a
+clear_rtv l rtvs:0 1,0.5,0.25,1
+clear_rtv l rtvs:0 0,0,1,1 4,4,8,8
+copy_tex l back:fp:0:28:32:32:1:256 0 0 0 rt:sub:0
+list_close l
+execute q l
+queue_signal q f 8
+fence_event f 8 null
+hash back 8192
+peek back 0 8
+peek back 1296 8
+# Depth: cleared and read back (as 32-bit floats).
+committed dev dp 1 T3/32x32/f40/F2
+dsv dev dsvs:0 dp
+list_reset l a
+clear_dsv l dsvs:0 1 0.75 0
+copy_tex l back:fp:0:41:32:32:1:256 0 0 0 dp:sub:0
+list_close l
+execute q l
+queue_signal q f 9
+fence_event f 9 null
+hash back 8192
+peek back 0 8
+# MSAA: a cleared four-sample target resolved.
+committed dev ms 1 T3/32x32/f28/F1/s4
+rtv dev rtvs:1 ms
+committed dev rs 1 T3/32x32/f28
+list_reset l a
+clear_rtv l rtvs:1 0,1,0,1
+resolve l rs 0 ms 0 28
+copy_tex l back:fp:0:28:32:32:1:256 0 0 0 rs:sub:0
+list_close l
+execute q l
+queue_signal q f 10
+fence_event f 10 null
+hash back 8192
+peek back 0 8
+# A depth texture with unordered access: its colour twin.
+committed dev tw 1 T3/32x32/f40/F6
+dsv dev dsvs:1 tw
+list_reset l a
+clear_dsv l dsvs:1 1 0.25 0
+copy_tex l back:fp:0:41:32:32:1:256 0 0 0 tw:sub:0
+list_close l
+execute q l
+queue_signal q f 11
+fence_event f 11 null
+hash back 8192
+peek back 0 8
+# Barriers on textures, then a read back.
+list_reset l a
+barrier l 0:til:0x800 0:rt:0x80 2:tw 2:null
+copy_tex l back:fp:0:28:64:64:1:256 0 0 0 til:sub:0
+list_close l
+execute q l
+queue_signal q f 12
+fence_event f 12 null
+hash back 16384
+release l
+end

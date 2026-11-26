@@ -1,0 +1,123 @@
+# M4.13 mesh pipelines and mesh dispatches (time per call). Frames in
+# small (reset, heaps, a mesh pipeline, target, viewport, scissor, 1 or 64
+# mesh dispatches of one group, close, execute, a fence signalled behind
+# and waited for), draw cycles beside them; recording alone: a mesh
+# dispatch, an indirect one (arguments in a title buffer); the title making
+# a mesh pipeline; the first mesh dispatch of each of 20 new mesh pipelines
+# (the host pipeline made then).
+runtime
+shader_cache c:/tmp/m4-shader-cache c:/tmp/m4-shader-cache/build.bin
+create_device dev device11
+create_queue dev q 0
+create_fence dev f 0
+allocator dev a 0
+list dev l 0 a
+list_close l
+desc_heap dev views 0 4096 flags=1
+desc_heap dev rtvs 2 8
+committed dev rt 1 T3/256x256/f28/F1
+committed dev args 2 B65536
+rtv dev rtvs:0 rt
+ms_triangle ms
+vs_fullscreen vs
+ps_color ps 1.0 0.5 0.25 1.0
+graphics_pipeline dev gm ms ps 28 mesh
+graphics_pipeline dev g vs ps 28
+cmd_signature dev smesh 12 null 10
+fill_u32 args 1 1 1
+ms_triangle m0 0.25
+graphics_pipeline dev gm0 m0 ps 28 mesh
+ms_triangle m1 0.265625
+graphics_pipeline dev gm1 m1 ps 28 mesh
+ms_triangle m2 0.28125
+graphics_pipeline dev gm2 m2 ps 28 mesh
+ms_triangle m3 0.296875
+graphics_pipeline dev gm3 m3 ps 28 mesh
+ms_triangle m4 0.3125
+graphics_pipeline dev gm4 m4 ps 28 mesh
+ms_triangle m5 0.328125
+graphics_pipeline dev gm5 m5 ps 28 mesh
+ms_triangle m6 0.34375
+graphics_pipeline dev gm6 m6 ps 28 mesh
+ms_triangle m7 0.359375
+graphics_pipeline dev gm7 m7 ps 28 mesh
+ms_triangle m8 0.375
+graphics_pipeline dev gm8 m8 ps 28 mesh
+ms_triangle m9 0.390625
+graphics_pipeline dev gm9 m9 ps 28 mesh
+ms_triangle m10 0.40625
+graphics_pipeline dev gm10 m10 ps 28 mesh
+ms_triangle m11 0.421875
+graphics_pipeline dev gm11 m11 ps 28 mesh
+ms_triangle m12 0.4375
+graphics_pipeline dev gm12 m12 ps 28 mesh
+ms_triangle m13 0.453125
+graphics_pipeline dev gm13 m13 ps 28 mesh
+ms_triangle m14 0.46875
+graphics_pipeline dev gm14 m14 ps 28 mesh
+ms_triangle m15 0.484375
+graphics_pipeline dev gm15 m15 ps 28 mesh
+ms_triangle m16 0.5
+graphics_pipeline dev gm16 m16 ps 28 mesh
+ms_triangle m17 0.515625
+graphics_pipeline dev gm17 m17 ps 28 mesh
+ms_triangle m18 0.53125
+graphics_pipeline dev gm18 m18 ps 28 mesh
+ms_triangle m19 0.546875
+graphics_pipeline dev gm19 m19 ps 28 mesh
+list dev lr 0 a
+set_heaps lr views
+targets lr rtvs:0
+viewport lr 0 0 256 256
+scissor lr 0 0 256 256
+quiet 1
+repeat 1000 mesh_cycle q l a f views gm rtvs:0 256 1
+repeat 1000 mesh_cycle q l a f views gm rtvs:0 256 64
+repeat 1000 draw_cycle q l a f views g rtvs:0 256 1
+set_pipeline lr gm
+repeat 20000 dispatch_mesh lr 1
+repeat 20000 execute_indirect lr smesh 1 args 0
+repeat 200 graphics_pipeline dev gx ms ps 28 mesh
+set_pipeline lr gm0
+dispatch_mesh lr 1
+set_pipeline lr gm1
+dispatch_mesh lr 1
+set_pipeline lr gm2
+dispatch_mesh lr 1
+set_pipeline lr gm3
+dispatch_mesh lr 1
+set_pipeline lr gm4
+dispatch_mesh lr 1
+set_pipeline lr gm5
+dispatch_mesh lr 1
+set_pipeline lr gm6
+dispatch_mesh lr 1
+set_pipeline lr gm7
+dispatch_mesh lr 1
+set_pipeline lr gm8
+dispatch_mesh lr 1
+set_pipeline lr gm9
+dispatch_mesh lr 1
+set_pipeline lr gm10
+dispatch_mesh lr 1
+set_pipeline lr gm11
+dispatch_mesh lr 1
+set_pipeline lr gm12
+dispatch_mesh lr 1
+set_pipeline lr gm13
+dispatch_mesh lr 1
+set_pipeline lr gm14
+dispatch_mesh lr 1
+set_pipeline lr gm15
+dispatch_mesh lr 1
+set_pipeline lr gm16
+dispatch_mesh lr 1
+set_pipeline lr gm17
+dispatch_mesh lr 1
+set_pipeline lr gm18
+dispatch_mesh lr 1
+set_pipeline lr gm19
+dispatch_mesh lr 1
+repeat 1000 mesh_cycle q l a f views gm rtvs:0 256 1
+repeat 1000 mesh_cycle q l a f views gm rtvs:0 256 64
+end

@@ -1,0 +1,1530 @@
+# M4.11: the sweep (time per call). 500 textures the title fills (16x16),
+# each read back once (host copies and staging buffers made), left idle
+# past the sweep's times; then the submission that runs the sweep (500
+# host copies and staging buffers let go), and submissions after it.
+runtime
+create_device dev device11
+create_queue dev q 0
+create_fence dev f 0
+allocator dev a 0
+list dev l 0 a
+list_close l
+set_interval dev 1000
+committed dev back 3 B4194304
+committed dev values 2 B65536
+committed dev t0 1 T3/16x16/f28
+fill t0 1024 1 0
+committed dev t1 1 T3/16x16/f28
+fill t1 1024 2 1
+committed dev t2 1 T3/16x16/f28
+fill t2 1024 3 2
+committed dev t3 1 T3/16x16/f28
+fill t3 1024 4 3
+committed dev t4 1 T3/16x16/f28
+fill t4 1024 5 4
+committed dev t5 1 T3/16x16/f28
+fill t5 1024 6 5
+committed dev t6 1 T3/16x16/f28
+fill t6 1024 7 6
+committed dev t7 1 T3/16x16/f28
+fill t7 1024 1 7
+committed dev t8 1 T3/16x16/f28
+fill t8 1024 2 8
+committed dev t9 1 T3/16x16/f28
+fill t9 1024 3 9
+committed dev t10 1 T3/16x16/f28
+fill t10 1024 4 10
+committed dev t11 1 T3/16x16/f28
+fill t11 1024 5 11
+committed dev t12 1 T3/16x16/f28
+fill t12 1024 6 12
+committed dev t13 1 T3/16x16/f28
+fill t13 1024 7 0
+committed dev t14 1 T3/16x16/f28
+fill t14 1024 1 1
+committed dev t15 1 T3/16x16/f28
+fill t15 1024 2 2
+committed dev t16 1 T3/16x16/f28
+fill t16 1024 3 3
+committed dev t17 1 T3/16x16/f28
+fill t17 1024 4 4
+committed dev t18 1 T3/16x16/f28
+fill t18 1024 5 5
+committed dev t19 1 T3/16x16/f28
+fill t19 1024 6 6
+committed dev t20 1 T3/16x16/f28
+fill t20 1024 7 7
+committed dev t21 1 T3/16x16/f28
+fill t21 1024 1 8
+committed dev t22 1 T3/16x16/f28
+fill t22 1024 2 9
+committed dev t23 1 T3/16x16/f28
+fill t23 1024 3 10
+committed dev t24 1 T3/16x16/f28
+fill t24 1024 4 11
+committed dev t25 1 T3/16x16/f28
+fill t25 1024 5 12
+committed dev t26 1 T3/16x16/f28
+fill t26 1024 6 0
+committed dev t27 1 T3/16x16/f28
+fill t27 1024 7 1
+committed dev t28 1 T3/16x16/f28
+fill t28 1024 1 2
+committed dev t29 1 T3/16x16/f28
+fill t29 1024 2 3
+committed dev t30 1 T3/16x16/f28
+fill t30 1024 3 4
+committed dev t31 1 T3/16x16/f28
+fill t31 1024 4 5
+committed dev t32 1 T3/16x16/f28
+fill t32 1024 5 6
+committed dev t33 1 T3/16x16/f28
+fill t33 1024 6 7
+committed dev t34 1 T3/16x16/f28
+fill t34 1024 7 8
+committed dev t35 1 T3/16x16/f28
+fill t35 1024 1 9
+committed dev t36 1 T3/16x16/f28
+fill t36 1024 2 10
+committed dev t37 1 T3/16x16/f28
+fill t37 1024 3 11
+committed dev t38 1 T3/16x16/f28
+fill t38 1024 4 12
+committed dev t39 1 T3/16x16/f28
+fill t39 1024 5 0
+committed dev t40 1 T3/16x16/f28
+fill t40 1024 6 1
+committed dev t41 1 T3/16x16/f28
+fill t41 1024 7 2
+committed dev t42 1 T3/16x16/f28
+fill t42 1024 1 3
+committed dev t43 1 T3/16x16/f28
+fill t43 1024 2 4
+committed dev t44 1 T3/16x16/f28
+fill t44 1024 3 5
+committed dev t45 1 T3/16x16/f28
+fill t45 1024 4 6
+committed dev t46 1 T3/16x16/f28
+fill t46 1024 5 7
+committed dev t47 1 T3/16x16/f28
+fill t47 1024 6 8
+committed dev t48 1 T3/16x16/f28
+fill t48 1024 7 9
+committed dev t49 1 T3/16x16/f28
+fill t49 1024 1 10
+committed dev t50 1 T3/16x16/f28
+fill t50 1024 2 11
+committed dev t51 1 T3/16x16/f28
+fill t51 1024 3 12
+committed dev t52 1 T3/16x16/f28
+fill t52 1024 4 0
+committed dev t53 1 T3/16x16/f28
+fill t53 1024 5 1
+committed dev t54 1 T3/16x16/f28
+fill t54 1024 6 2
+committed dev t55 1 T3/16x16/f28
+fill t55 1024 7 3
+committed dev t56 1 T3/16x16/f28
+fill t56 1024 1 4
+committed dev t57 1 T3/16x16/f28
+fill t57 1024 2 5
+committed dev t58 1 T3/16x16/f28
+fill t58 1024 3 6
+committed dev t59 1 T3/16x16/f28
+fill t59 1024 4 7
+committed dev t60 1 T3/16x16/f28
+fill t60 1024 5 8
+committed dev t61 1 T3/16x16/f28
+fill t61 1024 6 9
+committed dev t62 1 T3/16x16/f28
+fill t62 1024 7 10
+committed dev t63 1 T3/16x16/f28
+fill t63 1024 1 11
+committed dev t64 1 T3/16x16/f28
+fill t64 1024 2 12
+committed dev t65 1 T3/16x16/f28
+fill t65 1024 3 0
+committed dev t66 1 T3/16x16/f28
+fill t66 1024 4 1
+committed dev t67 1 T3/16x16/f28
+fill t67 1024 5 2
+committed dev t68 1 T3/16x16/f28
+fill t68 1024 6 3
+committed dev t69 1 T3/16x16/f28
+fill t69 1024 7 4
+committed dev t70 1 T3/16x16/f28
+fill t70 1024 1 5
+committed dev t71 1 T3/16x16/f28
+fill t71 1024 2 6
+committed dev t72 1 T3/16x16/f28
+fill t72 1024 3 7
+committed dev t73 1 T3/16x16/f28
+fill t73 1024 4 8
+committed dev t74 1 T3/16x16/f28
+fill t74 1024 5 9
+committed dev t75 1 T3/16x16/f28
+fill t75 1024 6 10
+committed dev t76 1 T3/16x16/f28
+fill t76 1024 7 11
+committed dev t77 1 T3/16x16/f28
+fill t77 1024 1 12
+committed dev t78 1 T3/16x16/f28
+fill t78 1024 2 0
+committed dev t79 1 T3/16x16/f28
+fill t79 1024 3 1
+committed dev t80 1 T3/16x16/f28
+fill t80 1024 4 2
+committed dev t81 1 T3/16x16/f28
+fill t81 1024 5 3
+committed dev t82 1 T3/16x16/f28
+fill t82 1024 6 4
+committed dev t83 1 T3/16x16/f28
+fill t83 1024 7 5
+committed dev t84 1 T3/16x16/f28
+fill t84 1024 1 6
+committed dev t85 1 T3/16x16/f28
+fill t85 1024 2 7
+committed dev t86 1 T3/16x16/f28
+fill t86 1024 3 8
+committed dev t87 1 T3/16x16/f28
+fill t87 1024 4 9
+committed dev t88 1 T3/16x16/f28
+fill t88 1024 5 10
+committed dev t89 1 T3/16x16/f28
+fill t89 1024 6 11
+committed dev t90 1 T3/16x16/f28
+fill t90 1024 7 12
+committed dev t91 1 T3/16x16/f28
+fill t91 1024 1 0
+committed dev t92 1 T3/16x16/f28
+fill t92 1024 2 1
+committed dev t93 1 T3/16x16/f28
+fill t93 1024 3 2
+committed dev t94 1 T3/16x16/f28
+fill t94 1024 4 3
+committed dev t95 1 T3/16x16/f28
+fill t95 1024 5 4
+committed dev t96 1 T3/16x16/f28
+fill t96 1024 6 5
+committed dev t97 1 T3/16x16/f28
+fill t97 1024 7 6
+committed dev t98 1 T3/16x16/f28
+fill t98 1024 1 7
+committed dev t99 1 T3/16x16/f28
+fill t99 1024 2 8
+committed dev t100 1 T3/16x16/f28
+fill t100 1024 3 9
+committed dev t101 1 T3/16x16/f28
+fill t101 1024 4 10
+committed dev t102 1 T3/16x16/f28
+fill t102 1024 5 11
+committed dev t103 1 T3/16x16/f28
+fill t103 1024 6 12
+committed dev t104 1 T3/16x16/f28
+fill t104 1024 7 0
+committed dev t105 1 T3/16x16/f28
+fill t105 1024 1 1
+committed dev t106 1 T3/16x16/f28
+fill t106 1024 2 2
+committed dev t107 1 T3/16x16/f28
+fill t107 1024 3 3
+committed dev t108 1 T3/16x16/f28
+fill t108 1024 4 4
+committed dev t109 1 T3/16x16/f28
+fill t109 1024 5 5
+committed dev t110 1 T3/16x16/f28
+fill t110 1024 6 6
+committed dev t111 1 T3/16x16/f28
+fill t111 1024 7 7
+committed dev t112 1 T3/16x16/f28
+fill t112 1024 1 8
+committed dev t113 1 T3/16x16/f28
+fill t113 1024 2 9
+committed dev t114 1 T3/16x16/f28
+fill t114 1024 3 10
+committed dev t115 1 T3/16x16/f28
+fill t115 1024 4 11
+committed dev t116 1 T3/16x16/f28
+fill t116 1024 5 12
+committed dev t117 1 T3/16x16/f28
+fill t117 1024 6 0
+committed dev t118 1 T3/16x16/f28
+fill t118 1024 7 1
+committed dev t119 1 T3/16x16/f28
+fill t119 1024 1 2
+committed dev t120 1 T3/16x16/f28
+fill t120 1024 2 3
+committed dev t121 1 T3/16x16/f28
+fill t121 1024 3 4
+committed dev t122 1 T3/16x16/f28
+fill t122 1024 4 5
+committed dev t123 1 T3/16x16/f28
+fill t123 1024 5 6
+committed dev t124 1 T3/16x16/f28
+fill t124 1024 6 7
+committed dev t125 1 T3/16x16/f28
+fill t125 1024 7 8
+committed dev t126 1 T3/16x16/f28
+fill t126 1024 1 9
+committed dev t127 1 T3/16x16/f28
+fill t127 1024 2 10
+committed dev t128 1 T3/16x16/f28
+fill t128 1024 3 11
+committed dev t129 1 T3/16x16/f28
+fill t129 1024 4 12
+committed dev t130 1 T3/16x16/f28
+fill t130 1024 5 0
+committed dev t131 1 T3/16x16/f28
+fill t131 1024 6 1
+committed dev t132 1 T3/16x16/f28
+fill t132 1024 7 2
+committed dev t133 1 T3/16x16/f28
+fill t133 1024 1 3
+committed dev t134 1 T3/16x16/f28
+fill t134 1024 2 4
+committed dev t135 1 T3/16x16/f28
+fill t135 1024 3 5
+committed dev t136 1 T3/16x16/f28
+fill t136 1024 4 6
+committed dev t137 1 T3/16x16/f28
+fill t137 1024 5 7
+committed dev t138 1 T3/16x16/f28
+fill t138 1024 6 8
+committed dev t139 1 T3/16x16/f28
+fill t139 1024 7 9
+committed dev t140 1 T3/16x16/f28
+fill t140 1024 1 10
+committed dev t141 1 T3/16x16/f28
+fill t141 1024 2 11
+committed dev t142 1 T3/16x16/f28
+fill t142 1024 3 12
+committed dev t143 1 T3/16x16/f28
+fill t143 1024 4 0
+committed dev t144 1 T3/16x16/f28
+fill t144 1024 5 1
+committed dev t145 1 T3/16x16/f28
+fill t145 1024 6 2
+committed dev t146 1 T3/16x16/f28
+fill t146 1024 7 3
+committed dev t147 1 T3/16x16/f28
+fill t147 1024 1 4
+committed dev t148 1 T3/16x16/f28
+fill t148 1024 2 5
+committed dev t149 1 T3/16x16/f28
+fill t149 1024 3 6
+committed dev t150 1 T3/16x16/f28
+fill t150 1024 4 7
+committed dev t151 1 T3/16x16/f28
+fill t151 1024 5 8
+committed dev t152 1 T3/16x16/f28
+fill t152 1024 6 9
+committed dev t153 1 T3/16x16/f28
+fill t153 1024 7 10
+committed dev t154 1 T3/16x16/f28
+fill t154 1024 1 11
+committed dev t155 1 T3/16x16/f28
+fill t155 1024 2 12
+committed dev t156 1 T3/16x16/f28
+fill t156 1024 3 0
+committed dev t157 1 T3/16x16/f28
+fill t157 1024 4 1
+committed dev t158 1 T3/16x16/f28
+fill t158 1024 5 2
+committed dev t159 1 T3/16x16/f28
+fill t159 1024 6 3
+committed dev t160 1 T3/16x16/f28
+fill t160 1024 7 4
+committed dev t161 1 T3/16x16/f28
+fill t161 1024 1 5
+committed dev t162 1 T3/16x16/f28
+fill t162 1024 2 6
+committed dev t163 1 T3/16x16/f28
+fill t163 1024 3 7
+committed dev t164 1 T3/16x16/f28
+fill t164 1024 4 8
+committed dev t165 1 T3/16x16/f28
+fill t165 1024 5 9
+committed dev t166 1 T3/16x16/f28
+fill t166 1024 6 10
+committed dev t167 1 T3/16x16/f28
+fill t167 1024 7 11
+committed dev t168 1 T3/16x16/f28
+fill t168 1024 1 12
+committed dev t169 1 T3/16x16/f28
+fill t169 1024 2 0
+committed dev t170 1 T3/16x16/f28
+fill t170 1024 3 1
+committed dev t171 1 T3/16x16/f28
+fill t171 1024 4 2
+committed dev t172 1 T3/16x16/f28
+fill t172 1024 5 3
+committed dev t173 1 T3/16x16/f28
+fill t173 1024 6 4
+committed dev t174 1 T3/16x16/f28
+fill t174 1024 7 5
+committed dev t175 1 T3/16x16/f28
+fill t175 1024 1 6
+committed dev t176 1 T3/16x16/f28
+fill t176 1024 2 7
+committed dev t177 1 T3/16x16/f28
+fill t177 1024 3 8
+committed dev t178 1 T3/16x16/f28
+fill t178 1024 4 9
+committed dev t179 1 T3/16x16/f28
+fill t179 1024 5 10
+committed dev t180 1 T3/16x16/f28
+fill t180 1024 6 11
+committed dev t181 1 T3/16x16/f28
+fill t181 1024 7 12
+committed dev t182 1 T3/16x16/f28
+fill t182 1024 1 0
+committed dev t183 1 T3/16x16/f28
+fill t183 1024 2 1
+committed dev t184 1 T3/16x16/f28
+fill t184 1024 3 2
+committed dev t185 1 T3/16x16/f28
+fill t185 1024 4 3
+committed dev t186 1 T3/16x16/f28
+fill t186 1024 5 4
+committed dev t187 1 T3/16x16/f28
+fill t187 1024 6 5
+committed dev t188 1 T3/16x16/f28
+fill t188 1024 7 6
+committed dev t189 1 T3/16x16/f28
+fill t189 1024 1 7
+committed dev t190 1 T3/16x16/f28
+fill t190 1024 2 8
+committed dev t191 1 T3/16x16/f28
+fill t191 1024 3 9
+committed dev t192 1 T3/16x16/f28
+fill t192 1024 4 10
+committed dev t193 1 T3/16x16/f28
+fill t193 1024 5 11
+committed dev t194 1 T3/16x16/f28
+fill t194 1024 6 12
+committed dev t195 1 T3/16x16/f28
+fill t195 1024 7 0
+committed dev t196 1 T3/16x16/f28
+fill t196 1024 1 1
+committed dev t197 1 T3/16x16/f28
+fill t197 1024 2 2
+committed dev t198 1 T3/16x16/f28
+fill t198 1024 3 3
+committed dev t199 1 T3/16x16/f28
+fill t199 1024 4 4
+committed dev t200 1 T3/16x16/f28
+fill t200 1024 5 5
+committed dev t201 1 T3/16x16/f28
+fill t201 1024 6 6
+committed dev t202 1 T3/16x16/f28
+fill t202 1024 7 7
+committed dev t203 1 T3/16x16/f28
+fill t203 1024 1 8
+committed dev t204 1 T3/16x16/f28
+fill t204 1024 2 9
+committed dev t205 1 T3/16x16/f28
+fill t205 1024 3 10
+committed dev t206 1 T3/16x16/f28
+fill t206 1024 4 11
+committed dev t207 1 T3/16x16/f28
+fill t207 1024 5 12
+committed dev t208 1 T3/16x16/f28
+fill t208 1024 6 0
+committed dev t209 1 T3/16x16/f28
+fill t209 1024 7 1
+committed dev t210 1 T3/16x16/f28
+fill t210 1024 1 2
+committed dev t211 1 T3/16x16/f28
+fill t211 1024 2 3
+committed dev t212 1 T3/16x16/f28
+fill t212 1024 3 4
+committed dev t213 1 T3/16x16/f28
+fill t213 1024 4 5
+committed dev t214 1 T3/16x16/f28
+fill t214 1024 5 6
+committed dev t215 1 T3/16x16/f28
+fill t215 1024 6 7
+committed dev t216 1 T3/16x16/f28
+fill t216 1024 7 8
+committed dev t217 1 T3/16x16/f28
+fill t217 1024 1 9
+committed dev t218 1 T3/16x16/f28
+fill t218 1024 2 10
+committed dev t219 1 T3/16x16/f28
+fill t219 1024 3 11
+committed dev t220 1 T3/16x16/f28
+fill t220 1024 4 12
+committed dev t221 1 T3/16x16/f28
+fill t221 1024 5 0
+committed dev t222 1 T3/16x16/f28
+fill t222 1024 6 1
+committed dev t223 1 T3/16x16/f28
+fill t223 1024 7 2
+committed dev t224 1 T3/16x16/f28
+fill t224 1024 1 3
+committed dev t225 1 T3/16x16/f28
+fill t225 1024 2 4
+committed dev t226 1 T3/16x16/f28
+fill t226 1024 3 5
+committed dev t227 1 T3/16x16/f28
+fill t227 1024 4 6
+committed dev t228 1 T3/16x16/f28
+fill t228 1024 5 7
+committed dev t229 1 T3/16x16/f28
+fill t229 1024 6 8
+committed dev t230 1 T3/16x16/f28
+fill t230 1024 7 9
+committed dev t231 1 T3/16x16/f28
+fill t231 1024 1 10
+committed dev t232 1 T3/16x16/f28
+fill t232 1024 2 11
+committed dev t233 1 T3/16x16/f28
+fill t233 1024 3 12
+committed dev t234 1 T3/16x16/f28
+fill t234 1024 4 0
+committed dev t235 1 T3/16x16/f28
+fill t235 1024 5 1
+committed dev t236 1 T3/16x16/f28
+fill t236 1024 6 2
+committed dev t237 1 T3/16x16/f28
+fill t237 1024 7 3
+committed dev t238 1 T3/16x16/f28
+fill t238 1024 1 4
+committed dev t239 1 T3/16x16/f28
+fill t239 1024 2 5
+committed dev t240 1 T3/16x16/f28
+fill t240 1024 3 6
+committed dev t241 1 T3/16x16/f28
+fill t241 1024 4 7
+committed dev t242 1 T3/16x16/f28
+fill t242 1024 5 8
+committed dev t243 1 T3/16x16/f28
+fill t243 1024 6 9
+committed dev t244 1 T3/16x16/f28
+fill t244 1024 7 10
+committed dev t245 1 T3/16x16/f28
+fill t245 1024 1 11
+committed dev t246 1 T3/16x16/f28
+fill t246 1024 2 12
+committed dev t247 1 T3/16x16/f28
+fill t247 1024 3 0
+committed dev t248 1 T3/16x16/f28
+fill t248 1024 4 1
+committed dev t249 1 T3/16x16/f28
+fill t249 1024 5 2
+committed dev t250 1 T3/16x16/f28
+fill t250 1024 6 3
+committed dev t251 1 T3/16x16/f28
+fill t251 1024 7 4
+committed dev t252 1 T3/16x16/f28
+fill t252 1024 1 5
+committed dev t253 1 T3/16x16/f28
+fill t253 1024 2 6
+committed dev t254 1 T3/16x16/f28
+fill t254 1024 3 7
+committed dev t255 1 T3/16x16/f28
+fill t255 1024 4 8
+committed dev t256 1 T3/16x16/f28
+fill t256 1024 5 9
+committed dev t257 1 T3/16x16/f28
+fill t257 1024 6 10
+committed dev t258 1 T3/16x16/f28
+fill t258 1024 7 11
+committed dev t259 1 T3/16x16/f28
+fill t259 1024 1 12
+committed dev t260 1 T3/16x16/f28
+fill t260 1024 2 0
+committed dev t261 1 T3/16x16/f28
+fill t261 1024 3 1
+committed dev t262 1 T3/16x16/f28
+fill t262 1024 4 2
+committed dev t263 1 T3/16x16/f28
+fill t263 1024 5 3
+committed dev t264 1 T3/16x16/f28
+fill t264 1024 6 4
+committed dev t265 1 T3/16x16/f28
+fill t265 1024 7 5
+committed dev t266 1 T3/16x16/f28
+fill t266 1024 1 6
+committed dev t267 1 T3/16x16/f28
+fill t267 1024 2 7
+committed dev t268 1 T3/16x16/f28
+fill t268 1024 3 8
+committed dev t269 1 T3/16x16/f28
+fill t269 1024 4 9
+committed dev t270 1 T3/16x16/f28
+fill t270 1024 5 10
+committed dev t271 1 T3/16x16/f28
+fill t271 1024 6 11
+committed dev t272 1 T3/16x16/f28
+fill t272 1024 7 12
+committed dev t273 1 T3/16x16/f28
+fill t273 1024 1 0
+committed dev t274 1 T3/16x16/f28
+fill t274 1024 2 1
+committed dev t275 1 T3/16x16/f28
+fill t275 1024 3 2
+committed dev t276 1 T3/16x16/f28
+fill t276 1024 4 3
+committed dev t277 1 T3/16x16/f28
+fill t277 1024 5 4
+committed dev t278 1 T3/16x16/f28
+fill t278 1024 6 5
+committed dev t279 1 T3/16x16/f28
+fill t279 1024 7 6
+committed dev t280 1 T3/16x16/f28
+fill t280 1024 1 7
+committed dev t281 1 T3/16x16/f28
+fill t281 1024 2 8
+committed dev t282 1 T3/16x16/f28
+fill t282 1024 3 9
+committed dev t283 1 T3/16x16/f28
+fill t283 1024 4 10
+committed dev t284 1 T3/16x16/f28
+fill t284 1024 5 11
+committed dev t285 1 T3/16x16/f28
+fill t285 1024 6 12
+committed dev t286 1 T3/16x16/f28
+fill t286 1024 7 0
+committed dev t287 1 T3/16x16/f28
+fill t287 1024 1 1
+committed dev t288 1 T3/16x16/f28
+fill t288 1024 2 2
+committed dev t289 1 T3/16x16/f28
+fill t289 1024 3 3
+committed dev t290 1 T3/16x16/f28
+fill t290 1024 4 4
+committed dev t291 1 T3/16x16/f28
+fill t291 1024 5 5
+committed dev t292 1 T3/16x16/f28
+fill t292 1024 6 6
+committed dev t293 1 T3/16x16/f28
+fill t293 1024 7 7
+committed dev t294 1 T3/16x16/f28
+fill t294 1024 1 8
+committed dev t295 1 T3/16x16/f28
+fill t295 1024 2 9
+committed dev t296 1 T3/16x16/f28
+fill t296 1024 3 10
+committed dev t297 1 T3/16x16/f28
+fill t297 1024 4 11
+committed dev t298 1 T3/16x16/f28
+fill t298 1024 5 12
+committed dev t299 1 T3/16x16/f28
+fill t299 1024 6 0
+committed dev t300 1 T3/16x16/f28
+fill t300 1024 7 1
+committed dev t301 1 T3/16x16/f28
+fill t301 1024 1 2
+committed dev t302 1 T3/16x16/f28
+fill t302 1024 2 3
+committed dev t303 1 T3/16x16/f28
+fill t303 1024 3 4
+committed dev t304 1 T3/16x16/f28
+fill t304 1024 4 5
+committed dev t305 1 T3/16x16/f28
+fill t305 1024 5 6
+committed dev t306 1 T3/16x16/f28
+fill t306 1024 6 7
+committed dev t307 1 T3/16x16/f28
+fill t307 1024 7 8
+committed dev t308 1 T3/16x16/f28
+fill t308 1024 1 9
+committed dev t309 1 T3/16x16/f28
+fill t309 1024 2 10
+committed dev t310 1 T3/16x16/f28
+fill t310 1024 3 11
+committed dev t311 1 T3/16x16/f28
+fill t311 1024 4 12
+committed dev t312 1 T3/16x16/f28
+fill t312 1024 5 0
+committed dev t313 1 T3/16x16/f28
+fill t313 1024 6 1
+committed dev t314 1 T3/16x16/f28
+fill t314 1024 7 2
+committed dev t315 1 T3/16x16/f28
+fill t315 1024 1 3
+committed dev t316 1 T3/16x16/f28
+fill t316 1024 2 4
+committed dev t317 1 T3/16x16/f28
+fill t317 1024 3 5
+committed dev t318 1 T3/16x16/f28
+fill t318 1024 4 6
+committed dev t319 1 T3/16x16/f28
+fill t319 1024 5 7
+committed dev t320 1 T3/16x16/f28
+fill t320 1024 6 8
+committed dev t321 1 T3/16x16/f28
+fill t321 1024 7 9
+committed dev t322 1 T3/16x16/f28
+fill t322 1024 1 10
+committed dev t323 1 T3/16x16/f28
+fill t323 1024 2 11
+committed dev t324 1 T3/16x16/f28
+fill t324 1024 3 12
+committed dev t325 1 T3/16x16/f28
+fill t325 1024 4 0
+committed dev t326 1 T3/16x16/f28
+fill t326 1024 5 1
+committed dev t327 1 T3/16x16/f28
+fill t327 1024 6 2
+committed dev t328 1 T3/16x16/f28
+fill t328 1024 7 3
+committed dev t329 1 T3/16x16/f28
+fill t329 1024 1 4
+committed dev t330 1 T3/16x16/f28
+fill t330 1024 2 5
+committed dev t331 1 T3/16x16/f28
+fill t331 1024 3 6
+committed dev t332 1 T3/16x16/f28
+fill t332 1024 4 7
+committed dev t333 1 T3/16x16/f28
+fill t333 1024 5 8
+committed dev t334 1 T3/16x16/f28
+fill t334 1024 6 9
+committed dev t335 1 T3/16x16/f28
+fill t335 1024 7 10
+committed dev t336 1 T3/16x16/f28
+fill t336 1024 1 11
+committed dev t337 1 T3/16x16/f28
+fill t337 1024 2 12
+committed dev t338 1 T3/16x16/f28
+fill t338 1024 3 0
+committed dev t339 1 T3/16x16/f28
+fill t339 1024 4 1
+committed dev t340 1 T3/16x16/f28
+fill t340 1024 5 2
+committed dev t341 1 T3/16x16/f28
+fill t341 1024 6 3
+committed dev t342 1 T3/16x16/f28
+fill t342 1024 7 4
+committed dev t343 1 T3/16x16/f28
+fill t343 1024 1 5
+committed dev t344 1 T3/16x16/f28
+fill t344 1024 2 6
+committed dev t345 1 T3/16x16/f28
+fill t345 1024 3 7
+committed dev t346 1 T3/16x16/f28
+fill t346 1024 4 8
+committed dev t347 1 T3/16x16/f28
+fill t347 1024 5 9
+committed dev t348 1 T3/16x16/f28
+fill t348 1024 6 10
+committed dev t349 1 T3/16x16/f28
+fill t349 1024 7 11
+committed dev t350 1 T3/16x16/f28
+fill t350 1024 1 12
+committed dev t351 1 T3/16x16/f28
+fill t351 1024 2 0
+committed dev t352 1 T3/16x16/f28
+fill t352 1024 3 1
+committed dev t353 1 T3/16x16/f28
+fill t353 1024 4 2
+committed dev t354 1 T3/16x16/f28
+fill t354 1024 5 3
+committed dev t355 1 T3/16x16/f28
+fill t355 1024 6 4
+committed dev t356 1 T3/16x16/f28
+fill t356 1024 7 5
+committed dev t357 1 T3/16x16/f28
+fill t357 1024 1 6
+committed dev t358 1 T3/16x16/f28
+fill t358 1024 2 7
+committed dev t359 1 T3/16x16/f28
+fill t359 1024 3 8
+committed dev t360 1 T3/16x16/f28
+fill t360 1024 4 9
+committed dev t361 1 T3/16x16/f28
+fill t361 1024 5 10
+committed dev t362 1 T3/16x16/f28
+fill t362 1024 6 11
+committed dev t363 1 T3/16x16/f28
+fill t363 1024 7 12
+committed dev t364 1 T3/16x16/f28
+fill t364 1024 1 0
+committed dev t365 1 T3/16x16/f28
+fill t365 1024 2 1
+committed dev t366 1 T3/16x16/f28
+fill t366 1024 3 2
+committed dev t367 1 T3/16x16/f28
+fill t367 1024 4 3
+committed dev t368 1 T3/16x16/f28
+fill t368 1024 5 4
+committed dev t369 1 T3/16x16/f28
+fill t369 1024 6 5
+committed dev t370 1 T3/16x16/f28
+fill t370 1024 7 6
+committed dev t371 1 T3/16x16/f28
+fill t371 1024 1 7
+committed dev t372 1 T3/16x16/f28
+fill t372 1024 2 8
+committed dev t373 1 T3/16x16/f28
+fill t373 1024 3 9
+committed dev t374 1 T3/16x16/f28
+fill t374 1024 4 10
+committed dev t375 1 T3/16x16/f28
+fill t375 1024 5 11
+committed dev t376 1 T3/16x16/f28
+fill t376 1024 6 12
+committed dev t377 1 T3/16x16/f28
+fill t377 1024 7 0
+committed dev t378 1 T3/16x16/f28
+fill t378 1024 1 1
+committed dev t379 1 T3/16x16/f28
+fill t379 1024 2 2
+committed dev t380 1 T3/16x16/f28
+fill t380 1024 3 3
+committed dev t381 1 T3/16x16/f28
+fill t381 1024 4 4
+committed dev t382 1 T3/16x16/f28
+fill t382 1024 5 5
+committed dev t383 1 T3/16x16/f28
+fill t383 1024 6 6
+committed dev t384 1 T3/16x16/f28
+fill t384 1024 7 7
+committed dev t385 1 T3/16x16/f28
+fill t385 1024 1 8
+committed dev t386 1 T3/16x16/f28
+fill t386 1024 2 9
+committed dev t387 1 T3/16x16/f28
+fill t387 1024 3 10
+committed dev t388 1 T3/16x16/f28
+fill t388 1024 4 11
+committed dev t389 1 T3/16x16/f28
+fill t389 1024 5 12
+committed dev t390 1 T3/16x16/f28
+fill t390 1024 6 0
+committed dev t391 1 T3/16x16/f28
+fill t391 1024 7 1
+committed dev t392 1 T3/16x16/f28
+fill t392 1024 1 2
+committed dev t393 1 T3/16x16/f28
+fill t393 1024 2 3
+committed dev t394 1 T3/16x16/f28
+fill t394 1024 3 4
+committed dev t395 1 T3/16x16/f28
+fill t395 1024 4 5
+committed dev t396 1 T3/16x16/f28
+fill t396 1024 5 6
+committed dev t397 1 T3/16x16/f28
+fill t397 1024 6 7
+committed dev t398 1 T3/16x16/f28
+fill t398 1024 7 8
+committed dev t399 1 T3/16x16/f28
+fill t399 1024 1 9
+committed dev t400 1 T3/16x16/f28
+fill t400 1024 2 10
+committed dev t401 1 T3/16x16/f28
+fill t401 1024 3 11
+committed dev t402 1 T3/16x16/f28
+fill t402 1024 4 12
+committed dev t403 1 T3/16x16/f28
+fill t403 1024 5 0
+committed dev t404 1 T3/16x16/f28
+fill t404 1024 6 1
+committed dev t405 1 T3/16x16/f28
+fill t405 1024 7 2
+committed dev t406 1 T3/16x16/f28
+fill t406 1024 1 3
+committed dev t407 1 T3/16x16/f28
+fill t407 1024 2 4
+committed dev t408 1 T3/16x16/f28
+fill t408 1024 3 5
+committed dev t409 1 T3/16x16/f28
+fill t409 1024 4 6
+committed dev t410 1 T3/16x16/f28
+fill t410 1024 5 7
+committed dev t411 1 T3/16x16/f28
+fill t411 1024 6 8
+committed dev t412 1 T3/16x16/f28
+fill t412 1024 7 9
+committed dev t413 1 T3/16x16/f28
+fill t413 1024 1 10
+committed dev t414 1 T3/16x16/f28
+fill t414 1024 2 11
+committed dev t415 1 T3/16x16/f28
+fill t415 1024 3 12
+committed dev t416 1 T3/16x16/f28
+fill t416 1024 4 0
+committed dev t417 1 T3/16x16/f28
+fill t417 1024 5 1
+committed dev t418 1 T3/16x16/f28
+fill t418 1024 6 2
+committed dev t419 1 T3/16x16/f28
+fill t419 1024 7 3
+committed dev t420 1 T3/16x16/f28
+fill t420 1024 1 4
+committed dev t421 1 T3/16x16/f28
+fill t421 1024 2 5
+committed dev t422 1 T3/16x16/f28
+fill t422 1024 3 6
+committed dev t423 1 T3/16x16/f28
+fill t423 1024 4 7
+committed dev t424 1 T3/16x16/f28
+fill t424 1024 5 8
+committed dev t425 1 T3/16x16/f28
+fill t425 1024 6 9
+committed dev t426 1 T3/16x16/f28
+fill t426 1024 7 10
+committed dev t427 1 T3/16x16/f28
+fill t427 1024 1 11
+committed dev t428 1 T3/16x16/f28
+fill t428 1024 2 12
+committed dev t429 1 T3/16x16/f28
+fill t429 1024 3 0
+committed dev t430 1 T3/16x16/f28
+fill t430 1024 4 1
+committed dev t431 1 T3/16x16/f28
+fill t431 1024 5 2
+committed dev t432 1 T3/16x16/f28
+fill t432 1024 6 3
+committed dev t433 1 T3/16x16/f28
+fill t433 1024 7 4
+committed dev t434 1 T3/16x16/f28
+fill t434 1024 1 5
+committed dev t435 1 T3/16x16/f28
+fill t435 1024 2 6
+committed dev t436 1 T3/16x16/f28
+fill t436 1024 3 7
+committed dev t437 1 T3/16x16/f28
+fill t437 1024 4 8
+committed dev t438 1 T3/16x16/f28
+fill t438 1024 5 9
+committed dev t439 1 T3/16x16/f28
+fill t439 1024 6 10
+committed dev t440 1 T3/16x16/f28
+fill t440 1024 7 11
+committed dev t441 1 T3/16x16/f28
+fill t441 1024 1 12
+committed dev t442 1 T3/16x16/f28
+fill t442 1024 2 0
+committed dev t443 1 T3/16x16/f28
+fill t443 1024 3 1
+committed dev t444 1 T3/16x16/f28
+fill t444 1024 4 2
+committed dev t445 1 T3/16x16/f28
+fill t445 1024 5 3
+committed dev t446 1 T3/16x16/f28
+fill t446 1024 6 4
+committed dev t447 1 T3/16x16/f28
+fill t447 1024 7 5
+committed dev t448 1 T3/16x16/f28
+fill t448 1024 1 6
+committed dev t449 1 T3/16x16/f28
+fill t449 1024 2 7
+committed dev t450 1 T3/16x16/f28
+fill t450 1024 3 8
+committed dev t451 1 T3/16x16/f28
+fill t451 1024 4 9
+committed dev t452 1 T3/16x16/f28
+fill t452 1024 5 10
+committed dev t453 1 T3/16x16/f28
+fill t453 1024 6 11
+committed dev t454 1 T3/16x16/f28
+fill t454 1024 7 12
+committed dev t455 1 T3/16x16/f28
+fill t455 1024 1 0
+committed dev t456 1 T3/16x16/f28
+fill t456 1024 2 1
+committed dev t457 1 T3/16x16/f28
+fill t457 1024 3 2
+committed dev t458 1 T3/16x16/f28
+fill t458 1024 4 3
+committed dev t459 1 T3/16x16/f28
+fill t459 1024 5 4
+committed dev t460 1 T3/16x16/f28
+fill t460 1024 6 5
+committed dev t461 1 T3/16x16/f28
+fill t461 1024 7 6
+committed dev t462 1 T3/16x16/f28
+fill t462 1024 1 7
+committed dev t463 1 T3/16x16/f28
+fill t463 1024 2 8
+committed dev t464 1 T3/16x16/f28
+fill t464 1024 3 9
+committed dev t465 1 T3/16x16/f28
+fill t465 1024 4 10
+committed dev t466 1 T3/16x16/f28
+fill t466 1024 5 11
+committed dev t467 1 T3/16x16/f28
+fill t467 1024 6 12
+committed dev t468 1 T3/16x16/f28
+fill t468 1024 7 0
+committed dev t469 1 T3/16x16/f28
+fill t469 1024 1 1
+committed dev t470 1 T3/16x16/f28
+fill t470 1024 2 2
+committed dev t471 1 T3/16x16/f28
+fill t471 1024 3 3
+committed dev t472 1 T3/16x16/f28
+fill t472 1024 4 4
+committed dev t473 1 T3/16x16/f28
+fill t473 1024 5 5
+committed dev t474 1 T3/16x16/f28
+fill t474 1024 6 6
+committed dev t475 1 T3/16x16/f28
+fill t475 1024 7 7
+committed dev t476 1 T3/16x16/f28
+fill t476 1024 1 8
+committed dev t477 1 T3/16x16/f28
+fill t477 1024 2 9
+committed dev t478 1 T3/16x16/f28
+fill t478 1024 3 10
+committed dev t479 1 T3/16x16/f28
+fill t479 1024 4 11
+committed dev t480 1 T3/16x16/f28
+fill t480 1024 5 12
+committed dev t481 1 T3/16x16/f28
+fill t481 1024 6 0
+committed dev t482 1 T3/16x16/f28
+fill t482 1024 7 1
+committed dev t483 1 T3/16x16/f28
+fill t483 1024 1 2
+committed dev t484 1 T3/16x16/f28
+fill t484 1024 2 3
+committed dev t485 1 T3/16x16/f28
+fill t485 1024 3 4
+committed dev t486 1 T3/16x16/f28
+fill t486 1024 4 5
+committed dev t487 1 T3/16x16/f28
+fill t487 1024 5 6
+committed dev t488 1 T3/16x16/f28
+fill t488 1024 6 7
+committed dev t489 1 T3/16x16/f28
+fill t489 1024 7 8
+committed dev t490 1 T3/16x16/f28
+fill t490 1024 1 9
+committed dev t491 1 T3/16x16/f28
+fill t491 1024 2 10
+committed dev t492 1 T3/16x16/f28
+fill t492 1024 3 11
+committed dev t493 1 T3/16x16/f28
+fill t493 1024 4 12
+committed dev t494 1 T3/16x16/f28
+fill t494 1024 5 0
+committed dev t495 1 T3/16x16/f28
+fill t495 1024 6 1
+committed dev t496 1 T3/16x16/f28
+fill t496 1024 7 2
+committed dev t497 1 T3/16x16/f28
+fill t497 1024 1 3
+committed dev t498 1 T3/16x16/f28
+fill t498 1024 2 4
+committed dev t499 1 T3/16x16/f28
+fill t499 1024 3 5
+list_reset l a
+copy_tex l back:fp:0:28:16:16:1:256 0 0 0 t0:sub:0
+copy_tex l back:fp:4096:28:16:16:1:256 0 0 0 t1:sub:0
+copy_tex l back:fp:8192:28:16:16:1:256 0 0 0 t2:sub:0
+copy_tex l back:fp:12288:28:16:16:1:256 0 0 0 t3:sub:0
+copy_tex l back:fp:16384:28:16:16:1:256 0 0 0 t4:sub:0
+copy_tex l back:fp:20480:28:16:16:1:256 0 0 0 t5:sub:0
+copy_tex l back:fp:24576:28:16:16:1:256 0 0 0 t6:sub:0
+copy_tex l back:fp:28672:28:16:16:1:256 0 0 0 t7:sub:0
+copy_tex l back:fp:32768:28:16:16:1:256 0 0 0 t8:sub:0
+copy_tex l back:fp:36864:28:16:16:1:256 0 0 0 t9:sub:0
+copy_tex l back:fp:40960:28:16:16:1:256 0 0 0 t10:sub:0
+copy_tex l back:fp:45056:28:16:16:1:256 0 0 0 t11:sub:0
+copy_tex l back:fp:49152:28:16:16:1:256 0 0 0 t12:sub:0
+copy_tex l back:fp:53248:28:16:16:1:256 0 0 0 t13:sub:0
+copy_tex l back:fp:57344:28:16:16:1:256 0 0 0 t14:sub:0
+copy_tex l back:fp:61440:28:16:16:1:256 0 0 0 t15:sub:0
+copy_tex l back:fp:65536:28:16:16:1:256 0 0 0 t16:sub:0
+copy_tex l back:fp:69632:28:16:16:1:256 0 0 0 t17:sub:0
+copy_tex l back:fp:73728:28:16:16:1:256 0 0 0 t18:sub:0
+copy_tex l back:fp:77824:28:16:16:1:256 0 0 0 t19:sub:0
+copy_tex l back:fp:81920:28:16:16:1:256 0 0 0 t20:sub:0
+copy_tex l back:fp:86016:28:16:16:1:256 0 0 0 t21:sub:0
+copy_tex l back:fp:90112:28:16:16:1:256 0 0 0 t22:sub:0
+copy_tex l back:fp:94208:28:16:16:1:256 0 0 0 t23:sub:0
+copy_tex l back:fp:98304:28:16:16:1:256 0 0 0 t24:sub:0
+copy_tex l back:fp:102400:28:16:16:1:256 0 0 0 t25:sub:0
+copy_tex l back:fp:106496:28:16:16:1:256 0 0 0 t26:sub:0
+copy_tex l back:fp:110592:28:16:16:1:256 0 0 0 t27:sub:0
+copy_tex l back:fp:114688:28:16:16:1:256 0 0 0 t28:sub:0
+copy_tex l back:fp:118784:28:16:16:1:256 0 0 0 t29:sub:0
+copy_tex l back:fp:122880:28:16:16:1:256 0 0 0 t30:sub:0
+copy_tex l back:fp:126976:28:16:16:1:256 0 0 0 t31:sub:0
+copy_tex l back:fp:131072:28:16:16:1:256 0 0 0 t32:sub:0
+copy_tex l back:fp:135168:28:16:16:1:256 0 0 0 t33:sub:0
+copy_tex l back:fp:139264:28:16:16:1:256 0 0 0 t34:sub:0
+copy_tex l back:fp:143360:28:16:16:1:256 0 0 0 t35:sub:0
+copy_tex l back:fp:147456:28:16:16:1:256 0 0 0 t36:sub:0
+copy_tex l back:fp:151552:28:16:16:1:256 0 0 0 t37:sub:0
+copy_tex l back:fp:155648:28:16:16:1:256 0 0 0 t38:sub:0
+copy_tex l back:fp:159744:28:16:16:1:256 0 0 0 t39:sub:0
+copy_tex l back:fp:163840:28:16:16:1:256 0 0 0 t40:sub:0
+copy_tex l back:fp:167936:28:16:16:1:256 0 0 0 t41:sub:0
+copy_tex l back:fp:172032:28:16:16:1:256 0 0 0 t42:sub:0
+copy_tex l back:fp:176128:28:16:16:1:256 0 0 0 t43:sub:0
+copy_tex l back:fp:180224:28:16:16:1:256 0 0 0 t44:sub:0
+copy_tex l back:fp:184320:28:16:16:1:256 0 0 0 t45:sub:0
+copy_tex l back:fp:188416:28:16:16:1:256 0 0 0 t46:sub:0
+copy_tex l back:fp:192512:28:16:16:1:256 0 0 0 t47:sub:0
+copy_tex l back:fp:196608:28:16:16:1:256 0 0 0 t48:sub:0
+copy_tex l back:fp:200704:28:16:16:1:256 0 0 0 t49:sub:0
+copy_tex l back:fp:204800:28:16:16:1:256 0 0 0 t50:sub:0
+copy_tex l back:fp:208896:28:16:16:1:256 0 0 0 t51:sub:0
+copy_tex l back:fp:212992:28:16:16:1:256 0 0 0 t52:sub:0
+copy_tex l back:fp:217088:28:16:16:1:256 0 0 0 t53:sub:0
+copy_tex l back:fp:221184:28:16:16:1:256 0 0 0 t54:sub:0
+copy_tex l back:fp:225280:28:16:16:1:256 0 0 0 t55:sub:0
+copy_tex l back:fp:229376:28:16:16:1:256 0 0 0 t56:sub:0
+copy_tex l back:fp:233472:28:16:16:1:256 0 0 0 t57:sub:0
+copy_tex l back:fp:237568:28:16:16:1:256 0 0 0 t58:sub:0
+copy_tex l back:fp:241664:28:16:16:1:256 0 0 0 t59:sub:0
+copy_tex l back:fp:245760:28:16:16:1:256 0 0 0 t60:sub:0
+copy_tex l back:fp:249856:28:16:16:1:256 0 0 0 t61:sub:0
+copy_tex l back:fp:253952:28:16:16:1:256 0 0 0 t62:sub:0
+copy_tex l back:fp:258048:28:16:16:1:256 0 0 0 t63:sub:0
+copy_tex l back:fp:262144:28:16:16:1:256 0 0 0 t64:sub:0
+copy_tex l back:fp:266240:28:16:16:1:256 0 0 0 t65:sub:0
+copy_tex l back:fp:270336:28:16:16:1:256 0 0 0 t66:sub:0
+copy_tex l back:fp:274432:28:16:16:1:256 0 0 0 t67:sub:0
+copy_tex l back:fp:278528:28:16:16:1:256 0 0 0 t68:sub:0
+copy_tex l back:fp:282624:28:16:16:1:256 0 0 0 t69:sub:0
+copy_tex l back:fp:286720:28:16:16:1:256 0 0 0 t70:sub:0
+copy_tex l back:fp:290816:28:16:16:1:256 0 0 0 t71:sub:0
+copy_tex l back:fp:294912:28:16:16:1:256 0 0 0 t72:sub:0
+copy_tex l back:fp:299008:28:16:16:1:256 0 0 0 t73:sub:0
+copy_tex l back:fp:303104:28:16:16:1:256 0 0 0 t74:sub:0
+copy_tex l back:fp:307200:28:16:16:1:256 0 0 0 t75:sub:0
+copy_tex l back:fp:311296:28:16:16:1:256 0 0 0 t76:sub:0
+copy_tex l back:fp:315392:28:16:16:1:256 0 0 0 t77:sub:0
+copy_tex l back:fp:319488:28:16:16:1:256 0 0 0 t78:sub:0
+copy_tex l back:fp:323584:28:16:16:1:256 0 0 0 t79:sub:0
+copy_tex l back:fp:327680:28:16:16:1:256 0 0 0 t80:sub:0
+copy_tex l back:fp:331776:28:16:16:1:256 0 0 0 t81:sub:0
+copy_tex l back:fp:335872:28:16:16:1:256 0 0 0 t82:sub:0
+copy_tex l back:fp:339968:28:16:16:1:256 0 0 0 t83:sub:0
+copy_tex l back:fp:344064:28:16:16:1:256 0 0 0 t84:sub:0
+copy_tex l back:fp:348160:28:16:16:1:256 0 0 0 t85:sub:0
+copy_tex l back:fp:352256:28:16:16:1:256 0 0 0 t86:sub:0
+copy_tex l back:fp:356352:28:16:16:1:256 0 0 0 t87:sub:0
+copy_tex l back:fp:360448:28:16:16:1:256 0 0 0 t88:sub:0
+copy_tex l back:fp:364544:28:16:16:1:256 0 0 0 t89:sub:0
+copy_tex l back:fp:368640:28:16:16:1:256 0 0 0 t90:sub:0
+copy_tex l back:fp:372736:28:16:16:1:256 0 0 0 t91:sub:0
+copy_tex l back:fp:376832:28:16:16:1:256 0 0 0 t92:sub:0
+copy_tex l back:fp:380928:28:16:16:1:256 0 0 0 t93:sub:0
+copy_tex l back:fp:385024:28:16:16:1:256 0 0 0 t94:sub:0
+copy_tex l back:fp:389120:28:16:16:1:256 0 0 0 t95:sub:0
+copy_tex l back:fp:393216:28:16:16:1:256 0 0 0 t96:sub:0
+copy_tex l back:fp:397312:28:16:16:1:256 0 0 0 t97:sub:0
+copy_tex l back:fp:401408:28:16:16:1:256 0 0 0 t98:sub:0
+copy_tex l back:fp:405504:28:16:16:1:256 0 0 0 t99:sub:0
+copy_tex l back:fp:409600:28:16:16:1:256 0 0 0 t100:sub:0
+copy_tex l back:fp:413696:28:16:16:1:256 0 0 0 t101:sub:0
+copy_tex l back:fp:417792:28:16:16:1:256 0 0 0 t102:sub:0
+copy_tex l back:fp:421888:28:16:16:1:256 0 0 0 t103:sub:0
+copy_tex l back:fp:425984:28:16:16:1:256 0 0 0 t104:sub:0
+copy_tex l back:fp:430080:28:16:16:1:256 0 0 0 t105:sub:0
+copy_tex l back:fp:434176:28:16:16:1:256 0 0 0 t106:sub:0
+copy_tex l back:fp:438272:28:16:16:1:256 0 0 0 t107:sub:0
+copy_tex l back:fp:442368:28:16:16:1:256 0 0 0 t108:sub:0
+copy_tex l back:fp:446464:28:16:16:1:256 0 0 0 t109:sub:0
+copy_tex l back:fp:450560:28:16:16:1:256 0 0 0 t110:sub:0
+copy_tex l back:fp:454656:28:16:16:1:256 0 0 0 t111:sub:0
+copy_tex l back:fp:458752:28:16:16:1:256 0 0 0 t112:sub:0
+copy_tex l back:fp:462848:28:16:16:1:256 0 0 0 t113:sub:0
+copy_tex l back:fp:466944:28:16:16:1:256 0 0 0 t114:sub:0
+copy_tex l back:fp:471040:28:16:16:1:256 0 0 0 t115:sub:0
+copy_tex l back:fp:475136:28:16:16:1:256 0 0 0 t116:sub:0
+copy_tex l back:fp:479232:28:16:16:1:256 0 0 0 t117:sub:0
+copy_tex l back:fp:483328:28:16:16:1:256 0 0 0 t118:sub:0
+copy_tex l back:fp:487424:28:16:16:1:256 0 0 0 t119:sub:0
+copy_tex l back:fp:491520:28:16:16:1:256 0 0 0 t120:sub:0
+copy_tex l back:fp:495616:28:16:16:1:256 0 0 0 t121:sub:0
+copy_tex l back:fp:499712:28:16:16:1:256 0 0 0 t122:sub:0
+copy_tex l back:fp:503808:28:16:16:1:256 0 0 0 t123:sub:0
+copy_tex l back:fp:507904:28:16:16:1:256 0 0 0 t124:sub:0
+copy_tex l back:fp:512000:28:16:16:1:256 0 0 0 t125:sub:0
+copy_tex l back:fp:516096:28:16:16:1:256 0 0 0 t126:sub:0
+copy_tex l back:fp:520192:28:16:16:1:256 0 0 0 t127:sub:0
+copy_tex l back:fp:524288:28:16:16:1:256 0 0 0 t128:sub:0
+copy_tex l back:fp:528384:28:16:16:1:256 0 0 0 t129:sub:0
+copy_tex l back:fp:532480:28:16:16:1:256 0 0 0 t130:sub:0
+copy_tex l back:fp:536576:28:16:16:1:256 0 0 0 t131:sub:0
+copy_tex l back:fp:540672:28:16:16:1:256 0 0 0 t132:sub:0
+copy_tex l back:fp:544768:28:16:16:1:256 0 0 0 t133:sub:0
+copy_tex l back:fp:548864:28:16:16:1:256 0 0 0 t134:sub:0
+copy_tex l back:fp:552960:28:16:16:1:256 0 0 0 t135:sub:0
+copy_tex l back:fp:557056:28:16:16:1:256 0 0 0 t136:sub:0
+copy_tex l back:fp:561152:28:16:16:1:256 0 0 0 t137:sub:0
+copy_tex l back:fp:565248:28:16:16:1:256 0 0 0 t138:sub:0
+copy_tex l back:fp:569344:28:16:16:1:256 0 0 0 t139:sub:0
+copy_tex l back:fp:573440:28:16:16:1:256 0 0 0 t140:sub:0
+copy_tex l back:fp:577536:28:16:16:1:256 0 0 0 t141:sub:0
+copy_tex l back:fp:581632:28:16:16:1:256 0 0 0 t142:sub:0
+copy_tex l back:fp:585728:28:16:16:1:256 0 0 0 t143:sub:0
+copy_tex l back:fp:589824:28:16:16:1:256 0 0 0 t144:sub:0
+copy_tex l back:fp:593920:28:16:16:1:256 0 0 0 t145:sub:0
+copy_tex l back:fp:598016:28:16:16:1:256 0 0 0 t146:sub:0
+copy_tex l back:fp:602112:28:16:16:1:256 0 0 0 t147:sub:0
+copy_tex l back:fp:606208:28:16:16:1:256 0 0 0 t148:sub:0
+copy_tex l back:fp:610304:28:16:16:1:256 0 0 0 t149:sub:0
+copy_tex l back:fp:614400:28:16:16:1:256 0 0 0 t150:sub:0
+copy_tex l back:fp:618496:28:16:16:1:256 0 0 0 t151:sub:0
+copy_tex l back:fp:622592:28:16:16:1:256 0 0 0 t152:sub:0
+copy_tex l back:fp:626688:28:16:16:1:256 0 0 0 t153:sub:0
+copy_tex l back:fp:630784:28:16:16:1:256 0 0 0 t154:sub:0
+copy_tex l back:fp:634880:28:16:16:1:256 0 0 0 t155:sub:0
+copy_tex l back:fp:638976:28:16:16:1:256 0 0 0 t156:sub:0
+copy_tex l back:fp:643072:28:16:16:1:256 0 0 0 t157:sub:0
+copy_tex l back:fp:647168:28:16:16:1:256 0 0 0 t158:sub:0
+copy_tex l back:fp:651264:28:16:16:1:256 0 0 0 t159:sub:0
+copy_tex l back:fp:655360:28:16:16:1:256 0 0 0 t160:sub:0
+copy_tex l back:fp:659456:28:16:16:1:256 0 0 0 t161:sub:0
+copy_tex l back:fp:663552:28:16:16:1:256 0 0 0 t162:sub:0
+copy_tex l back:fp:667648:28:16:16:1:256 0 0 0 t163:sub:0
+copy_tex l back:fp:671744:28:16:16:1:256 0 0 0 t164:sub:0
+copy_tex l back:fp:675840:28:16:16:1:256 0 0 0 t165:sub:0
+copy_tex l back:fp:679936:28:16:16:1:256 0 0 0 t166:sub:0
+copy_tex l back:fp:684032:28:16:16:1:256 0 0 0 t167:sub:0
+copy_tex l back:fp:688128:28:16:16:1:256 0 0 0 t168:sub:0
+copy_tex l back:fp:692224:28:16:16:1:256 0 0 0 t169:sub:0
+copy_tex l back:fp:696320:28:16:16:1:256 0 0 0 t170:sub:0
+copy_tex l back:fp:700416:28:16:16:1:256 0 0 0 t171:sub:0
+copy_tex l back:fp:704512:28:16:16:1:256 0 0 0 t172:sub:0
+copy_tex l back:fp:708608:28:16:16:1:256 0 0 0 t173:sub:0
+copy_tex l back:fp:712704:28:16:16:1:256 0 0 0 t174:sub:0
+copy_tex l back:fp:716800:28:16:16:1:256 0 0 0 t175:sub:0
+copy_tex l back:fp:720896:28:16:16:1:256 0 0 0 t176:sub:0
+copy_tex l back:fp:724992:28:16:16:1:256 0 0 0 t177:sub:0
+copy_tex l back:fp:729088:28:16:16:1:256 0 0 0 t178:sub:0
+copy_tex l back:fp:733184:28:16:16:1:256 0 0 0 t179:sub:0
+copy_tex l back:fp:737280:28:16:16:1:256 0 0 0 t180:sub:0
+copy_tex l back:fp:741376:28:16:16:1:256 0 0 0 t181:sub:0
+copy_tex l back:fp:745472:28:16:16:1:256 0 0 0 t182:sub:0
+copy_tex l back:fp:749568:28:16:16:1:256 0 0 0 t183:sub:0
+copy_tex l back:fp:753664:28:16:16:1:256 0 0 0 t184:sub:0
+copy_tex l back:fp:757760:28:16:16:1:256 0 0 0 t185:sub:0
+copy_tex l back:fp:761856:28:16:16:1:256 0 0 0 t186:sub:0
+copy_tex l back:fp:765952:28:16:16:1:256 0 0 0 t187:sub:0
+copy_tex l back:fp:770048:28:16:16:1:256 0 0 0 t188:sub:0
+copy_tex l back:fp:774144:28:16:16:1:256 0 0 0 t189:sub:0
+copy_tex l back:fp:778240:28:16:16:1:256 0 0 0 t190:sub:0
+copy_tex l back:fp:782336:28:16:16:1:256 0 0 0 t191:sub:0
+copy_tex l back:fp:786432:28:16:16:1:256 0 0 0 t192:sub:0
+copy_tex l back:fp:790528:28:16:16:1:256 0 0 0 t193:sub:0
+copy_tex l back:fp:794624:28:16:16:1:256 0 0 0 t194:sub:0
+copy_tex l back:fp:798720:28:16:16:1:256 0 0 0 t195:sub:0
+copy_tex l back:fp:802816:28:16:16:1:256 0 0 0 t196:sub:0
+copy_tex l back:fp:806912:28:16:16:1:256 0 0 0 t197:sub:0
+copy_tex l back:fp:811008:28:16:16:1:256 0 0 0 t198:sub:0
+copy_tex l back:fp:815104:28:16:16:1:256 0 0 0 t199:sub:0
+copy_tex l back:fp:819200:28:16:16:1:256 0 0 0 t200:sub:0
+copy_tex l back:fp:823296:28:16:16:1:256 0 0 0 t201:sub:0
+copy_tex l back:fp:827392:28:16:16:1:256 0 0 0 t202:sub:0
+copy_tex l back:fp:831488:28:16:16:1:256 0 0 0 t203:sub:0
+copy_tex l back:fp:835584:28:16:16:1:256 0 0 0 t204:sub:0
+copy_tex l back:fp:839680:28:16:16:1:256 0 0 0 t205:sub:0
+copy_tex l back:fp:843776:28:16:16:1:256 0 0 0 t206:sub:0
+copy_tex l back:fp:847872:28:16:16:1:256 0 0 0 t207:sub:0
+copy_tex l back:fp:851968:28:16:16:1:256 0 0 0 t208:sub:0
+copy_tex l back:fp:856064:28:16:16:1:256 0 0 0 t209:sub:0
+copy_tex l back:fp:860160:28:16:16:1:256 0 0 0 t210:sub:0
+copy_tex l back:fp:864256:28:16:16:1:256 0 0 0 t211:sub:0
+copy_tex l back:fp:868352:28:16:16:1:256 0 0 0 t212:sub:0
+copy_tex l back:fp:872448:28:16:16:1:256 0 0 0 t213:sub:0
+copy_tex l back:fp:876544:28:16:16:1:256 0 0 0 t214:sub:0
+copy_tex l back:fp:880640:28:16:16:1:256 0 0 0 t215:sub:0
+copy_tex l back:fp:884736:28:16:16:1:256 0 0 0 t216:sub:0
+copy_tex l back:fp:888832:28:16:16:1:256 0 0 0 t217:sub:0
+copy_tex l back:fp:892928:28:16:16:1:256 0 0 0 t218:sub:0
+copy_tex l back:fp:897024:28:16:16:1:256 0 0 0 t219:sub:0
+copy_tex l back:fp:901120:28:16:16:1:256 0 0 0 t220:sub:0
+copy_tex l back:fp:905216:28:16:16:1:256 0 0 0 t221:sub:0
+copy_tex l back:fp:909312:28:16:16:1:256 0 0 0 t222:sub:0
+copy_tex l back:fp:913408:28:16:16:1:256 0 0 0 t223:sub:0
+copy_tex l back:fp:917504:28:16:16:1:256 0 0 0 t224:sub:0
+copy_tex l back:fp:921600:28:16:16:1:256 0 0 0 t225:sub:0
+copy_tex l back:fp:925696:28:16:16:1:256 0 0 0 t226:sub:0
+copy_tex l back:fp:929792:28:16:16:1:256 0 0 0 t227:sub:0
+copy_tex l back:fp:933888:28:16:16:1:256 0 0 0 t228:sub:0
+copy_tex l back:fp:937984:28:16:16:1:256 0 0 0 t229:sub:0
+copy_tex l back:fp:942080:28:16:16:1:256 0 0 0 t230:sub:0
+copy_tex l back:fp:946176:28:16:16:1:256 0 0 0 t231:sub:0
+copy_tex l back:fp:950272:28:16:16:1:256 0 0 0 t232:sub:0
+copy_tex l back:fp:954368:28:16:16:1:256 0 0 0 t233:sub:0
+copy_tex l back:fp:958464:28:16:16:1:256 0 0 0 t234:sub:0
+copy_tex l back:fp:962560:28:16:16:1:256 0 0 0 t235:sub:0
+copy_tex l back:fp:966656:28:16:16:1:256 0 0 0 t236:sub:0
+copy_tex l back:fp:970752:28:16:16:1:256 0 0 0 t237:sub:0
+copy_tex l back:fp:974848:28:16:16:1:256 0 0 0 t238:sub:0
+copy_tex l back:fp:978944:28:16:16:1:256 0 0 0 t239:sub:0
+copy_tex l back:fp:983040:28:16:16:1:256 0 0 0 t240:sub:0
+copy_tex l back:fp:987136:28:16:16:1:256 0 0 0 t241:sub:0
+copy_tex l back:fp:991232:28:16:16:1:256 0 0 0 t242:sub:0
+copy_tex l back:fp:995328:28:16:16:1:256 0 0 0 t243:sub:0
+copy_tex l back:fp:999424:28:16:16:1:256 0 0 0 t244:sub:0
+copy_tex l back:fp:1003520:28:16:16:1:256 0 0 0 t245:sub:0
+copy_tex l back:fp:1007616:28:16:16:1:256 0 0 0 t246:sub:0
+copy_tex l back:fp:1011712:28:16:16:1:256 0 0 0 t247:sub:0
+copy_tex l back:fp:1015808:28:16:16:1:256 0 0 0 t248:sub:0
+copy_tex l back:fp:1019904:28:16:16:1:256 0 0 0 t249:sub:0
+copy_tex l back:fp:1024000:28:16:16:1:256 0 0 0 t250:sub:0
+copy_tex l back:fp:1028096:28:16:16:1:256 0 0 0 t251:sub:0
+copy_tex l back:fp:1032192:28:16:16:1:256 0 0 0 t252:sub:0
+copy_tex l back:fp:1036288:28:16:16:1:256 0 0 0 t253:sub:0
+copy_tex l back:fp:1040384:28:16:16:1:256 0 0 0 t254:sub:0
+copy_tex l back:fp:1044480:28:16:16:1:256 0 0 0 t255:sub:0
+copy_tex l back:fp:1048576:28:16:16:1:256 0 0 0 t256:sub:0
+copy_tex l back:fp:1052672:28:16:16:1:256 0 0 0 t257:sub:0
+copy_tex l back:fp:1056768:28:16:16:1:256 0 0 0 t258:sub:0
+copy_tex l back:fp:1060864:28:16:16:1:256 0 0 0 t259:sub:0
+copy_tex l back:fp:1064960:28:16:16:1:256 0 0 0 t260:sub:0
+copy_tex l back:fp:1069056:28:16:16:1:256 0 0 0 t261:sub:0
+copy_tex l back:fp:1073152:28:16:16:1:256 0 0 0 t262:sub:0
+copy_tex l back:fp:1077248:28:16:16:1:256 0 0 0 t263:sub:0
+copy_tex l back:fp:1081344:28:16:16:1:256 0 0 0 t264:sub:0
+copy_tex l back:fp:1085440:28:16:16:1:256 0 0 0 t265:sub:0
+copy_tex l back:fp:1089536:28:16:16:1:256 0 0 0 t266:sub:0
+copy_tex l back:fp:1093632:28:16:16:1:256 0 0 0 t267:sub:0
+copy_tex l back:fp:1097728:28:16:16:1:256 0 0 0 t268:sub:0
+copy_tex l back:fp:1101824:28:16:16:1:256 0 0 0 t269:sub:0
+copy_tex l back:fp:1105920:28:16:16:1:256 0 0 0 t270:sub:0
+copy_tex l back:fp:1110016:28:16:16:1:256 0 0 0 t271:sub:0
+copy_tex l back:fp:1114112:28:16:16:1:256 0 0 0 t272:sub:0
+copy_tex l back:fp:1118208:28:16:16:1:256 0 0 0 t273:sub:0
+copy_tex l back:fp:1122304:28:16:16:1:256 0 0 0 t274:sub:0
+copy_tex l back:fp:1126400:28:16:16:1:256 0 0 0 t275:sub:0
+copy_tex l back:fp:1130496:28:16:16:1:256 0 0 0 t276:sub:0
+copy_tex l back:fp:1134592:28:16:16:1:256 0 0 0 t277:sub:0
+copy_tex l back:fp:1138688:28:16:16:1:256 0 0 0 t278:sub:0
+copy_tex l back:fp:1142784:28:16:16:1:256 0 0 0 t279:sub:0
+copy_tex l back:fp:1146880:28:16:16:1:256 0 0 0 t280:sub:0
+copy_tex l back:fp:1150976:28:16:16:1:256 0 0 0 t281:sub:0
+copy_tex l back:fp:1155072:28:16:16:1:256 0 0 0 t282:sub:0
+copy_tex l back:fp:1159168:28:16:16:1:256 0 0 0 t283:sub:0
+copy_tex l back:fp:1163264:28:16:16:1:256 0 0 0 t284:sub:0
+copy_tex l back:fp:1167360:28:16:16:1:256 0 0 0 t285:sub:0
+copy_tex l back:fp:1171456:28:16:16:1:256 0 0 0 t286:sub:0
+copy_tex l back:fp:1175552:28:16:16:1:256 0 0 0 t287:sub:0
+copy_tex l back:fp:1179648:28:16:16:1:256 0 0 0 t288:sub:0
+copy_tex l back:fp:1183744:28:16:16:1:256 0 0 0 t289:sub:0
+copy_tex l back:fp:1187840:28:16:16:1:256 0 0 0 t290:sub:0
+copy_tex l back:fp:1191936:28:16:16:1:256 0 0 0 t291:sub:0
+copy_tex l back:fp:1196032:28:16:16:1:256 0 0 0 t292:sub:0
+copy_tex l back:fp:1200128:28:16:16:1:256 0 0 0 t293:sub:0
+copy_tex l back:fp:1204224:28:16:16:1:256 0 0 0 t294:sub:0
+copy_tex l back:fp:1208320:28:16:16:1:256 0 0 0 t295:sub:0
+copy_tex l back:fp:1212416:28:16:16:1:256 0 0 0 t296:sub:0
+copy_tex l back:fp:1216512:28:16:16:1:256 0 0 0 t297:sub:0
+copy_tex l back:fp:1220608:28:16:16:1:256 0 0 0 t298:sub:0
+copy_tex l back:fp:1224704:28:16:16:1:256 0 0 0 t299:sub:0
+copy_tex l back:fp:1228800:28:16:16:1:256 0 0 0 t300:sub:0
+copy_tex l back:fp:1232896:28:16:16:1:256 0 0 0 t301:sub:0
+copy_tex l back:fp:1236992:28:16:16:1:256 0 0 0 t302:sub:0
+copy_tex l back:fp:1241088:28:16:16:1:256 0 0 0 t303:sub:0
+copy_tex l back:fp:1245184:28:16:16:1:256 0 0 0 t304:sub:0
+copy_tex l back:fp:1249280:28:16:16:1:256 0 0 0 t305:sub:0
+copy_tex l back:fp:1253376:28:16:16:1:256 0 0 0 t306:sub:0
+copy_tex l back:fp:1257472:28:16:16:1:256 0 0 0 t307:sub:0
+copy_tex l back:fp:1261568:28:16:16:1:256 0 0 0 t308:sub:0
+copy_tex l back:fp:1265664:28:16:16:1:256 0 0 0 t309:sub:0
+copy_tex l back:fp:1269760:28:16:16:1:256 0 0 0 t310:sub:0
+copy_tex l back:fp:1273856:28:16:16:1:256 0 0 0 t311:sub:0
+copy_tex l back:fp:1277952:28:16:16:1:256 0 0 0 t312:sub:0
+copy_tex l back:fp:1282048:28:16:16:1:256 0 0 0 t313:sub:0
+copy_tex l back:fp:1286144:28:16:16:1:256 0 0 0 t314:sub:0
+copy_tex l back:fp:1290240:28:16:16:1:256 0 0 0 t315:sub:0
+copy_tex l back:fp:1294336:28:16:16:1:256 0 0 0 t316:sub:0
+copy_tex l back:fp:1298432:28:16:16:1:256 0 0 0 t317:sub:0
+copy_tex l back:fp:1302528:28:16:16:1:256 0 0 0 t318:sub:0
+copy_tex l back:fp:1306624:28:16:16:1:256 0 0 0 t319:sub:0
+copy_tex l back:fp:1310720:28:16:16:1:256 0 0 0 t320:sub:0
+copy_tex l back:fp:1314816:28:16:16:1:256 0 0 0 t321:sub:0
+copy_tex l back:fp:1318912:28:16:16:1:256 0 0 0 t322:sub:0
+copy_tex l back:fp:1323008:28:16:16:1:256 0 0 0 t323:sub:0
+copy_tex l back:fp:1327104:28:16:16:1:256 0 0 0 t324:sub:0
+copy_tex l back:fp:1331200:28:16:16:1:256 0 0 0 t325:sub:0
+copy_tex l back:fp:1335296:28:16:16:1:256 0 0 0 t326:sub:0
+copy_tex l back:fp:1339392:28:16:16:1:256 0 0 0 t327:sub:0
+copy_tex l back:fp:1343488:28:16:16:1:256 0 0 0 t328:sub:0
+copy_tex l back:fp:1347584:28:16:16:1:256 0 0 0 t329:sub:0
+copy_tex l back:fp:1351680:28:16:16:1:256 0 0 0 t330:sub:0
+copy_tex l back:fp:1355776:28:16:16:1:256 0 0 0 t331:sub:0
+copy_tex l back:fp:1359872:28:16:16:1:256 0 0 0 t332:sub:0
+copy_tex l back:fp:1363968:28:16:16:1:256 0 0 0 t333:sub:0
+copy_tex l back:fp:1368064:28:16:16:1:256 0 0 0 t334:sub:0
+copy_tex l back:fp:1372160:28:16:16:1:256 0 0 0 t335:sub:0
+copy_tex l back:fp:1376256:28:16:16:1:256 0 0 0 t336:sub:0
+copy_tex l back:fp:1380352:28:16:16:1:256 0 0 0 t337:sub:0
+copy_tex l back:fp:1384448:28:16:16:1:256 0 0 0 t338:sub:0
+copy_tex l back:fp:1388544:28:16:16:1:256 0 0 0 t339:sub:0
+copy_tex l back:fp:1392640:28:16:16:1:256 0 0 0 t340:sub:0
+copy_tex l back:fp:1396736:28:16:16:1:256 0 0 0 t341:sub:0
+copy_tex l back:fp:1400832:28:16:16:1:256 0 0 0 t342:sub:0
+copy_tex l back:fp:1404928:28:16:16:1:256 0 0 0 t343:sub:0
+copy_tex l back:fp:1409024:28:16:16:1:256 0 0 0 t344:sub:0
+copy_tex l back:fp:1413120:28:16:16:1:256 0 0 0 t345:sub:0
+copy_tex l back:fp:1417216:28:16:16:1:256 0 0 0 t346:sub:0
+copy_tex l back:fp:1421312:28:16:16:1:256 0 0 0 t347:sub:0
+copy_tex l back:fp:1425408:28:16:16:1:256 0 0 0 t348:sub:0
+copy_tex l back:fp:1429504:28:16:16:1:256 0 0 0 t349:sub:0
+copy_tex l back:fp:1433600:28:16:16:1:256 0 0 0 t350:sub:0
+copy_tex l back:fp:1437696:28:16:16:1:256 0 0 0 t351:sub:0
+copy_tex l back:fp:1441792:28:16:16:1:256 0 0 0 t352:sub:0
+copy_tex l back:fp:1445888:28:16:16:1:256 0 0 0 t353:sub:0
+copy_tex l back:fp:1449984:28:16:16:1:256 0 0 0 t354:sub:0
+copy_tex l back:fp:1454080:28:16:16:1:256 0 0 0 t355:sub:0
+copy_tex l back:fp:1458176:28:16:16:1:256 0 0 0 t356:sub:0
+copy_tex l back:fp:1462272:28:16:16:1:256 0 0 0 t357:sub:0
+copy_tex l back:fp:1466368:28:16:16:1:256 0 0 0 t358:sub:0
+copy_tex l back:fp:1470464:28:16:16:1:256 0 0 0 t359:sub:0
+copy_tex l back:fp:1474560:28:16:16:1:256 0 0 0 t360:sub:0
+copy_tex l back:fp:1478656:28:16:16:1:256 0 0 0 t361:sub:0
+copy_tex l back:fp:1482752:28:16:16:1:256 0 0 0 t362:sub:0
+copy_tex l back:fp:1486848:28:16:16:1:256 0 0 0 t363:sub:0
+copy_tex l back:fp:1490944:28:16:16:1:256 0 0 0 t364:sub:0
+copy_tex l back:fp:1495040:28:16:16:1:256 0 0 0 t365:sub:0
+copy_tex l back:fp:1499136:28:16:16:1:256 0 0 0 t366:sub:0
+copy_tex l back:fp:1503232:28:16:16:1:256 0 0 0 t367:sub:0
+copy_tex l back:fp:1507328:28:16:16:1:256 0 0 0 t368:sub:0
+copy_tex l back:fp:1511424:28:16:16:1:256 0 0 0 t369:sub:0
+copy_tex l back:fp:1515520:28:16:16:1:256 0 0 0 t370:sub:0
+copy_tex l back:fp:1519616:28:16:16:1:256 0 0 0 t371:sub:0
+copy_tex l back:fp:1523712:28:16:16:1:256 0 0 0 t372:sub:0
+copy_tex l back:fp:1527808:28:16:16:1:256 0 0 0 t373:sub:0
+copy_tex l back:fp:1531904:28:16:16:1:256 0 0 0 t374:sub:0
+copy_tex l back:fp:1536000:28:16:16:1:256 0 0 0 t375:sub:0
+copy_tex l back:fp:1540096:28:16:16:1:256 0 0 0 t376:sub:0
+copy_tex l back:fp:1544192:28:16:16:1:256 0 0 0 t377:sub:0
+copy_tex l back:fp:1548288:28:16:16:1:256 0 0 0 t378:sub:0
+copy_tex l back:fp:1552384:28:16:16:1:256 0 0 0 t379:sub:0
+copy_tex l back:fp:1556480:28:16:16:1:256 0 0 0 t380:sub:0
+copy_tex l back:fp:1560576:28:16:16:1:256 0 0 0 t381:sub:0
+copy_tex l back:fp:1564672:28:16:16:1:256 0 0 0 t382:sub:0
+copy_tex l back:fp:1568768:28:16:16:1:256 0 0 0 t383:sub:0
+copy_tex l back:fp:1572864:28:16:16:1:256 0 0 0 t384:sub:0
+copy_tex l back:fp:1576960:28:16:16:1:256 0 0 0 t385:sub:0
+copy_tex l back:fp:1581056:28:16:16:1:256 0 0 0 t386:sub:0
+copy_tex l back:fp:1585152:28:16:16:1:256 0 0 0 t387:sub:0
+copy_tex l back:fp:1589248:28:16:16:1:256 0 0 0 t388:sub:0
+copy_tex l back:fp:1593344:28:16:16:1:256 0 0 0 t389:sub:0
+copy_tex l back:fp:1597440:28:16:16:1:256 0 0 0 t390:sub:0
+copy_tex l back:fp:1601536:28:16:16:1:256 0 0 0 t391:sub:0
+copy_tex l back:fp:1605632:28:16:16:1:256 0 0 0 t392:sub:0
+copy_tex l back:fp:1609728:28:16:16:1:256 0 0 0 t393:sub:0
+copy_tex l back:fp:1613824:28:16:16:1:256 0 0 0 t394:sub:0
+copy_tex l back:fp:1617920:28:16:16:1:256 0 0 0 t395:sub:0
+copy_tex l back:fp:1622016:28:16:16:1:256 0 0 0 t396:sub:0
+copy_tex l back:fp:1626112:28:16:16:1:256 0 0 0 t397:sub:0
+copy_tex l back:fp:1630208:28:16:16:1:256 0 0 0 t398:sub:0
+copy_tex l back:fp:1634304:28:16:16:1:256 0 0 0 t399:sub:0
+copy_tex l back:fp:1638400:28:16:16:1:256 0 0 0 t400:sub:0
+copy_tex l back:fp:1642496:28:16:16:1:256 0 0 0 t401:sub:0
+copy_tex l back:fp:1646592:28:16:16:1:256 0 0 0 t402:sub:0
+copy_tex l back:fp:1650688:28:16:16:1:256 0 0 0 t403:sub:0
+copy_tex l back:fp:1654784:28:16:16:1:256 0 0 0 t404:sub:0
+copy_tex l back:fp:1658880:28:16:16:1:256 0 0 0 t405:sub:0
+copy_tex l back:fp:1662976:28:16:16:1:256 0 0 0 t406:sub:0
+copy_tex l back:fp:1667072:28:16:16:1:256 0 0 0 t407:sub:0
+copy_tex l back:fp:1671168:28:16:16:1:256 0 0 0 t408:sub:0
+copy_tex l back:fp:1675264:28:16:16:1:256 0 0 0 t409:sub:0
+copy_tex l back:fp:1679360:28:16:16:1:256 0 0 0 t410:sub:0
+copy_tex l back:fp:1683456:28:16:16:1:256 0 0 0 t411:sub:0
+copy_tex l back:fp:1687552:28:16:16:1:256 0 0 0 t412:sub:0
+copy_tex l back:fp:1691648:28:16:16:1:256 0 0 0 t413:sub:0
+copy_tex l back:fp:1695744:28:16:16:1:256 0 0 0 t414:sub:0
+copy_tex l back:fp:1699840:28:16:16:1:256 0 0 0 t415:sub:0
+copy_tex l back:fp:1703936:28:16:16:1:256 0 0 0 t416:sub:0
+copy_tex l back:fp:1708032:28:16:16:1:256 0 0 0 t417:sub:0
+copy_tex l back:fp:1712128:28:16:16:1:256 0 0 0 t418:sub:0
+copy_tex l back:fp:1716224:28:16:16:1:256 0 0 0 t419:sub:0
+copy_tex l back:fp:1720320:28:16:16:1:256 0 0 0 t420:sub:0
+copy_tex l back:fp:1724416:28:16:16:1:256 0 0 0 t421:sub:0
+copy_tex l back:fp:1728512:28:16:16:1:256 0 0 0 t422:sub:0
+copy_tex l back:fp:1732608:28:16:16:1:256 0 0 0 t423:sub:0
+copy_tex l back:fp:1736704:28:16:16:1:256 0 0 0 t424:sub:0
+copy_tex l back:fp:1740800:28:16:16:1:256 0 0 0 t425:sub:0
+copy_tex l back:fp:1744896:28:16:16:1:256 0 0 0 t426:sub:0
+copy_tex l back:fp:1748992:28:16:16:1:256 0 0 0 t427:sub:0
+copy_tex l back:fp:1753088:28:16:16:1:256 0 0 0 t428:sub:0
+copy_tex l back:fp:1757184:28:16:16:1:256 0 0 0 t429:sub:0
+copy_tex l back:fp:1761280:28:16:16:1:256 0 0 0 t430:sub:0
+copy_tex l back:fp:1765376:28:16:16:1:256 0 0 0 t431:sub:0
+copy_tex l back:fp:1769472:28:16:16:1:256 0 0 0 t432:sub:0
+copy_tex l back:fp:1773568:28:16:16:1:256 0 0 0 t433:sub:0
+copy_tex l back:fp:1777664:28:16:16:1:256 0 0 0 t434:sub:0
+copy_tex l back:fp:1781760:28:16:16:1:256 0 0 0 t435:sub:0
+copy_tex l back:fp:1785856:28:16:16:1:256 0 0 0 t436:sub:0
+copy_tex l back:fp:1789952:28:16:16:1:256 0 0 0 t437:sub:0
+copy_tex l back:fp:1794048:28:16:16:1:256 0 0 0 t438:sub:0
+copy_tex l back:fp:1798144:28:16:16:1:256 0 0 0 t439:sub:0
+copy_tex l back:fp:1802240:28:16:16:1:256 0 0 0 t440:sub:0
+copy_tex l back:fp:1806336:28:16:16:1:256 0 0 0 t441:sub:0
+copy_tex l back:fp:1810432:28:16:16:1:256 0 0 0 t442:sub:0
+copy_tex l back:fp:1814528:28:16:16:1:256 0 0 0 t443:sub:0
+copy_tex l back:fp:1818624:28:16:16:1:256 0 0 0 t444:sub:0
+copy_tex l back:fp:1822720:28:16:16:1:256 0 0 0 t445:sub:0
+copy_tex l back:fp:1826816:28:16:16:1:256 0 0 0 t446:sub:0
+copy_tex l back:fp:1830912:28:16:16:1:256 0 0 0 t447:sub:0
+copy_tex l back:fp:1835008:28:16:16:1:256 0 0 0 t448:sub:0
+copy_tex l back:fp:1839104:28:16:16:1:256 0 0 0 t449:sub:0
+copy_tex l back:fp:1843200:28:16:16:1:256 0 0 0 t450:sub:0
+copy_tex l back:fp:1847296:28:16:16:1:256 0 0 0 t451:sub:0
+copy_tex l back:fp:1851392:28:16:16:1:256 0 0 0 t452:sub:0
+copy_tex l back:fp:1855488:28:16:16:1:256 0 0 0 t453:sub:0
+copy_tex l back:fp:1859584:28:16:16:1:256 0 0 0 t454:sub:0
+copy_tex l back:fp:1863680:28:16:16:1:256 0 0 0 t455:sub:0
+copy_tex l back:fp:1867776:28:16:16:1:256 0 0 0 t456:sub:0
+copy_tex l back:fp:1871872:28:16:16:1:256 0 0 0 t457:sub:0
+copy_tex l back:fp:1875968:28:16:16:1:256 0 0 0 t458:sub:0
+copy_tex l back:fp:1880064:28:16:16:1:256 0 0 0 t459:sub:0
+copy_tex l back:fp:1884160:28:16:16:1:256 0 0 0 t460:sub:0
+copy_tex l back:fp:1888256:28:16:16:1:256 0 0 0 t461:sub:0
+copy_tex l back:fp:1892352:28:16:16:1:256 0 0 0 t462:sub:0
+copy_tex l back:fp:1896448:28:16:16:1:256 0 0 0 t463:sub:0
+copy_tex l back:fp:1900544:28:16:16:1:256 0 0 0 t464:sub:0
+copy_tex l back:fp:1904640:28:16:16:1:256 0 0 0 t465:sub:0
+copy_tex l back:fp:1908736:28:16:16:1:256 0 0 0 t466:sub:0
+copy_tex l back:fp:1912832:28:16:16:1:256 0 0 0 t467:sub:0
+copy_tex l back:fp:1916928:28:16:16:1:256 0 0 0 t468:sub:0
+copy_tex l back:fp:1921024:28:16:16:1:256 0 0 0 t469:sub:0
+copy_tex l back:fp:1925120:28:16:16:1:256 0 0 0 t470:sub:0
+copy_tex l back:fp:1929216:28:16:16:1:256 0 0 0 t471:sub:0
+copy_tex l back:fp:1933312:28:16:16:1:256 0 0 0 t472:sub:0
+copy_tex l back:fp:1937408:28:16:16:1:256 0 0 0 t473:sub:0
+copy_tex l back:fp:1941504:28:16:16:1:256 0 0 0 t474:sub:0
+copy_tex l back:fp:1945600:28:16:16:1:256 0 0 0 t475:sub:0
+copy_tex l back:fp:1949696:28:16:16:1:256 0 0 0 t476:sub:0
+copy_tex l back:fp:1953792:28:16:16:1:256 0 0 0 t477:sub:0
+copy_tex l back:fp:1957888:28:16:16:1:256 0 0 0 t478:sub:0
+copy_tex l back:fp:1961984:28:16:16:1:256 0 0 0 t479:sub:0
+copy_tex l back:fp:1966080:28:16:16:1:256 0 0 0 t480:sub:0
+copy_tex l back:fp:1970176:28:16:16:1:256 0 0 0 t481:sub:0
+copy_tex l back:fp:1974272:28:16:16:1:256 0 0 0 t482:sub:0
+copy_tex l back:fp:1978368:28:16:16:1:256 0 0 0 t483:sub:0
+copy_tex l back:fp:1982464:28:16:16:1:256 0 0 0 t484:sub:0
+copy_tex l back:fp:1986560:28:16:16:1:256 0 0 0 t485:sub:0
+copy_tex l back:fp:1990656:28:16:16:1:256 0 0 0 t486:sub:0
+copy_tex l back:fp:1994752:28:16:16:1:256 0 0 0 t487:sub:0
+copy_tex l back:fp:1998848:28:16:16:1:256 0 0 0 t488:sub:0
+copy_tex l back:fp:2002944:28:16:16:1:256 0 0 0 t489:sub:0
+copy_tex l back:fp:2007040:28:16:16:1:256 0 0 0 t490:sub:0
+copy_tex l back:fp:2011136:28:16:16:1:256 0 0 0 t491:sub:0
+copy_tex l back:fp:2015232:28:16:16:1:256 0 0 0 t492:sub:0
+copy_tex l back:fp:2019328:28:16:16:1:256 0 0 0 t493:sub:0
+copy_tex l back:fp:2023424:28:16:16:1:256 0 0 0 t494:sub:0
+copy_tex l back:fp:2027520:28:16:16:1:256 0 0 0 t495:sub:0
+copy_tex l back:fp:2031616:28:16:16:1:256 0 0 0 t496:sub:0
+copy_tex l back:fp:2035712:28:16:16:1:256 0 0 0 t497:sub:0
+copy_tex l back:fp:2039808:28:16:16:1:256 0 0 0 t498:sub:0
+copy_tex l back:fp:2043904:28:16:16:1:256 0 0 0 t499:sub:0
+list_close l
+execute q l
+queue_signal q f 1
+fence_event f 1 null
+hash back 16384
+sleep 10500
+repeat 40 frame_wait dev 0 1000 0
+submit_cycle q l a f 1 256 back back values+0
+quiet 1
+repeat 200 submit_cycle q l a f 1 256 back back values+0
+# Once what the sweep let go is gone (C++: off the disposal thread): the
+# steady cycle again.
+sleep 1000
+repeat 200 submit_cycle q l a f 1 256 back back values+0
+end

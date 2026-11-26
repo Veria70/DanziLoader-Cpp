@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-
-
+// The reference's `window_tests` (crates/victory-gpu/src/shadow.rs;
+// DanziLoader / victory-perf, see NOTICE.md), ported.
 #include <vector>
 
 #include "check.hpp"

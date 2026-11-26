@@ -1,0 +1,183 @@
+# M6.6: game saves (xgamesave): providers, containers, versioned updates,
+# reads (blocking and async), enumeration, deletion, the old one-file-per-
+# blob layout converted, and what ends up on disk. Pointers in read results
+# are the buffer's own, so only what follows the blob array is dumped.
+call xgameruntime.dll InitializeApiImplEx:32 1 2 2
+guid tq 073b7dcb-1fcf-4030-94be-e3c9eb623428
+buf out 8
+call xgameruntime.dll QueryApiImpl:32 &tq &tq &out
+load xa out 0
+guid gp 704c3f58-e629-4cc2-b197-30511b996fe2
+guid g26 1bfff3af-f14a-40a3-8e35-9ada906593f9
+call xgameruntime.dll QueryApiImpl:32 &gp &gp &out
+call xgameruntime.dll QueryApiImpl:32 &gp &g26 &out
+load gs out 0
+buf blk 56
+buf pv 8
+# No title yet: no folder for saves.
+vcall $gs 0x20:32 null null 0 &blk
+vcall $gs 0x28:32 &blk &pv
+title 0x1234ABCD 9NBLGGH4R315 data/storage 1048576
+# A container in the old layout, converted when a provider opens.
+mkdir data/saves/0009000000000001/cfg/old%2Fslot
+mkfile data/saves/0009000000000001/cfg/old%2Fslot/.display Old slot
+mkfile data/saves/0009000000000001/cfg/old%2Fslot/blob%2Ea 12345
+mkfile data/saves/0009000000000001/cfg/old%2Fslot/b 678
+mkfile data/saves/0009000000000001/cfg/old%2Fslot/not.ours x
+str cfg cfg
+buf blk1 56
+vcall $gs 0x20:32 null &cfg 0 &blk1
+vcall $xa 0x18:32 &blk1 1
+vcall $gs 0x28:32 &blk1 &pv
+load p pv 0
+tree data/saves
+buf cb 8
+vcall $gs 0x70:32 $p &cb @container
+log
+# Quota left.
+buf q 8
+buf blk2 56
+vcall $gs 0x40:32 $p &blk2
+vcall $gs 0x48:32 &blk2 &q
+dump q 8
+vcall $gs 0x40:32 null &blk2
+# Names: invalid ones refused.
+str bad1 a/b.
+str bad2 x..y
+str bad3 sp ace
+str good Slot_1/save-A.dat
+str good2 slot_1/save-a.dat
+buf ch 8
+vcall $gs 0x80:32 $p &bad1 &ch
+vcall $gs 0x80:32 $p &bad2 &ch
+vcall $gs 0x80:32 $p &bad3 &ch
+vcall $gs 0x80:32 $p null &ch
+vcall $gs 0x80:32 $p &good &ch
+load c ch 0
+vcall $gs 0x80:32 $p &good2 &ch
+load c2 ch 0
+# An update: two blobs, one later deleted again, a display name.
+str disp My Save
+str n1 alpha
+str n2 beta
+str n3 gamma
+str d1 first data
+str d2 BETA
+buf uh 8
+vcall $gs 0xb8:32 $c &disp &uh
+load u uh 0
+vcall $gs 0xc8:32 $u &n1 &d1 10
+vcall $gs 0xc8:32 $u &n2 &d2 4
+vcall $gs 0xc8:32 $u &n3 &d2 4
+vcall $gs 0xd0:32 $u &n3
+vcall $gs 0xc8:32 $u null &d2 4
+vcall $gs 0xc8:32 $u &n1 null 4
+vcall $gs 0xc8:32 $u &n1 &d1 17000000
+vcall $gs 0xd0:32 $u null
+buf blk3 56
+vcall $gs 0xe0:32 $u &blk3
+vcall $gs 0xe8:32 &blk3
+vcall $gs 0xc0:0 $u
+tree data/saves
+# A second update keeps alpha (linked), replaces beta, adds gamma.
+vcall $gs 0xb8:32 $c null &uh
+load u2 uh 0
+str d3 new beta!
+vcall $gs 0xc8:32 $u2 &n2 &d3 9
+vcall $gs 0xc8:32 $u2 &n3 &d1 5
+buf blk4 56
+vcall $gs 0xe0:32 $u2 &blk4
+vcall $gs 0xe8:32 &blk4
+vcall $gs 0xc0:0 $u2
+tree data/saves
+# The other container differs only in case: its own folder.
+vcall $gs 0xb8:32 $c2 &disp &uh
+load u3 uh 0
+vcall $gs 0xc8:32 $u3 &n1 &d2 4
+buf blk5 56
+vcall $gs 0xe0:32 $u3 &blk5
+vcall $gs 0xe8:32 &blk5
+vcall $gs 0xc0:0 $u3
+# Enumeration and information.
+vcall $gs 0x70:32 $p &cb @container
+log
+vcall $gs 0x70:32 $p &cb @container1
+log
+vcall $gs 0x68:32 $p &good &cb @container
+log
+str missing nothing_here
+vcall $gs 0x68:32 $p &missing &cb @container
+log
+vcall $gs 0x68:32 $p &bad1 &cb @container
+vcall $gs 0x68:32 $p &good &cb null
+str pre be
+vcall $gs 0x98:32 $c &pre &cb @blob
+log
+vcall $gs 0x98:32 $c null &cb @blob1
+log
+vcall $gs 0x98:32 $c null &cb @blob
+log
+# Reads: all blobs, named ones, too small a buffer, a missing name.
+buf rb 512
+buf cnt 8
+vcall $gs 0xa0:32 $c null &cnt 512 &rb
+dump cnt 4
+dump rb 80 72
+buf names 16
+store names 0 &n3
+store names 8 &n1
+store cnt 0 2
+vcall $gs 0xa0:32 $c &names &cnt 512 &rb
+dump cnt 4
+dump rb 40 48
+store cnt 0 2
+vcall $gs 0xa0:32 $c &names &cnt 20 &rb
+str nope nope
+store names 8 &nope
+store cnt 0 2
+vcall $gs 0xa0:32 $c &names &cnt 512 &rb
+vcall $gs 0xa0:32 null null &cnt 512 &rb
+buf blk6 56
+vcall $gs 0xa8:32 $c null 0 &blk6
+buf sz 8
+vcall $xa 0x20:32 &blk6 &sz
+dump sz 8
+buf rb2 512
+vcall $gs 0xb0:32 &blk6 20 &rb2 &cnt
+vcall $gs 0xb0:32 &blk6 512 &rb2 &cnt
+dump cnt 4
+dump rb2 80 72
+buf blk7 56
+store names 8 &nope
+vcall $gs 0xa8:32 $c &names 2 &blk7
+vcall $gs 0xb0:32 &blk7 512 &rb2 &cnt
+# Quota after the writes; deletion.
+buf blk8 56
+vcall $gs 0x40:32 $p &blk8
+vcall $gs 0x48:32 &blk8 &q
+dump q 8
+buf blk9 56
+vcall $gs 0x58:32 $p &good2 &blk9
+vcall $gs 0x60:32 &blk9
+buf blk10 56
+vcall $gs 0x58:32 $p &missing &blk10
+vcall $gs 0x60:32 &blk10
+buf blk11 56
+vcall $gs 0x58:32 $p &bad2 &blk11
+vcall $gs 0x60:32 &blk11
+vcall $gs 0x70:32 $p &cb @container
+log
+tree data/saves
+vcall $gs 0x88:0 $c
+vcall $gs 0x88:0 $c2
+vcall $gs 0x30:0 $p
+# Another configuration; the default one.
+buf blk12 56
+vcall $gs 0x20:32 null null 0 &blk12
+vcall $gs 0x28:32 &blk12 &pv
+load p2 pv 0
+vcall $gs 0x70:32 $p2 &cb @container
+log
+vcall $gs 0x30:0 $p2
+vcall $gs 0x18:32
+tree data/saves

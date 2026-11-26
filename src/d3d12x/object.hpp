@@ -1,14 +1,19 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Port of crates/victory-gpu/src/object.rs (DanziLoader / victory-perf, see
-
-
+// NOTICE.md): what every console graphics object starts with (a function
+// table pointer, bookkeeping bits, a reference count), interface answers,
+// objects handed out and released, private data and names, and the tables
+// whose unwritten slots log once and fail.
 #pragma once
 
 #include <array>
 #include <atomic>
 #include <cstdint>
 #include <cstring>
+#include <string>
 #include <utility>
+
+#include <intrin.h>
 
 namespace danzi::d3d12x {
 
@@ -39,6 +44,9 @@ constexpr Iid guid(std::uint32_t a, std::uint16_t b, std::uint16_t c, std::array
             d[6],
             d[7]};
 }
+
+
+std::string guid_text(const Iid& g);
 
 struct Object {
     const void* const* functions;
@@ -73,7 +81,10 @@ std::uint32_t __stdcall add_ref(This self);
 std::uint32_t __stdcall release(This self);
 
 
-inline HRESULT answer(Kind, const Iid*, This found, This* out) {
+namespace detail {
+void unknown_interface(Kind kind, const Iid* iid);
+}   
+inline HRESULT answer(Kind kind, const Iid* iid, This found, This* out) {
     if (!out) {
         return E_POINTER_;
     }
@@ -82,6 +93,7 @@ inline HRESULT answer(Kind, const Iid*, This found, This* out) {
         *out = found;
         return S_OK_;
     }
+    detail::unknown_interface(kind, iid);
     *out = nullptr;
     return E_NOINTERFACE_;
 }
@@ -109,12 +121,43 @@ bool is(const Iid* iid, const std::array<Iid, N>& known) {
     return is(iid, known.data(), N);
 }
 
+void forget_private_data(This self);
+
+
+template <class T, std::size_t N>
+HRESULT hand_out(Kind kind, T* object, const Iid* iid, const std::array<Iid, N>& known, This* out) {
+    if (!is(iid, known)) {
+        delete object;
+        return answer(kind, iid, nullptr, out);
+    }
+    if (!out) {
+        delete object;
+        return S_FALSE_;
+    }
+    return answer(kind, iid, reinterpret_cast<This>(object), out);
+}
+
+
+template <class T>
+std::uint32_t release_boxed(This self) {
+    std::uint32_t n = self->refs.load(std::memory_order_acquire);
+    do {
+        if (n == 0) {
+            return 0;
+        }
+    } while (!self->refs.compare_exchange_weak(n, n - 1, std::memory_order_acq_rel, std::memory_order_acquire));
+    if (n == 1) {
+        forget_private_data(self);
+        delete reinterpret_cast<T*>(self);
+        return 0;
+    }
+    return n - 1;
+}
+
 
 HRESULT __stdcall get_private_data(This self, const Iid* id, std::uint32_t* size, std::uint8_t* data);
 HRESULT __stdcall set_private_data(This self, const Iid* id, std::uint32_t size, const std::uint8_t* data);
 HRESULT __stdcall set_name(This self, const wchar_t* name);
-
-void forget_private_data(This self);
 
 HRESULT __stdcall parent_device(This self, const Iid* iid, This* out);
 
@@ -125,10 +168,10 @@ template <std::size_t N>
 using Table = std::array<const void*, N>;
 
 namespace detail {
-void report_missing(Kind kind, std::size_t slot);
+void report_missing(Kind kind, std::size_t slot, const void* caller);
 template <int KIND, std::size_t SLOT>
 HRESULT __stdcall missing() {
-    report_missing(static_cast<Kind>(KIND), SLOT);
+    report_missing(static_cast<Kind>(KIND), SLOT, _ReturnAddress());
     return E_NOTIMPL_;
 }
 template <int KIND, std::size_t... I>
@@ -154,6 +197,9 @@ Table<N> d3d12_object(Table<N> t) {
     t[6] = reinterpret_cast<const void*>(&set_name);
     return t;
 }
+
+
+#define DANZI_EMPTY_BODY __nop()
 
 template <class F>
 const void* fn(F f) {
