@@ -41,12 +41,6 @@ unchanged:
 - Tests use synthetic data that our own code generates.
 - Personal game data, caches and saves live outside source control.
 
-## The test oracle
-
-`oracle/` compiles code taken verbatim from the reference checkout at build
-time. The code is read from the reference and never copied into this
-repository. That code keeps its upstream licence and authorship.
-
 ## Third-party code
 
 - `third_party/blake3/`: the BLAKE3 team's C implementation (version 1.8.7,
@@ -58,13 +52,11 @@ repository. That code keeps its upstream licence and authorship.
   behaviour reference for `src/core/toml.cpp`, which reproduces what the
   reference's `toml` 1.2.2 (`toml_parser` 1.1.6, `toml_datetime` 1.1.3,
   `toml_writer` 1.2.0) accepts, returns and reports. No code is taken from
-  them; `build/toml-oracle/` builds that crate version as a test oracle for
-  `tools/check_toml.py`.
+  them.
 - `third_party/opus/`: libopus 1.6.1 from Xiph.Org (BSD-3-Clause; `COPYING`
   and `AUTHORS` kept beside it; origin and checksum in `VENDOR.md`). The port
   decodes the console's Opus streams (`xapu`) with it, where the reference
-  uses the `opus-pure` crate (MIT OR Apache-2.0); `build/opus-oracle` builds
-  that crate as a test oracle for `tools/check_opus.py`.
+  uses the `opus-pure` crate (MIT OR Apache-2.0).
 
 ## Console-instruction emulation
 
@@ -73,6 +65,6 @@ CPU's instructions a host CPU lacks: `clzero` and its loops, SSE4a,
 `monitorx`/`mwaitx`, `rdpru`, `rdpid`, `clwb`, `clflushopt`, SHA, ADX,
 `rdseed`) were written independently for this port from the AMD64
 Architecture Programmer's Manual and the Intel SDM, and checked against the
-instructions executed natively (`tools/emulate_check.cpp`). They are not
+instructions executed natively. They are not
 derived from XCL nor from the reference's XCL-derived
 `console_insn.rs`/`console_insn_decode.rs`, which this port does not use.

@@ -1,5 +1,0 @@
-LIBRARY fixture_dll
-EXPORTS
-    dll_add
-    dll_watch
-    dll_by_ordinal @5 NONAME
