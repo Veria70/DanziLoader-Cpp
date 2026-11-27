@@ -1,0 +1,12 @@
+{
+  "start_utc": "2026-11-26T22:11:42.383000+00:00",
+  "duration_seconds": 1800.0,
+  "visible_window": {
+    "window_s": 1800.0,
+    "visible_changes": 10884,
+    "visible_fps": 6.047,
+    "p95_visible_ms": 240.03,
+    "slowest_1pct_visible_fps": 0.9,
+    "max_gap_ms": 7050.16
+  }
+}

@@ -1,0 +1,7 @@
+metric,off,on,on_minus_off,percent_change
+submission_ms,100.81,97.5,-3.31,-3.28
+visible_fps,6.95,8.3,1.35,19.42
+p95_visible_ms,160.01,140.01,-20.0,-12.5
+render_counter_fps,7.0,8.28,1.28,18.29
+relay_landing_ms,19.6,16.84,-2.76,-14.08
+all_thread_contended_ms,126.37,117.91,-8.46,-6.69
